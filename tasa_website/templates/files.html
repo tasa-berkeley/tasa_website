@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+  {% block content %}
+
+  <div id="slide1" class="files-splash">
+        <h1 class="head-title noselect">
+          Files
+        </h1>
+      </div>
+      <div class="container-fluid">
+        <div class="row row-pad event">
+          <div class="col-md-12 col-pad">
+            <ul>
+            {% for file in files %}
+              <li>
+                <p class="file-text">
+                  <a href="{{file.file_url}}">{{file.name}}</a>
+                </p>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+        </div>
+      </div>
+
+   {% endblock %}

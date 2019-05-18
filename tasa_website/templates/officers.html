@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+	{% block content %}
+	<div id="slide1" class="officer-splash">
+        <div class="officer-title noselect">
+          Officers
+        </div>
+    </div>
+        <div class="container">
+             <div class="officer-member-container">
+                {% for officer in officers %}
+                <div onmouseover="this.style.cursor='pointer'" class="officer-member grow" data-toggle="modal" data-target="#{{officer.id}}">
+                        <img class="officer-member-picture" src="{{ officer.image_url }}"></img>
+                        <div class="officer-member-info">
+                            <span class="name">{{ officer.name }}</span>
+                            <span class="position_name">{{ convert_position(officer.position) }}</span>
+                            <span class="major">{{ officer.major }}</span>
+                            <span class="year">{{ officer.year }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+            {% for officer in officers %}
+                <div id={{officer.id}} class="modal fade" role="dialog"<>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">{{officer.name}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <img class="officer-picture-modal" src="{{ officer.image_url }}"></img>
+                                <p class="quote">{{officer.quote}}</p>
+                                <p class="officer-desc">{{officer.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+
+    {% endblock %}

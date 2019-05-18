@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% block show_latest_event %}
+  	{% if event %}
+	  	<h1>Upcoming Events</h1>
+	  	<a href="{{ event.link }}" target="_blank">
+	  		<img class="upcoming-event" src="{{ event.image_url }}"/></a>
+	  	<p class="text-justify">
+	  		{{ event.title }} <br>
+	  		{{ event.time }} <br>
+	  		{{ event.location }}
+	  	</p>
+	  	<p class="text-right">
+	  		<a href="{{ event.link }}" target="_blank">More Info</a></p>
+  	{% endif %}
+{% endblock %}

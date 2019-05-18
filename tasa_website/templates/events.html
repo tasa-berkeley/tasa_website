@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+  {% block content %}
+      <div id="slide1" class="eventSplash darken-event noselect">
+        <h1 class="head-title">
+          Events
+        </h1>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row row-fluid row-pad event">
+          <div class="col-md-10 col-pad">
+            <h2>Upcoming Events</h2>
+          </div>
+        </div>
+        {% for event in upcoming %}
+          {% if loop.first %}
+          <div class="row row-fluid row-pad event">
+          {% elif loop.index0 % 3 == 0 and not loop.first %}
+          </div>
+          <div class="row row-fluid row-pad event">
+          {% endif %}
+          <div class="col-md-4 col-pad">
+              <img src="{{ event.image_url }}" class="event-images"/>
+              <h3 class="event-subheader">What</h3>
+              <p class="event-text">{{ event.title|safe }}</p>
+              <h3 class="event-subheader">When</h3>
+              <p class="event-text">{{ event.time }}</p>
+              <p class="text-right"><br><a href="{{ event.link }}" target="_blank">More Info</a></p>
+          </div>
+          {% if loop.last %}
+          </div>
+          {% endif %}
+        {% endfor %}
+        <div class="row row-fluid row-pad event">
+          <div class="col-md-10 col-pad">
+            <h2>Recent Events</h2>
+          </div>
+        </div>
+        {% for event in recent %}
+          {% if loop.first %}
+          <div class="row row-fluid row-pad event">
+          {% elif loop.index0 % 3 == 0 %}
+          </div>
+          <div class="row row-fluid row-pad event">
+          {% endif %}
+          <div class="col-md-4 col-pad">
+              <img src="{{ event.image_url }}" class="event-images"/>
+              <h3 class="event-subheader">What</h3>
+              <p class="event-text">{{ event.title|safe }}</p>
+              <h3 class="event-subheader">When</h3>
+              <p class="event-text">{{ event.time }}</p>
+              <p class="text-right"><br><a href="{{ event.link }}" target="_blank">More Info</a></p>
+          </div>
+          {% if loop.last %}
+          </div>
+          {% endif %}
+        {% endfor %}
+</div>
+{% endblock %}

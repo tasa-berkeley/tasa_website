@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+  {% block content %}
+  <div id="slide1" class="family-splash">
+        <h1 class="head-title noselect">
+          Families
+        </h1>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row row-pad event">
+          <div class="col-md-12 col-pad">
+            <h2>Family System</h2>
+            <p class="text-justify">Aside from our weekly events, TASA also offers our members the opportunity to meet new people outside of the college setting through smaller meet-ups that usually take place on the weekends. The family system works with smaller groups within the larger TASA community, which allows our members to make friends through the comfort of a closer environment. Activities with the families usually include going out for dinner at the many restuarants around Berkeley, exploring places such as Emeryville or San Francisco, or even cozy game nights where members can make fresh baked cookies.</p>
+          </div>
+        </div>
+        <div class="row row-pad event">
+             {% for family in families %}
+                <div class="col-md-6 col-pad">
+                    <div class="family1 mobile-height" style="background-image: url({{ family.image_url }})">
+                    </div>
+                    <h2 class="officer-name">{{ family.family_name }} | {{ family.family_head1 }} & {{family.family_head2}}</h2>
+                        <p class="text-justify officer-desc officer-pad">
+                        {{ family.description}}</p>
+                </div>
+             {% endfor %}  
+          </div>
+          </div>
+  {% endblock %}

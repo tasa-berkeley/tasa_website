@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>TASA @ Berkeley Admin Page</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link href='https://fonts.googleapis.com/css?family=Yantramanav:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+<link href="{{ url_for('static', filename='css/tasa_v0.0.1.css') }}" rel="stylesheet">
+</head>
+<body>
+  <div class="modal fade" id="officerModal" tabindex="-1" role="dialog" aria-labelledby="officerModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="officerModalLabel">Update Officer</h4>
+        </div>
+        <form id="officer-modal-form" method="post" enctype=multipart/form-data>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="name" class="control-label">Name:</label>
+              <input type="text" name="name" class="form-control" id="officer-modal-name"></input>
+            </div>
+            <div class="form-group">
+              <label for="year" class="control-label">Year:</label>
+              <input type="text" name="year" class="form-control" id="officer-modal-year"></input>
+            </div>
+            <div class="form-group">
+              <label for="major" class="control-label">Major:</label>
+              <input type="text" name="major" class="form-control" id="officer-modal-major"></input>
+            </div>
+            <div class="form-group">
+              <label for="position" class="control-label">Position:</label>
+              <select class="form-control" name="position" id="officer-modal-position">
+                <option value=0>President</option>
+                <option value=1>Internal Vice President</option>
+                <option value=2>External Vice President</option>
+                <option value=3>Treasurer</option>
+                <option value=4>Webmaster</option>
+                <option value=5>Outreach</option>
+                <option value=6>Public Relations</option>
+                <option value=7>Family Head</option>
+                <option value=8>Historian</option>
+                <option value=9>Senior Advisor</option>
+                <option value=10>Family Head Intern</option>
+                <option value=11>Historian Intern</option>
+                <option value=12>Public Relations Intern</option>
+                <option value=13>Outreach Intern</option>
+                <option value=14>Treasurer Intern</option>
+                <option value=15>Webmaster Intern</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quote" class="control-label">Quote:</label>
+              <textarea type="text" name="quote" class="form-control" id="officer-modal-quote"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="description" class="control-label">Description:</label>
+              <textarea type="text" name="description" class="form-control" id="officer-modal-description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="file" class="control-label">Image (for best viewing, make sure it is 1:1 aspect ratio):</label>
+              <input type=file name=file class="form-control-file"></input>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="familyModal" tabindex="-1" role="dialog" aria-labelledby="familyModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="familyModalLabel">Update family</h4>
+        </div>
+        <form id="family-modal-form" method="post" enctype=multipart/form-data>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="family_name" class="control-label">Family Name:</label>
+              <input type="text" name="family_name" class="form-control" id="family-modal-name"></input>
+            </div>
+            <div class="form-group">
+              <label for="description" class="control-label">Description:</label>
+              <input type="text" name="description" class="form-control" id="family-modal-description"></input>
+            </div>
+            <div class="form-group">
+              <label for="family_head1" class="control-label">Family Head 1:</label>
+              <input type="text" name="family_head1" class="form-control" id="family-modal-familyhead1"></input>
+            </div>
+            <div class="form-group">
+              <label for="family_head2" class="control-label">Family Head 2:</label>
+              <textarea type="text" name="family_head2" class="form-control" id="family-modal-familyhead2"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="file" class="control-label">Image:</label>
+              <input type=file name=file class="form-control-file"></input>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+{% if session.logged_in %}
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-info" role="alert">
+          System Message: {{ messages[0] }}
+        </div>
+        {% endif %}
+      {% endwith %}
+      <div class="container-fluid">
+        <div class="row welcome">
+            <div class="col"></div>
+            <div class="col text-center">
+                <h1>TASA @ Berkeley <br> Admin Page</h1>
+            </div>
+            <div class="col"></div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <ul class="nav nav-pills justify-content-center welcome">
+          <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#addEvent">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addOfficer">Add Officer</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFamily">Add Family</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewEvents">View Events</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewOfficers">View Officers</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFamilies">View Families</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFile">Add File</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="addEvent" role="tabpanel">
+            <div class="row welcome">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add an event</h2>
+                <p>Enter a Facebook event url, e.g. https://facebook.com/events/123456/</p>
+                <form action="{{ url_for('add_event') }}" method=post class=add-event>
+                  <div class="form-group">
+                    <label for="eventLink">Link</label>
+                    <input name=link type="text" class="form-control" id="eventLink">
+                  </div>
+                  <button class="btn btn-primary" type=submit>Add Event</button>
+                </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="addOfficer" role="tabpanel">
+            <div class="row welcome">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add an officer</h2>
+                <form action="{{ url_for('add_officer') }}" method=post enctype=multipart/form-data>
+                    <div class="form-group">
+                      <label for="officerName">Name</label>
+                      <input name=name type="text" class="form-control" id="officerName">
+                    </div>
+                    <div class="form-group">
+                      <label for="officerYear">Year</label>
+                      <input name=year type="text" class="form-control" id="officerYear">
+                    </div>
+                    <div class="form-group">
+                      <label for="officerMajor">Major</label>
+                      <input name=major type="text" class="form-control" id="officerMajor">
+                    </div>
+                    <div class="form-group">
+                      <label for="officerPosition">Position</label>
+                      <select name=position class="form-control" id="officerPosition">
+                          <option value=0>President</option>
+                          <option value=1>Internal Vice President</option>
+                          <option value=2>External Vice President</option>
+                          <option value=3>Treasurer</option>
+                          <option value=4>Webmaster</option>
+                          <option value=5>Outreach</option>
+                          <option value=6>Public Relations</option>
+                          <option value=7>Family Head</option>
+                          <option value=8>Historian</option>
+                          <option value=9>Senior Advisor</option>
+                          <option value=10>Family Head Intern</option>
+                          <option value=11>Historian Intern</option>
+                          <option value=12>Public Relations Intern</option>
+                          <option value=13>Outreach Intern</option>
+                          <option value=14>Treasurer Intern</option>
+                          <option value=15>Webmaster Intern</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="officerQuote">Quote</label>
+                      <input name=quote type="text" class="form-control" id="officerQuote">
+                    </div>
+                    <div class="form-group">
+                      <label for="officerDescription">Description</label>
+                      <textarea name=description rows=4 type="text" class="form-control" id="officerDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="officerImage">Image (for best viewing, make sure it is 1:1 aspect ratio)</label>
+                      <input class="form-control-file" type=file name=file id="officerImage">
+                    </div>
+                    <button class="btn btn-primary" type=submit>Add Officer</button>
+                </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="addFamily" role="tabpanel">
+            <div class="row welcome">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add family</h2>
+                  <form action="{{ url_for('add_family') }}" method=post enctype=multipart/form-data>
+                    <div class="form-group">
+                      <label for="familyName">Family Name</label>
+                      <input name=family_name type="text" class="form-control" id="familyName">
+                    </div>
+                    <div class="form-group">
+                      <label for="familyHead1">Family Head 1</label>
+                      <input name=family_head1 type="text" class="form-control" id="familyHead1">
+                    </div>
+                    <div class="form-group">
+                      <label for="familyHead2">Family Head 2</label>
+                      <input name=family_head2 type="text" class="form-control" id="familyHead2">
+                    </div>
+                    <div class="form-group">
+                      <label for="familyDescription">Description</label>
+                      <textarea name=description rows=4 type="text" class="form-control" id="familyDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="familyImage">Image</label>
+                      <input class="form-control-file" type=file name=file id="familyImage">
+                    </div>
+                    <button class="btn btn-primary" type=submit>Add Family</button>
+                  </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="viewEvents" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>All Events in DB:</h2>
+                  <ul>
+                  {% for event in events %}
+                    <li>
+                      {{ event.title }} &nbsp;
+                      <a href="javascript:void(0);" onclick="deleteItem({{event.id}}, '{{event.title}}', '/events/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="viewOfficers" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>All Officers in DB:</h2>
+                  <ul>
+                  {% for officer in officers %}
+                    <li>
+                      {{ officer.name }}
+                      <a href="javascript:void(0);" data-toggle="modal" data-target="#officerModal"
+                          data-name="{{officer.name}}" data-id="{{officer.id}}" data-year="{{officer.year}}"
+                          data-major="{{officer.major}}" data-position={{officer.position}} data-quote="{{officer.quote}}"
+                          data-description="{{officer.description}}">Update</a>&nbsp;
+                      <a href="javascript:void(0);" onclick="deleteItem({{officer.id}}, '{{officer.name}}', '/officers/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="viewFamilies" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>All Families in DB:</h2>
+                  <ul>
+                  {% for family in families %}
+                    <li>
+                      {{ family.family_name }}
+                      <a href="javascript:void(0);" data-toggle="modal" data-target="#familyModal"
+                          data-name="{{family.family_name}}" data-id="{{family.id}}" data-familyhead1="{{family.family_head1}}"
+                          data-familyhead2="{{family.family_head2}}" data-description="{{family.description}}">Update</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{family.id}}, '{{family.family_name}}', '/families/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="addFile" role="tabpanel">
+            <div class="row welcome">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add a File</h2>
+                <form action="{{ url_for('add_file') }}" method=post>
+                    <div class="form-group">
+                      <label for="fileName">File Name</label>
+                      <input name=name type="text" class="form-control" id="fileName">
+                    </div>
+                    <div class="form-group">
+                      <label for="file">Link to file</label>
+                      <input name="file_url" type="text" class="form-control" id="file">
+                    </div>
+                    <button class="btn btn-primary" type=submit>Add File</button>
+                </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="viewFiles" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>All Files in DB:</h2>
+                  <ul>
+                  {% for file in files %}
+                    <li>
+                      {{ file.name }} &nbsp;
+                      <a href="javascript:void(0);" onclick="deleteItem({{file.id}}, '{{file.name}}', '/files/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endif %}
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+function deleteItem(id, name, endpoint) {
+  if (confirm('Are you sure you want to delete ' + name + '?')) {
+    $.ajax({
+      url: endpoint + id,
+      type: 'DELETE',
+    });
+    location.reload();
+  }
+}
+$('#officerModal').on('show.bs.modal', function(e) {
+  const link = $(e.relatedTarget);
+  const name = link.data('name');
+  const year = link.data('year');
+  const id = link.data('id');
+  const major = link.data('major');
+  const quote = link.data('quote');
+  const description = link.data('description');
+  const position = link.data('position');
+  const modal = $(this);
+  modal.find('.modal-title').text('Updating ' + name);
+  modal.find('#officer-modal-name').val(name);
+  modal.find('#officer-modal-year').val(year);
+  modal.find('#officer-modal-major').val(major);
+  modal.find('#officer-modal-quote').val(quote);
+  modal.find('#officer-modal-description').val(description);
+  modal.find('#officer-modal-position').val(position);
+
+  const updateUrl = '/officers/' + id;
+  modal.find('#officer-modal-form').attr('action', updateUrl);
+});
+
+$('#familyModal').on('show.bs.modal', function(e) {
+  const link = $(e.relatedTarget);
+  const name = link.data('name');
+  const id = link.data('id');
+  const description = link.data('description');
+  const familyhead1 = link.data('familyhead1');
+  const familyhead2 = link.data('familyhead2');
+  const modal = $(this);
+  modal.find('.modal-title').text('Updating ' + name);
+  modal.find('#family-modal-name').val(name);
+  modal.find('#family-modal-description').val(description);
+  modal.find('#family-modal-familyhead1').val(familyhead1);
+  modal.find('#family-modal-familyhead2').val(familyhead2);
+
+  const updateUrl = '/families/' + id;
+  modal.find('#family-modal-form').attr('action', updateUrl);
+});
+
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>
