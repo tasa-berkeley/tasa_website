@@ -400,14 +400,14 @@ html {
 
 .family-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/berkeleyproj.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/fa19families.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.4)
 		),
-	url("../images/berkeleyproj.jpg");
+	url("../images/fa19families.JPG");
 	height: 33em;
 	margin-top: -1.2em;
 	background-size: cover;
@@ -427,7 +427,7 @@ html {
 }
 
 .eventSplash {
-	background-image: url("../images/bobalympics.jpg");
+	background-image: url("../images/fa19events.jpg");
 	font-family: 'Yantramanav', sans-serif;
 	display: block;
 	background-position: 0% 30%;
@@ -439,14 +439,14 @@ html {
 
 .darken-event {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/bobalympics.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/fa19events.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.3)
 		),
-	url("../images/bobalympics.jpg");
+	url("../images/fa19events.jpg");
 }
 
 
@@ -501,14 +501,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/cabinetf17.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19officers.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/cabinetf17.jpg");
+	url("../images/fa19officers.jpg");
 }
 
 .files-splash {
@@ -519,14 +519,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/files.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19files.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/files.jpg");
+	url("../images/fa19files.JPG");
 	margin-top: -1.2em;
 }
 
@@ -538,14 +538,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/donate.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19donate.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/donate.jpg");
+	url("../images/fa19donate.jpg");
 	margin-top: -1.2em;
 }
 
