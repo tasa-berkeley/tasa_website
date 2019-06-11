@@ -108,7 +108,8 @@ def admin_panel():
     officers = query_db('select * from officers order by id')
     families = query_db('select * from families order by id')
     files = query_db('select * from files order by id')
-    return render_template('admin.html', events=events, officers=officers, families=families, files=files)
+    members = query_db('select * from members order by id')
+    return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members)
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
@@ -287,6 +288,48 @@ def delete_file(file_id):
     query = 'delete from files where id = ?'
     query_db(query, (file_id,))
     return 'Deleted file'
+
+@app.route('/members', methods=['POST'])
+def add_general_member():
+    auth.check_login()
+
+    name = request.form['name']
+    year = request.form['year']
+    email = request.form['email']
+    findable = request.form['findable']
+    checkins = 0
+
+    query = 'insert into members (name, year, email, findable, checkins) values (?, ?, ?, ?, ?)'
+    query_db(query, [name, year, email, findable, checkins])
+    flash('New member added')
+    return redirect(url_for('admin_panel'))
+
+@app.route('/members/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+    auth.check_login()
+    query = 'delete from members where id = ?'
+    query_db(query, (member_id,))
+    return 'Deleted member'
+
+@app.route('/members/<int:member_id>', methods=['POST'])
+def update_member(member_id):
+    auth.check_login()
+
+    name = request.form['name']
+    year = request.form['year']
+    email = request.form['email']
+    findable = request.form['findable']
+    checkins = request.form['checkins']
+
+    query = (
+        'update members '
+        'set name=?, year=?, email=?, findable=?, checkins=? '
+        'where id=?'
+    )
+    query_db(query, [name, year, email, findable, checkins, member_id])
+    flash('Updated ' + name)
+    # TODO: think about doing all of these redirects javascript-side
+    return redirect(url_for('admin_panel'))
 
 @app.route('/about', methods=['GET'])
 def about():

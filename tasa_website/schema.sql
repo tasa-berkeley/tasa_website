@@ -38,3 +38,13 @@ create table files(
     name text not null,
     file_url text not null
 );
+
+drop table if exists members;
+create table members(
+    id integer primary key autoincrement,
+    name text not null,
+    year text not null
+    email text not null
+    findable integer not null
+    checkins integer not null
+);

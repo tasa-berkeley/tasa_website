@@ -114,6 +114,49 @@
   </div>
 
 
+  <div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="memberModalLabel">Update General Member</h4>
+        </div>
+        <form id="member-modal-form" method="post" enctype=multipart/form-data>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="name" class="control-label">Name:</label>
+              <input type="text" name="name" class="form-control" id="member-modal-name"></input>
+            </div>
+            <div class="form-group">
+              <label for="year" class="control-label">Year:</label>
+              <input type="text" name="year" class="form-control" id="member-modal-year"></input>
+            </div>
+            <div class="form-group">
+              <label for="email" class="control-label">Email:</label>
+              <input type="text" name="email" class="form-control" id="member-modal-email"></input>
+            </div>
+            <div class="form-group">
+              <label for="radio-buttons">Do you want to be searchable on the website?</label>
+              <div class="radio-buttons">
+                  <label><input name=findable type="radio" id="yes" value="yes">Yes</label>&nbsp;
+                  <label><input name=findable type="radio" id="no" value="no">No</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="checkins" class="control-label">Number of check-ins:</label>
+              <input type="integer" name="checkins" class="form-control" id="member-modal-checkins"></input>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 {% if session.logged_in %}
       {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -141,6 +184,8 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFamilies">View Families</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFile">Add File</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
         </ul>
 
         <div class="tab-content">
@@ -345,6 +390,64 @@
               <div class="col"></div>
             </div>
           </div>
+          <div class="tab-pane" id="addGeneralMember" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add a general member</h2>
+                <form action="{{ url_for('add_general_member') }}" method=post enctype=multipart/form-data>
+                    <div class="form-group">
+                      <label for="memberName">Name</label>
+                      <input name=name type="text" class="form-control" id="memberName">
+                    </div>
+                    <div class="form-group">
+                      <label for="memberYear">Year</label>
+                      <input name=year type="text" class="form-control" id="memberYear">
+                    </div>
+                    <div class="form-group">
+                      <label for="memberEmail">Email</label>
+                      <input name=email type="text" class="form-control" id="memberEmail">
+                    </div>
+                    <div class="form-group">
+                      <label for="radio-buttons">Do you want to be searchable on the website?</label>
+                      <div class="radio-buttons">
+                        <div>
+                          <label for="yes">Yes</label>
+                          <input name=findable type="radio" id="yes" value="yes" checked>
+                        </div>
+                        <div>
+                          <label for="no">No</label>
+                          <input name=findable type="radio" id="no" value="no">
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary" type=submit>Add General Member</button>
+                </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="viewGeneralMembers" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>All General Members in DB:</h2>
+                  <ul>
+                  {% for member in members %}
+                    <li>
+                      {{ member.name }}
+                      <a href="javascript:void(0);" data-toggle="modal" data-target="#memberModal"
+                          data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
+                          data-email="{{member.email}}" data-findable={{member.findable}} data-checkins="{{member.checkins}}"
+                          >Update</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{member.id}}, '{{member.name}}', '/members/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
         </div>
       </div>
 {% endif %}
@@ -400,6 +503,29 @@ $('#familyModal').on('show.bs.modal', function(e) {
 
   const updateUrl = '/families/' + id;
   modal.find('#family-modal-form').attr('action', updateUrl);
+});
+
+$('#memberModal').on('show.bs.modal', function(e) {
+  const link = $(e.relatedTarget);
+  const name = link.data('name');
+  const id = link.data('id');
+  const year = link.data('year');
+  const email = link.data('email');
+  //hacky way of setting the radio button to whatever setting they signed up for
+  const findable = "input[name=\"findable\"][value=\"" + link.data('findable') + "\"]";
+
+  const checkins = link.data('checkins');
+  const modal = $(this);
+  modal.find('.modal-title').text('Updating ' + name);
+  modal.find('#member-modal-name').val(name);
+  modal.find('#member-modal-year').val(year);
+  modal.find('#member-modal-email').val(email);
+  //see above hacky way
+  modal.find(findable).attr("checked", true)
+  modal.find('#member-modal-checkins').val(checkins);
+
+  const updateUrl = '/members/' + id;
+  modal.find('#member-modal-form').attr('action', updateUrl);
 });
 
 </script>
