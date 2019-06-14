@@ -157,6 +157,41 @@
   </div>
 
 
+  <div class="modal fade" id="checkinModal" tabindex="-1" role="dialog" aria-labelledby="checkinModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="checkinModalLabel">Check-in!</h4>
+        </div>
+        <form id="checkin-modal-form" method="post" enctype=multipart/form-data>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name" class="control-label">Name</label>
+            <h6 name="name" id="checkin-modal-name"></h6>
+          </div>
+          <div class="form-group">
+            <label for="year" class="control-label">Year</label>
+            <h6 name="year" id="checkin-modal-year"></h6>
+          </div>
+          <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <h6 name="email" id="checkin-modal-email"></h6>
+          </div>
+          <div class="form-group">
+            <label for="checkins" class="control-label">Total Check-ins</label>
+            <h6 name="checkins" id="checkin-modal-checkins"></h6>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Confirm</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 {% if session.logged_in %}
       {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -186,6 +221,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
         </ul>
 
         <div class="tab-content">
@@ -398,15 +434,15 @@
                 <form action="{{ url_for('add_general_member') }}" method=post enctype=multipart/form-data>
                     <div class="form-group">
                       <label for="memberName">Name</label>
-                      <input name=name type="text" class="form-control" id="memberName">
+                      <input name=name type="text" class="form-control" id="memberName" required>
                     </div>
                     <div class="form-group">
                       <label for="memberYear">Year</label>
-                      <input name=year type="text" class="form-control" id="memberYear">
+                      <input name=year type="text" class="form-control" id="memberYear" required>
                     </div>
                     <div class="form-group">
                       <label for="memberEmail">Email</label>
-                      <input name=email type="text" class="form-control" id="memberEmail">
+                      <input name=email type="text" class="form-control" id="memberEmail" required>
                     </div>
                     <div class="form-group">
                       <label for="radio-buttons">Do you want to be searchable on the website?</label>
@@ -448,6 +484,45 @@
               <div class="col"></div>
             </div>
           </div>
+
+          <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Check-in!</h2>
+                <div id="accordion">
+                  {% for event in events %}
+                  <div class="card">
+                    <div class="card-heading">
+                      <h5 class="card-title">
+                        <a data-toggle="collapse" href="#collapse{{ event.id }}" aria-expanded="false" aria-controls="collapse{{ event.id }}">
+                          {{ event.title }}
+                        </a>
+                      </h5>
+                    </div>
+                    <div id="collapse{{ event.id }}" data-parent="#accordion" class="collapse" aria-labelledby="card-heading">
+                      <div class="card-body">
+                        <ul>
+                          {% for member in members %}
+                            <li>
+                              {{ member.name }}
+                              <a href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
+                                  data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
+                                  data-email="{{member.email}}" data-checkins="{{member.checkins}}"
+                                  >Check-in</a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+
         </div>
       </div>
 {% endif %}
@@ -526,6 +601,24 @@ $('#memberModal').on('show.bs.modal', function(e) {
 
   const updateUrl = '/members/' + id;
   modal.find('#member-modal-form').attr('action', updateUrl);
+});
+
+$('#checkinModal').on('show.bs.modal', function(e) {
+  const link = $(e.relatedTarget);
+  const name = link.data('name');
+  const id = link.data('id');
+  const year = link.data('year');
+  const email = link.data('email');
+  const checkins = link.data('checkins');
+  const modal = $(this);
+
+  modal.find('.modal-title').text('Checking in ' + name);
+  modal.find('#checkin-modal-name').text(name);
+  modal.find('#checkin-modal-year').text(year);
+  modal.find('#checkin-modal-email').text(email);
+  modal.find('#checkin-modal-checkins').text(checkins);
+  const updateUrl = '/checkin/' + id;
+  modal.find('#checkin-modal-form').attr('action', updateUrl);
 });
 
 </script>

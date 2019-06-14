@@ -108,7 +108,7 @@ def admin_panel():
     officers = query_db('select * from officers order by id')
     families = query_db('select * from families order by id')
     files = query_db('select * from files order by id')
-    members = query_db('select * from members order by id')
+    members = query_db('select * from members order by name')
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members)
 
 @app.route('/officers', methods=['GET'])
@@ -309,7 +309,8 @@ def delete_member(member_id):
     auth.check_login()
     query = 'delete from members where id = ?'
     query_db(query, (member_id,))
-    return 'Deleted member'
+    flash('Deleted member')
+    return redirect(url_for('admin_panel'))
 
 @app.route('/members/<int:member_id>', methods=['POST'])
 def update_member(member_id):
@@ -328,6 +329,21 @@ def update_member(member_id):
     )
     query_db(query, [name, year, email, findable, checkins, member_id])
     flash('Updated ' + name)
+    # TODO: think about doing all of these redirects javascript-side
+    return redirect(url_for('admin_panel'))
+
+@app.route('/checkin/<int:member_id>', methods=['POST'])
+def update_checkin(member_id):
+    auth.check_login()
+    query = (
+        'update members '
+        'set checkins=checkins+1 '
+        'where id=?'
+    )
+    query_db(query, (member_id,))
+    # TODO: This is very hacky and needs to be fixed. member[0][0] is the name and member[0][1] is the number of checkins
+    member = query_db('select name, checkins from members where id=?', (member_id,))
+    flash(str(member[0][0]) + ", you have checked in " + str(member[0][1]) + " times!")
     # TODO: think about doing all of these redirects javascript-side
     return redirect(url_for('admin_panel'))
 
