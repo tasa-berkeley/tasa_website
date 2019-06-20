@@ -309,8 +309,7 @@ def delete_member(member_id):
     auth.check_login()
     query = 'delete from members where id = ?'
     query_db(query, (member_id,))
-    flash('Deleted member')
-    return redirect(url_for('admin_panel'))
+    return 'Deleted member'
 
 @app.route('/members/<int:member_id>', methods=['POST'])
 def update_member(member_id):
@@ -341,11 +340,10 @@ def update_checkin(member_id):
         'where id=?'
     )
     query_db(query, (member_id,))
-    # TODO: This is very hacky and needs to be fixed. member[0][0] is the name and member[0][1] is the number of checkins
-    member = query_db('select name, checkins from members where id=?', (member_id,))
-    flash(str(member[0][0]) + ", you have checked in " + str(member[0][1]) + " times!")
-    # TODO: think about doing all of these redirects javascript-side
-    return redirect(url_for('admin_panel'))
+    name = request.form['name']
+    checkins = str(int(request.form['checkins']) + 1)
+    eventName = request.form['eventName']
+    return name + ", you have checked in " + checkins + " times!"
 
 @app.route('/about', methods=['GET'])
 def about():

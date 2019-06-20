@@ -164,8 +164,12 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="checkinModalLabel">Check-in!</h4>
         </div>
-        <form id="checkin-modal-form" method="post" enctype=multipart/form-data>
+        <div id="checkin-modal">
         <div class="modal-body">
+          <div class="form-group">
+            <label for="eventName" class="control-label">Event</label>
+            <h6 name="eventName" id="checkin-modal-event"></h6>
+          </div>
           <div class="form-group">
             <label for="name" class="control-label">Name</label>
             <h6 name="name" id="checkin-modal-name"></h6>
@@ -185,21 +189,22 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Confirm</button>
+          <button type="submit" id="checkin-modal-button" class="btn btn-primary">Confirm</button>
         </div>
-        </form>
+      </div>
       </div>
     </div>
   </div>
 
 {% if session.logged_in %}
+  <div class="alert alert-info" id="alert" role="alert">
       {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <div class="alert alert-info" role="alert">
           System Message: {{ messages[0] }}
-        </div>
         {% endif %}
       {% endwith %}
+
+  </div>
       <div class="container-fluid">
         <div class="row welcome">
             <div class="col"></div>
@@ -506,10 +511,10 @@
                           {% for member in members %}
                             <li>
                               {{ member.name }}
-                              <a href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
+                              <button href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
                                   data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
-                                  data-email="{{member.email}}" data-checkins="{{member.checkins}}"
-                                  >Check-in</a>
+                                  data-email="{{member.email}}" data-checkins="{{member.checkins}}" data-event="{{event.title}}"
+                                  >Check-in</button>
                             </li>
                           {% endfor %}
                         </ul>
@@ -539,6 +544,16 @@ function deleteItem(id, name, endpoint) {
     });
     location.reload();
   }
+}
+function checkin(id, name, checkins, eventName) {
+  $.ajax({
+    url: '/checkin/' + id,
+    type: 'POST',
+    data: { name: name, checkins: checkins, eventName: eventName },
+  });
+  checkins = parseInt(checkins) + 1
+  alert(name + ", you have checked in " + checkins + " times!")
+  location.reload();
 }
 $('#officerModal').on('show.bs.modal', function(e) {
   const link = $(e.relatedTarget);
@@ -605,6 +620,7 @@ $('#memberModal').on('show.bs.modal', function(e) {
 
 $('#checkinModal').on('show.bs.modal', function(e) {
   const link = $(e.relatedTarget);
+  const eventName = link.data('event')
   const name = link.data('name');
   const id = link.data('id');
   const year = link.data('year');
@@ -613,12 +629,12 @@ $('#checkinModal').on('show.bs.modal', function(e) {
   const modal = $(this);
 
   modal.find('.modal-title').text('Checking in ' + name);
+  modal.find('#checkin-modal-event').text(eventName);
   modal.find('#checkin-modal-name').text(name);
   modal.find('#checkin-modal-year').text(year);
   modal.find('#checkin-modal-email').text(email);
   modal.find('#checkin-modal-checkins').text(checkins);
-  const updateUrl = '/checkin/' + id;
-  modal.find('#checkin-modal-form').attr('action', updateUrl);
+  modal.find('#checkin-modal-button').attr('onClick', "checkin(\'" + id + "\',\'" + name + "\',\'" + checkins + "\',\'" + eventName + "\')" );
 });
 
 </script>
