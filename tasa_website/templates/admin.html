@@ -512,9 +512,9 @@
                         <ul id="member-list{{ event.id }}">
                           {% for member in members %}
                             <li>
-                              {{ member.name }}
+                              <label for="#list-buttons">{{ member.name }}</label>
                               {% if check_valid_checkin(event.id, member.id) %}
-                                <button href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
+                                <button id="list-buttons" href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
                                     data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
                                     data-email="{{member.email}}" data-checkins="{{member.checkins}}" data-eventname="{{event.title}}"
                                     data-eventid="{{event.id}}"
@@ -565,8 +565,8 @@ function checkin(id, name, checkins, eventName, eventID) {
 }
 function updateNames(eventID) {
   searchText = $('#searchbar' + eventID).val();
-  $('#member-list' + eventID + ' li').css('display', 'none')
-  $('#member-list' + eventID + ' li:contains(' + searchText + ')').css('display','');
+  $('#member-list' + eventID + ' li').css('display', 'none');
+  $('#member-list' + eventID + ' label:contains(' + searchText + ')').parent().css('display','');
 }
 $('#officerModal').on('show.bs.modal', function(e) {
   const link = $(e.relatedTarget);
