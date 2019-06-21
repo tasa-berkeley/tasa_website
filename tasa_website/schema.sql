@@ -48,3 +48,11 @@ create table members(
     findable integer not null
     checkins integer not null
 );
+
+drop table if exists event_checkins;
+create table event_checkins(
+  eventID integer not null
+  eventName text not null
+  memberID integer not null
+  memberName text not null
+);

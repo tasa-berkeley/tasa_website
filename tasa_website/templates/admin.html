@@ -507,14 +507,22 @@
                     </div>
                     <div id="collapse{{ event.id }}" data-parent="#accordion" class="collapse" aria-labelledby="card-heading">
                       <div class="card-body">
-                        <ul>
+                        <label for='#searchbar{{ event.id }}'>Search:</label>
+                        <input id='searchbar{{ event.id }}' type='text' oninput='updateNames({{ event.id }})'></input>
+                        <ul id="member-list{{ event.id }}">
                           {% for member in members %}
                             <li>
                               {{ member.name }}
-                              <button href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
-                                  data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
-                                  data-email="{{member.email}}" data-checkins="{{member.checkins}}" data-event="{{event.title}}"
-                                  >Check-in</button>
+                              {% if check_valid_checkin(event.id, member.id) %}
+                                <button href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
+                                    data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
+                                    data-email="{{member.email}}" data-checkins="{{member.checkins}}" data-eventname="{{event.title}}"
+                                    data-eventid="{{event.id}}"
+                                    >Check-in</button>
+                              {% else %}
+                                <button disabled
+                                    >Check-in</button>
+                              {% endif %}
                             </li>
                           {% endfor %}
                         </ul>
@@ -545,15 +553,20 @@ function deleteItem(id, name, endpoint) {
     location.reload();
   }
 }
-function checkin(id, name, checkins, eventName) {
+function checkin(id, name, checkins, eventName, eventID) {
   $.ajax({
     url: '/checkin/' + id,
     type: 'POST',
-    data: { name: name, checkins: checkins, eventName: eventName },
+    data: { name: name, checkins: checkins, eventName: eventName, eventID: eventID },
   });
-  checkins = parseInt(checkins) + 1
-  alert(name + ", you have checked in " + checkins + " times!")
+  checkins = parseInt(checkins) + 1;
+  alert(name + ", you have checked in " + checkins + " times!");
   location.reload();
+}
+function updateNames(eventID) {
+  searchText = $('#searchbar' + eventID).val();
+  $('#member-list' + eventID + ' li').css('display', 'none')
+  $('#member-list' + eventID + ' li:contains(' + searchText + ')').css('display','');
 }
 $('#officerModal').on('show.bs.modal', function(e) {
   const link = $(e.relatedTarget);
@@ -620,7 +633,8 @@ $('#memberModal').on('show.bs.modal', function(e) {
 
 $('#checkinModal').on('show.bs.modal', function(e) {
   const link = $(e.relatedTarget);
-  const eventName = link.data('event')
+  const eventName = link.data('eventname')
+  const eventID = link.data('eventid')
   const name = link.data('name');
   const id = link.data('id');
   const year = link.data('year');
@@ -634,7 +648,7 @@ $('#checkinModal').on('show.bs.modal', function(e) {
   modal.find('#checkin-modal-year').text(year);
   modal.find('#checkin-modal-email').text(email);
   modal.find('#checkin-modal-checkins').text(checkins);
-  modal.find('#checkin-modal-button').attr('onClick', "checkin(\'" + id + "\',\'" + name + "\',\'" + checkins + "\',\'" + eventName + "\')" );
+  modal.find('#checkin-modal-button').attr('onClick', "checkin(\'" + id + "\',\'" + name + "\',\'" + checkins + "\',\'" + eventName + "\',\'" + eventID + "\')" );
 });
 
 </script>

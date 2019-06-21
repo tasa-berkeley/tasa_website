@@ -109,7 +109,8 @@ def admin_panel():
     families = query_db('select * from families order by id')
     files = query_db('select * from files order by id')
     members = query_db('select * from members order by name')
-    return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members)
+    event_checkins = query_db('select * from event_checkins order by eventID')
+    return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members, check_valid_checkin=check_valid_checkin)
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
@@ -343,7 +344,12 @@ def update_checkin(member_id):
     name = request.form['name']
     checkins = str(int(request.form['checkins']) + 1)
     eventName = request.form['eventName']
-    return name + ", you have checked in " + checkins + " times!"
+    eventID = int(request.form['eventID'])
+    query = (
+        'insert into event_checkins values (?,?,?,?)'
+    )
+    query_db(query, (eventID, eventName, member_id, name))
+    return "Checked in"
 
 @app.route('/about', methods=['GET'])
 def about():
@@ -360,3 +366,9 @@ def processor():
         return helpers.POSITIONS[pos_int]
 
     return dict(convert_position=convert_position)
+
+# a helper function which I'm putting in here because I need Jinja to use it
+def check_valid_checkin(eventID, memberID):
+    query = 'select * from event_checkins where eventID=? and memberID=?'
+    checkins = query_db(query, (eventID, memberID))
+    return len(checkins) == 0
