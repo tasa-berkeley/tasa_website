@@ -513,7 +513,7 @@
                       <div class="card-body">
                         <label for='#searchbar{{ event.id }}'>Search:</label>
                         <input id='searchbar{{ event.id }}' type='text' oninput='updateNames({{ event.id }})'></input>
-                        <ul id="member-list{{ event.id }}">
+                        <ul id="memberList{{ event.id }}">
                           {% for member in members %}
                             <li>
                               <label for="#list-buttons">{{ member.name }}</label>
@@ -588,8 +588,8 @@ function checkin(id, name, checkins, eventName, eventID) {
 function updateNames(eventID) {
   if (eventID) {
     searchText = $('#searchbar' + eventID).val();
-    $('#member-list' + eventID + ' li').css('display', 'none');
-    $('#member-list' + eventID + ' label:contains(' + searchText + ')').parent().css('display','');
+    $('#memberList' + eventID + ' li').css('display', 'none');
+    $('#memberList' + eventID + ' label:contains(' + searchText + ')').parent().css('display','');
   } else {
     searchText = $('#searchbarView').val();
     $('#memberListView li').css('display', 'none');
