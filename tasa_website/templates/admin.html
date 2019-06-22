@@ -469,15 +469,18 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="viewGeneralMembers" role="tabpanel">
             <div class="row">
               <div class="col"></div>
               <div class="col">
                 <h2>All General Members in DB:</h2>
-                  <ul>
+                <label for='#searchbarView'>Search:</label>
+                <input id='searchbarView' type='text' oninput='updateNames()'></input>
+                  <ul id='memberListView'>
                   {% for member in members %}
                     <li>
-                      {{ member.name }}
+                      <label>{{ member.name }}</label>
                       <a href="javascript:void(0);" data-toggle="modal" data-target="#memberModal"
                           data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
                           data-email="{{member.email}}" data-findable={{member.findable}} data-checkins="{{member.checkins}}"
@@ -583,9 +586,15 @@ function checkin(id, name, checkins, eventName, eventID) {
   location.reload();
 }
 function updateNames(eventID) {
-  searchText = $('#searchbar' + eventID).val();
-  $('#member-list' + eventID + ' li').css('display', 'none');
-  $('#member-list' + eventID + ' label:contains(' + searchText + ')').parent().css('display','');
+  if (eventID) {
+    searchText = $('#searchbar' + eventID).val();
+    $('#member-list' + eventID + ' li').css('display', 'none');
+    $('#member-list' + eventID + ' label:contains(' + searchText + ')').parent().css('display','');
+  } else {
+    searchText = $('#searchbarView').val();
+    $('#memberListView li').css('display', 'none');
+    $('#memberListView label:contains(' + searchText + ')').parent().css('display','');
+  }
 }
 $('#officerModal').on('show.bs.modal', function(e) {
   const link = $(e.relatedTarget);
