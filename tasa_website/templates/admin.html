@@ -227,6 +227,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
         </ul>
 
         <div class="tab-content">
@@ -531,6 +532,24 @@
                   </div>
                   {% endfor %}
                 </div>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="leaderboard" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Leaderboard:</h2>
+                  <ol>
+                  {% for leader in leaderboard %}
+                    <li>
+                      <h6>{{ leader.name }}</h6>
+                      <p>{{ leader.checkins }} checkins</p>
+                    </li>
+                  {% endfor %}
+                </ol>
               </div>
               <div class="col"></div>
             </div>

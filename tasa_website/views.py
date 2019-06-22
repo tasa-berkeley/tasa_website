@@ -110,7 +110,9 @@ def admin_panel():
     files = query_db('select * from files order by id')
     members = query_db('select * from members order by name')
     event_checkins = query_db('select * from event_checkins order by eventID')
-    return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members, check_valid_checkin=check_valid_checkin)
+    leaderboard = query_db('select * from members order by checkins desc limit 3')
+    return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
+                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard)
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
