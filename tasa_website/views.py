@@ -334,6 +334,12 @@ def update_member(member_id):
     # TODO: think about doing all of these redirects javascript-side
     return redirect(url_for('admin_panel'))
 
+@app.route('/members/delete_all', methods=['DELETE'])
+def delete_all_members():
+    auth.check_login()
+    query_db('delete from members')
+    return "Reset general members"
+
 @app.route('/checkin/<int:member_id>', methods=['POST'])
 def update_checkin(member_id):
     auth.check_login()

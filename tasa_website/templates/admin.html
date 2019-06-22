@@ -489,6 +489,7 @@
                     </li>
                   {% endfor %}
                   </ul>
+                  <button class="btn btn-primary" href="javascript:void(0);" onclick="deleteAll('/members/delete_all')">Reset general members</button>
               </div>
               <div class="col"></div>
             </div>
@@ -575,6 +576,19 @@ function deleteItem(id, name, endpoint) {
     location.reload();
   }
 }
+function deleteAll(endpoint) {
+  if (confirm('Are you sure you want to do this?')) {
+    if (confirm('Are you really sure?')) {
+      if (confirm('There\'s no turning back. Are you 100% sure?')) {
+        $.ajax({
+          url: endpoint,
+          type: 'DELETE',
+        });
+        location.reload();
+      }
+    }
+  }
+}
 function checkin(id, name, checkins, eventName, eventID) {
   $.ajax({
     url: '/checkin/' + id,
@@ -586,14 +600,17 @@ function checkin(id, name, checkins, eventName, eventID) {
   location.reload();
 }
 function updateNames(eventID) {
+  jQuery.expr[':'].icontains = function(a, i, m) {
+    return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+  };
   if (eventID) {
     searchText = $('#searchbar' + eventID).val();
     $('#memberList' + eventID + ' li').css('display', 'none');
-    $('#memberList' + eventID + ' label:contains(' + searchText + ')').parent().css('display','');
+    $('#memberList' + eventID + ' label:icontains(' + searchText + ')').parent().css('display','');
   } else {
     searchText = $('#searchbarView').val();
     $('#memberListView li').css('display', 'none');
-    $('#memberListView label:contains(' + searchText + ')').parent().css('display','');
+    $('#memberListView label:icontains(' + searchText + ')').parent().css('display','');
   }
 }
 $('#officerModal').on('show.bs.modal', function(e) {
