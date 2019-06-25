@@ -746,8 +746,8 @@ $('#eventStatsModal').on('show.bs.modal', function(e) {
   const eventReturningAttendance = link.data('returning_attendance')
   const modal = $(this);
 
-  percentNewAttendance = (eventAttendance && (eventNewAttendance / eventAttendance * 100)).toFixed(2)
-  percentReturningAttendance = (eventAttendance && (eventReturningAttendance / eventAttendance * 100)).toFixed(2)
+  percentNewAttendance = parseFloat(eventAttendance && (eventNewAttendance / eventAttendance * 100)).toFixed(2)
+  percentReturningAttendance = parseFloat(eventAttendance && (eventReturningAttendance / eventAttendance * 100)).toFixed(2)
 
   modal.find('.modal-title').text('Stats');
   modal.find('#event-stats-modal-attendance').text(eventAttendance + " person(s)");
