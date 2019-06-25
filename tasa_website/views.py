@@ -338,6 +338,7 @@ def update_member(member_id):
 def delete_all_members():
     auth.check_login()
     query_db('delete from members')
+    query_db('delete from event_checkins')
     return "Reset general members"
 
 @app.route('/checkin/<int:member_id>', methods=['POST'])
