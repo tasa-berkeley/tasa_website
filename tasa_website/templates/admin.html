@@ -129,7 +129,13 @@
             </div>
             <div class="form-group">
               <label for="year" class="control-label">Year:</label>
-              <input type="text" name="year" class="form-control" id="member-modal-year"></input>
+              <select name="year" class="form-control" id="member-modal-year">
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="email" class="control-label">Email:</label>
@@ -475,7 +481,13 @@
                     </div>
                     <div class="form-group">
                       <label for="memberYear">Year</label>
-                      <input name=year type="text" class="form-control" id="memberYear" required>
+                      <select name=year class="form-control" id="memberYear" required>
+                        <option value="Freshman" selected>Freshman</option>
+                        <option value="Sophomore">Sophomore</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Senior">Senior</option>
+                        <option value="Other">Other</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label for="memberEmail">Email</label>
