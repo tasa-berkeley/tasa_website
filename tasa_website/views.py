@@ -351,13 +351,28 @@ def update_checkin(member_id):
     )
     query_db(query, (member_id,))
     name = request.form['name']
-    checkins = str(int(request.form['checkins']) + 1)
+    checkins = request.form['checkins']
+    returning = (int(checkins) > 0)
     eventName = request.form['eventName']
     eventID = int(request.form['eventID'])
     query = (
         'insert into event_checkins values (?,?,?,?)'
     )
     query_db(query, (eventID, eventName, member_id, name))
+    if returning:
+        query = (
+            'update events '
+            'set attendance=attendance+1, returning_attendance=returning_attendance+1 '
+            'where id=?'
+        )
+    else:
+        query = (
+            'update events '
+            'set attendance=attendance+1, new_attendance=new_attendance+1 '
+            'where id=?'
+        )
+    query_db(query, (eventID,))
+
     return "Checked in"
 
 @app.route('/about', methods=['GET'])

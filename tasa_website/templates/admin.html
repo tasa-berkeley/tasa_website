@@ -196,6 +196,34 @@
     </div>
   </div>
 
+  <div class="modal fade" id="eventStatsModal" tabindex="-1" role="dialog" aria-labelledby="eventStatsModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="eventStatsModalLabel">Stats</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="attendance" class="control-label">Total Attendance</label>
+            <h6 name="attendance" id="event-stats-modal-attendance"></h6>
+          </div>
+          <div class="form-group">
+            <label for="new-attendance" class="control-label">New Members</label>
+            <h6 name="new-attendance" id="event-stats-modal-new-attendance"></h6>
+          </div>
+          <div class="form-group">
+            <label for="returning-attendance" class="control-label">Returning Members</label>
+            <h6 name="returning-attendance" id="event-stats-modal-returning-attendance"></h6>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% if session.logged_in %}
   <div class="alert alert-info" id="alert" role="alert">
       {% with messages = get_flashed_messages() %}
@@ -346,6 +374,9 @@
                   {% for event in events %}
                     <li>
                       {{ event.title }} &nbsp;
+                      <a href="javascript:void(0);" data-toggle="modal" data-target="#eventStatsModal"
+                          data-attendance='{{ event.attendance }}' data-new_attendance='{{ event.new_attendance }}'
+                          data-returning_attendance='{{ event.returning_attendance }}'>Stats</a>&nbsp;
                       <a href="javascript:void(0);" onclick="deleteItem({{event.id}}, '{{event.title}}', '/events/')">Delete</a>
                     </li>
                   {% endfor %}
@@ -694,6 +725,22 @@ $('#checkinModal').on('show.bs.modal', function(e) {
   modal.find('#checkin-modal-email').text(email);
   modal.find('#checkin-modal-checkins').text(checkins);
   modal.find('#checkin-modal-button').attr('onClick', "checkin(\'" + id + "\',\'" + name + "\',\'" + checkins + "\',\'" + eventName + "\',\'" + eventID + "\')" );
+});
+
+$('#eventStatsModal').on('show.bs.modal', function(e) {
+  const link = $(e.relatedTarget);
+  const eventAttendance = link.data('attendance')
+  const eventNewAttendance = link.data('new_attendance')
+  const eventReturningAttendance = link.data('returning_attendance')
+  const modal = $(this);
+
+  percentNewAttendance = (eventAttendance && (eventNewAttendance / eventAttendance * 100)).toFixed(2)
+  percentReturningAttendance = (eventAttendance && (eventReturningAttendance / eventAttendance * 100)).toFixed(2)
+
+  modal.find('.modal-title').text('Stats');
+  modal.find('#event-stats-modal-attendance').text(eventAttendance + " person(s)");
+  modal.find('#event-stats-modal-new-attendance').text(percentNewAttendance + "%");
+  modal.find('#event-stats-modal-returning-attendance').text(percentReturningAttendance + "%");
 });
 
 </script>
