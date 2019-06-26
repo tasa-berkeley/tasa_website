@@ -530,6 +530,25 @@ h3.event-subheader {
 	margin-top: -1.2em;
 }
 
+.checkin-splash {
+	font-family: 'Yantramanav', sans-serif;
+	display: block;
+	background-position: 0% 40%;
+	background-size: cover;
+	height: 33em;
+	width: 100%;
+	background-image:
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19checkins.JPG");
+	background-image:
+	linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.0),
+		rgba(0, 0, 0, 0.2)
+		),
+	url("../images/fa19checkins.JPG");
+	margin-top: -1.2em;
+}
+
 .donate-splash {
 	font-family: 'Yantramanav', sans-serif;
 	display: block;

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+  {% block content %}
+
+  <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="searchModalLabel">Info</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="checkins" class="control-label">Checkins</label>
+            <h6 name="checkins" id="search-modal-checkins"></h6>
+          </div>
+          <div class="form-group">
+            <label for="events" class="control-label">Events Attended</label>
+            <ul name="events" id="search-modal-events">
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="slide1" class="checkin-splash">
+        <h1 class="head-title noselect">
+          Attendance
+        </h1>
+      </div>
+      <div class="container-fluid">
+        <div class="row row-pad event">
+          <div class="col-md-12 col-pad">
+            <form action='{{ url_for("get_checkins") }}' method=get>
+              <label for='#searchbarView'>Name: </label>&nbsp;
+              <input id='searchbarView' type='text' name='searchbarText'></input>
+              <button href="javascript:void(0);" class="btn btn-primary" type=submit>Search</button>
+            </form>
+            <ul>
+              {% for member in members %}
+              <li>
+                {{ member.name }}&nbsp;
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#searchModal"
+                    data-name="{{member.name}}" data-id="{{member.id}}" data-checkins="{{member.checkins}}"
+                    >View</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+      <script type="text/javascript">
+      $('#searchModal').on('show.bs.modal', function(e) {
+        const link = $(e.relatedTarget);
+        const checkins = link.data('checkins')
+        const memberID = link.data('id')
+        const modal = $(this);
+
+        modal.find('#search-modal-checkins').text(checkins);
+        modal.find('#search-modal-events').empty()
+        {% for event in event_checkins %}
+          if ('{{ event.memberID }}' == memberID) {
+            modal.find('#search-modal-events').append('<li>{{ event.eventName }}</li>')
+          }
+        {% endfor %}
+
+      });
+
+      </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  {% endblock %}

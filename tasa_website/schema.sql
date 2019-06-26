@@ -7,6 +7,9 @@ create table events (
   link text not null,
   image_url text not null,
   unix_time int not null
+  attendance	INTEGER DEFAULT 0,
+	new_attendance	INTEGER DEFAULT 0,
+	returning_attendance	INTEGER DEFAULT 0
 );
 
 drop table if exists officers;

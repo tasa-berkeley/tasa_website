@@ -341,6 +341,18 @@ def delete_all_members():
     query_db('delete from event_checkins')
     return "Reset general members"
 
+@app.route('/checkin', methods=['GET'])
+def get_checkins():
+    search = request.args.get('searchbarText', '')
+    if search:
+        query = 'select * from members where name like ? and findable="yes"'
+        members = query_db(query, ('%' + search + '%',))
+    else:
+        members = []
+    query = 'select * from event_checkins'
+    event_checkins = query_db(query)
+    return render_template('checkins.html', members=members, event_checkins=event_checkins)
+
 @app.route('/checkin/<int:member_id>', methods=['POST'])
 def update_checkin(member_id):
     auth.check_login()
