@@ -110,7 +110,7 @@ def admin_panel():
     files = query_db('select * from files order by id')
     members = query_db('select * from members order by name')
     event_checkins = query_db('select * from event_checkins order by eventID')
-    leaderboard = query_db('select * from members order by checkins desc limit 3')
+    leaderboard = query_db('select * from members order by checkins desc')
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
                         check_valid_checkin=check_valid_checkin, leaderboard=leaderboard)
 
