@@ -356,36 +356,40 @@ def get_checkins():
 @app.route('/checkin/<int:member_id>', methods=['POST'])
 def update_checkin(member_id):
     auth.check_login()
-    query = (
-        'update members '
-        'set checkins=checkins+1 '
-        'where id=?'
-    )
-    query_db(query, (member_id,))
+
     name = request.form['name']
     checkins = request.form['checkins']
     returning = (int(checkins) > 0)
     eventName = request.form['eventName']
     eventID = int(request.form['eventID'])
-    query = (
-        'insert into event_checkins values (?,?,?,?)'
-    )
-    query_db(query, (eventID, eventName, member_id, name))
-    if returning:
+    if check_valid_checkin(eventID, member_id):
         query = (
-            'update events '
-            'set attendance=attendance+1, returning_attendance=returning_attendance+1 '
+            'update members '
+            'set checkins=checkins+1 '
             'where id=?'
         )
-    else:
-        query = (
-            'update events '
-            'set attendance=attendance+1, new_attendance=new_attendance+1 '
-            'where id=?'
-        )
-    query_db(query, (eventID,))
+        query_db(query, (member_id,))
 
-    return "Checked in"
+        query = (
+            'insert into event_checkins values (?,?,?,?)'
+        )
+        query_db(query, (eventID, eventName, member_id, name))
+        if returning:
+            query = (
+                'update events '
+                'set attendance=attendance+1, returning_attendance=returning_attendance+1 '
+                'where id=?'
+            )
+        else:
+            query = (
+                'update events '
+                'set attendance=attendance+1, new_attendance=new_attendance+1 '
+                'where id=?'
+            )
+        query_db(query, (eventID,))
+
+        return "Checked in"
+    return "Already checked in for this event"
 
 @app.route('/about', methods=['GET'])
 def about():
