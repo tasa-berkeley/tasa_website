@@ -28,14 +28,14 @@ html {
 
 .secondSplash {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/fa19v2home1.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/fa19v2home1.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.5)
 		),
-	url("../images/fa19v2home1.jpg");
+	url("../images/fa19v2home1.JPG");
 	font-family: 'Yantramanav', sans-serif;
 	background-position: 47% 35%;
 	display: block;
@@ -45,14 +45,14 @@ html {
 
 .thirdSplash {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2home2.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2home2.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2home2.jpg");
+	url("../images/fa19v2home2.JPG");
 	font-family: 'Yantramanav', sans-serif;
 	-webkit-background-position: 47% 35%;
 	background-position: 47% 35%;
@@ -381,14 +381,14 @@ html {
 
 .about-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/fa19v2about.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/fa19v2about.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.1)
 		),
-	url("../images/fa19v2about.jpg");
+	url("../images/fa19v2about.JPG");
 	height: 33em;
 	background-size: cover;
 	width: 100%;
@@ -400,14 +400,14 @@ html {
 
 .family-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/fa19v2families.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/fa19v2families.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.4)
 		),
-	url("../images/fa19v2families.JPG");
+	url("../images/fa19v2families.jpg");
 	height: 33em;
 	margin-top: -1.2em;
 	background-size: cover;
@@ -427,7 +427,7 @@ html {
 }
 
 .eventSplash {
-	background-image: url("../images/fa19v2events.jpg");
+	background-image: url("../images/fa19v2events.JPG")
 	font-family: 'Yantramanav', sans-serif;
 	display: block;
 	background-position: 0% 30%;
@@ -439,14 +439,14 @@ html {
 
 .darken-event {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/fa19v2events.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/fa19v2events.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.3)
 		),
-	url("../images/fa19v2events.jpg");
+	url("../images/fa19v2events.JPG");
 }
 
 
@@ -501,14 +501,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2officers.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2officers.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2officers.jpg");
+	url("../images/fa19v2officers.JPG");
 }
 
 .files-splash {
@@ -519,14 +519,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2files.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2files.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2files.JPG");
+	url("../images/fa19v2files.jpg");
 	margin-top: -1.2em;
 }
 
