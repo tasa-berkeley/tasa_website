@@ -83,11 +83,18 @@ def add_event():
         image_url, image_path = helpers.create_file_paths(IMAGE_FOLDER, file_name)
         image.save(image_path, format='JPEG', quality=95, optimize=True, progressive=True)
 
-        query = 'insert into events (title, time, location, link, image_url, unix_time)'\
-                'values (?, ?, ?, ?, ?, ?)'
+        exists_query = 'SELECT * FROM events WHERE link = ?'
+        event = query_db(exists_query, [url])
+        if event is None:
+            query = 'INSERT INTO events (title, time, location, link, image_url, unix_time)'\
+                    'VALUES (?, ?, ?, ?, ?, ?)'
+            query_db(query, [title, time_str, location, url ,image_url, unix_time])
+            flash("New event was successfully posted.")
+        else:
+            query = 'UPDATE events SET title = ?, time = ?, location = ?, image_url = ?, unix_time = ? WHERE link = ?'
+            query_db(query, [title, time_str, location, image_url, unix_time, url])
+            flash("Event successfully updated.")
 
-        query_db(query, [title, time_str, location, url, image_url, unix_time])
-        flash('New event was successfully posted')
         return redirect(url_for('admin_panel'))
     except Exception as e:
         flash('Exception: ' + str(e))
@@ -99,7 +106,6 @@ def delete_event(event_id):
     query = 'delete from events where id = ?'
     query_db(query, (event_id,))
     return 'Deleted event'
-
 
 @app.route('/admin', methods=['GET'])
 def admin_panel():
