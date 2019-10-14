@@ -269,14 +269,14 @@
             <div class="row welcome">
               <div class="col"></div>
               <div class="col">
-                <h2>Add an event</h2>
+                <h2>Add or update an event</h2>
                 <p>Enter a Facebook event url, e.g. https://facebook.com/events/123456/</p>
                 <form action="{{ url_for('add_event') }}" method=post class=add-event>
                   <div class="form-group">
                     <label for="eventLink">Link</label>
                     <input name=link type="text" class="form-control" id="eventLink">
                   </div>
-                  <button class="btn btn-primary" type=submit>Add Event</button>
+                  <button class="btn btn-primary" type=submit>Add/Update Event</button>
                 </form>
               </div>
               <div class="col"></div>
