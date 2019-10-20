@@ -84,7 +84,7 @@ def add_event():
         image.save(image_path, format='JPEG', quality=95, optimize=True, progressive=True)
 
         exists_query = 'SELECT * FROM events WHERE link = ?'
-        event = query_db(exists_query, [url])
+        event = query_db(exists_query, [url], True)
         if event is None:
             query = 'INSERT INTO events (title, time, location, link, image_url, unix_time)'\
                     'VALUES (?, ?, ?, ?, ?, ?)'
