@@ -8,6 +8,9 @@ import sqlite3
 import time
 import urllib
 import yaml
+import collections
+import StringIO
+import csv
 
 from flask import Flask
 from flask import flash
@@ -15,6 +18,7 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
+from flask import make_response
 
 import auth
 import fb_events
@@ -347,6 +351,30 @@ def delete_all_members():
     query_db('delete from event_checkins')
     return "Reset general members"
 
+@app.route('/members/download', methods=['GET'])
+def download_checkin_info():
+    auth.check_login()
+    query = 'SELECT e.eventName, m.name FROM event_checkins as e, members as m WHERE m.id = e.memberID'
+    lst = query_db(query)
+    event_dict = collections.defaultdict(list)
+    member_dict = collections.defaultdict(list)
+    for entry in lst:
+        event_dict[entry[0]].append(entry[1])
+        member_dict[entry[1]].append(entry[0])
+    event_csv = []
+    member_csv = []
+    for k,v in event_dict.items():
+        event_csv.append([[k] + v])
+    for k,v in member_dict.items():
+        member_csv.append([[k] + v])
+    si = StringIO.StringIO()
+    cw = csv.writer(si)
+    cw.writerows(event_csv)
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
+
 @app.route('/checkin', methods=['GET'])
 def get_checkins():
     search = request.args.get('searchbarText', '')
@@ -418,3 +446,4 @@ def check_valid_checkin(eventID, memberID):
     query = 'select * from event_checkins where eventID=? and memberID=?'
     checkins = query_db(query, (eventID, memberID))
     return len(checkins) == 0
+

@@ -533,6 +533,7 @@
                   {% endfor %}
                   </ul>
                   <button class="btn btn-primary" href="javascript:void(0);" onclick="deleteAll('/members/delete_all')">Reset general members</button>
+                  <button class="btn btn-primary" href="javascript:void(0);" onclick="downloadCheckinInfo('/members/download')">Download Checkin Info</button>
               </div>
               <div class="col"></div>
             </div>
@@ -618,6 +619,12 @@ function deleteItem(id, name, endpoint) {
     });
     location.reload();
   }
+}
+function downloadCheckinInfo(endpoint) {
+  $.ajax({
+    url:endpoint,
+    type: 'GET'
+  });
 }
 function deleteAll(endpoint) {
   if (confirm('Are you sure you want to do this?')) {
