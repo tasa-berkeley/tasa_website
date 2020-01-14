@@ -9,8 +9,9 @@ import time
 import urllib
 import yaml
 import collections
-import StringIO
+import io
 import csv
+import zipfile
 
 from flask import Flask
 from flask import flash
@@ -18,7 +19,8 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
-from flask import make_response
+from flask import Response
+from flask import send_file
 
 import auth
 import fb_events
@@ -361,19 +363,38 @@ def download_checkin_info():
     for entry in lst:
         event_dict[entry[0]].append(entry[1])
         member_dict[entry[1]].append(entry[0])
-    event_csv = []
-    member_csv = []
+    
+    event_lst = []
+    member_lst = []
     for k,v in event_dict.items():
-        event_csv.append([[k] + v])
+        event_lst.append([k] + v)
     for k,v in member_dict.items():
-        member_csv.append([[k] + v])
-    si = StringIO.StringIO()
-    cw = csv.writer(si)
-    cw.writerows(event_csv)
-    output = make_response(si.getvalue())
-    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
-    output.headers["Content-type"] = "text/csv"
-    return output
+        member_lst.append([k] + v)
+    
+    event_csv_string = []
+    member_csv_string = []
+    for csvLine in event_lst:
+        event_csv_string += [",".join(csvLine)]
+
+    for csvLine in member_lst:
+        member_csv_string += [",".join(csvLine)]
+
+    event_csv_string = "\n".join(event_csv_string)
+    member_csv_string = "\n".join(member_csv_string)
+    
+    memory_file = io.BytesIO()
+    with zipfile.ZipFile(memory_file, 'w') as zf:
+        data = zipfile.ZipInfo('membersperevent.csv')
+        data.date_time = time.localtime(time.time())[:6]
+        data.compress_type = zipfile.ZIP_DEFLATED
+        zf.writestr(data, event_csv_string)
+
+        data = zipfile.ZipInfo('eventspermember.csv')
+        data.date_time = time.localtime(time.time())[:6]
+        data.compress_type = zipfile.ZIP_DEFLATED
+        zf.writestr(data, member_csv_string)
+    memory_file.seek(0)
+    return send_file(memory_file, attachment_filename='checkins.zip', as_attachment=True)
 
 @app.route('/checkin', methods=['GET'])
 def get_checkins():
