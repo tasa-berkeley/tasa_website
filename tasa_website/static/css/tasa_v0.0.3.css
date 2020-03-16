@@ -28,14 +28,14 @@ html {
 
 .secondSplash {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/fa19v2home1.JPG");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/sp20v1home1.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.5)
 		),
-	url("../images/fa19v2home1.JPG");
+	url("../images/sp20v1home1.jpg");
 	font-family: 'Yantramanav', sans-serif;
 	background-position: 47% 35%;
 	display: block;
@@ -45,14 +45,14 @@ html {
 
 .thirdSplash {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2home2.JPG");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1home2.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2home2.JPG");
+	url("../images/sp20v1home2.jpg");
 	font-family: 'Yantramanav', sans-serif;
 	-webkit-background-position: 47% 35%;
 	background-position: 47% 35%;
@@ -381,14 +381,14 @@ html {
 
 .about-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/fa19v2about.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/sp20v1about.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.1)
 		),
-	url("../images/fa19v2about.JPG");
+	url("../images/sp20v1about.jpg");
 	height: 33em;
 	background-size: cover;
 	width: 100%;
@@ -400,14 +400,14 @@ html {
 
 .family-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/fa19v2families.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/sp20v1families.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.4)
 		),
-	url("../images/fa19v2families.jpg");
+	url("../images/sp20v1families.jpg");
 	height: 33em;
 	margin-top: -1.2em;
 	background-size: cover;
@@ -427,7 +427,7 @@ html {
 }
 
 .eventSplash {
-	background-image: url("../images/fa19v2events.JPG")
+	background-image: url("../images/sp20v1events.jpg")
 	font-family: 'Yantramanav', sans-serif;
 	display: block;
 	background-position: 0% 30%;
@@ -439,14 +439,14 @@ html {
 
 .darken-event {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/fa19v2events.JPG");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/sp20v1events.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.3)
 		),
-	url("../images/fa19v2events.JPG");
+	url("../images/sp20v1events.jpg");
 }
 
 
@@ -501,14 +501,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2officers.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1officers.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2officers.JPG");
+	url("../images/sp20v1officers.jpg");
 }
 
 .files-splash {
@@ -519,14 +519,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2files.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1files.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2files.jpg");
+	url("../images/sp20v1files.JPG");
 	margin-top: -1.2em;
 }
 
@@ -538,14 +538,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2checkin.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1checkin.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2checkin.JPG");
+	url("../images/sp20v1checkin.jpg");
 	margin-top: -1.2em;
 }
 
@@ -557,14 +557,14 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa19v2donate.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1donate.JPG");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa19v2donate.jpg");
+	url("../images/sp20v1donate.JPG");
 	margin-top: -1.2em;
 }
 
