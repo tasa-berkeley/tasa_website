@@ -519,7 +519,7 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1files.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1files.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
@@ -557,7 +557,7 @@ h3.event-subheader {
 	height: 33em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1donate.JPG");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1donate.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
