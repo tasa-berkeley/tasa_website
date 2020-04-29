@@ -39,11 +39,10 @@ from . import query_db
 @app.route('/')
 def index():
     events = query_db('select title, time, location, link, image_url, unix_time from events order by unix_time desc')
-    upcoming_events = list(filter(lambda e: e['unix_time'] > int(time.time()), events))
+    upcoming_events = events[:3]
     if len(upcoming_events) == 0:
         return render_template('show_latest_event.html')
-    upcoming_events.sort(key=lambda e: e['unix_time'])
-    return render_template('show_latest_event.html', event=upcoming_events[0])
+    return render_template('show_latest_event.html', events=upcoming_events)
 
 @app.route('/events', methods=['GET'])
 def event_list():
