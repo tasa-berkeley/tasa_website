@@ -22,9 +22,9 @@ from flask import url_for
 from flask import Response
 from flask import send_file
 
-import auth
-import fb_events
-import helpers
+from tasa_website import auth
+from tasa_website import fb_events
+from tasa_website import helpers
 
 from . import app
 from . import FAMILY_IMAGE_FOLDER
@@ -39,7 +39,7 @@ from . import query_db
 @app.route('/')
 def index():
     events = query_db('select title, time, location, link, image_url, unix_time from events order by unix_time desc')
-    upcoming_events = filter(lambda e: e['unix_time'] > int(time.time()), events)
+    upcoming_events = list(filter(lambda e: e['unix_time'] > int(time.time()), events))
     if len(upcoming_events) == 0:
         return render_template('show_latest_event.html')
     upcoming_events.sort(key=lambda e: e['unix_time'])

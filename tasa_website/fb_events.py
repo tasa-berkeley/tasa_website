@@ -1,4 +1,4 @@
-import cStringIO
+from io import StringIO
 import requests
 import urllib
 
@@ -22,6 +22,6 @@ def get_cover_photo(event_id):
     }).json()
     image_url = res['cover']['source']
     image_data =  urllib.urlopen(image_url)
-    image_file = cStringIO.StringIO(image_data.read())
+    image_file = io.StringIO(image_data.read())
     image = Image.open(image_file)
     return image
