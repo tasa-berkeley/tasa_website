@@ -16,7 +16,7 @@
 
   <link rel="icon" type="image/ico" href="https://tasa.berkeley.edu/images/assets/favicon.ico"/>
   <!-- Bootstrap -->
-  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Yantramanav:300' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
   <!-- Tasa custom CSS -->
@@ -42,34 +42,25 @@
     <!-- End Google Analytics -->
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse noselect">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="/">Home</a></li>
-              <li class="active"><a href="/about">About</a></li>
-              <li class="active"><a href="/events">Events</a></li>
-              <li class="active"><a href="/officers">Officers</a></li>
-              <li class="active"><a href="/families">Families</a></li>
-              <li class="active"><a href="/files">Files</a></li>
-              <li class="active"><a href="/donate">Donate</a></li>
-              <li class="active"><a href="/checkin">Check-in</a></li>
+        <nav class="navbar navbar-expand sticky-top">
+        <div class="container-fluid justify-content-end">
+            <ul class="nav">
+              <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/events">Events</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/officers">Officers</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/families">Families</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/files">Files</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/donate">Donate</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/checkin">Check-in</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
         </div>
       </nav>
       {% block content %}{% endblock %}
                     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/skrollr/0.6.30/skrollr.min.js"></script>
             <script type="text/javascript">
               if(!(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)){

@@ -19,11 +19,19 @@ html {
 	opacity: .8;
 }
 
-.navbar-right {
+
+.nav li a {
+	color:white;
 }
 
-.nav.navbar-nav.navbar-right li a {
-	color:white;
+
+.nav > li > a:hover {
+  color: #A9A9A9;
+  text-decoration: none;
+  background-color: #000000;
+  -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+     -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+          box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
 }
 
 .secondSplash {
@@ -395,7 +403,6 @@ html {
 	vertical-align: top;
 	font-family: 'Yantramanav', sans-serif;
 	display: block;
-	margin-top: -1.2em;
 }
 
 .family-splash {
@@ -409,7 +416,6 @@ html {
 		),
 	url("../images/sp20v1families.jpg");
 	height: 33em;
-	margin-top: -1.2em;
 	background-size: cover;
 	width: 100%;
 	vertical-align: top;
@@ -434,7 +440,7 @@ html {
 	background-size: cover;
 	height: 33em;
 	width: 100%;
-	margin-top: -1.2em;
+	position: relative;
 }
 
 .darken-event {
@@ -527,7 +533,6 @@ h3.event-subheader {
 		rgba(0, 0, 0, 0.2)
 		),
 	url("../images/sp20v1files.jpg");
-	margin-top: -1.2em;
 }
 
 .checkin-splash {
@@ -546,7 +551,6 @@ h3.event-subheader {
 		rgba(0, 0, 0, 0.2)
 		),
 	url("../images/sp20v1checkin.jpg");
-	margin-top: -1.2em;
 }
 
 .donate-splash {
@@ -565,7 +569,6 @@ h3.event-subheader {
 		rgba(0, 0, 0, 0.2)
 		),
 	url("../images/sp20v1donate.jpg");
-	margin-top: -1.2em;
 }
 
 .officer-title {
@@ -725,17 +728,6 @@ h3.event-subheader {
 
 }
 
-.navbar .nav > .active > a,
-.navbar .nav > .active > a:hover,
-.navbar .nav > .active > a:focus {
-  color: #A9A9A9;
-  text-decoration: none;
-  background-color: #000000;
-  -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
-     -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
-          box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
-}
-
 .parallax-image-wrapper {
 	position:fixed;
 	left:0;
@@ -756,46 +748,6 @@ h3.event-subheader {
 /** {
   outline: 1px red solid;
 }*/
-
-.family1 {
-	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.3)), url("../images/taibae.jpg");
-	background-image:
-	linear-gradient(
-		to bottom,
-		rgba(0, 0, 0, 0.0),
-		rgba(0, 0, 0, 0.3)
-		),
-	url("../images/taibae.jpg");
-	background-position: 11% 0%;
-	font-family: 'Yantramanav', sans-serif;
-	display: block;
-	background-size: cover;
-	height: 27em;
-	border-style: solid;
-	border-width: .4em;
-	border-color: #DDDDDD;
-}
-
-.family2 {
-	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.3)), url("../images/tailol.jpg");
-	background-image:
-	linear-gradient(
-		to bottom,
-		rgba(0, 0, 0, 0.0),
-		rgba(0, 0, 0, 0.3)
-		),
-	url("../images/tailol.jpg");
-	background-position: 50% 30%;
-	font-family: 'Yantramanav', sans-serif;
-	display: block;
-	background-size: cover;
-	height: 27em;
-	border-style: solid;
-	border-width: .4em;
-	border-color: #DDDDDD;
-}
 
 .officer-member-container {
     min-height: 300px;
@@ -870,3 +822,5 @@ h3.event-subheader {
 p.file-text {
 	font-size: 1.5em;
 }
+
+
