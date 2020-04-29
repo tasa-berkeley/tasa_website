@@ -42,8 +42,14 @@
     <!-- End Google Analytics -->
     </head>
     <body>
-        <nav class="navbar navbar-expand sticky-top">
-        <div class="container-fluid justify-content-end">
+        <nav class="navbar navbar-expand-sm navbar-dark">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div id="collapsable" class="navbar-collapse collapse justify-content-end">
             <ul class="nav">
               <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
               <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
@@ -54,8 +60,9 @@
               <li class="nav-item"><a class="nav-link active" href="/donate">Donate</a></li>
               <li class="nav-item"><a class="nav-link active" href="/checkin">Check-in</a></li>
             </ul>
+          </div>
         </div>
-      </nav>
+        </nav>
       {% block content %}{% endblock %}
                     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
