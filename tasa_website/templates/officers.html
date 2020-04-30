@@ -17,24 +17,22 @@
                 <span class="year">{{ officer.year }}</span>
             </div>
         </div>
+        <div class="modal fade" id="officer_{{officer.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{officer.name}}</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="officer-picture-modal" src="{{ officer.image_url }}"></img>
+                        <p class="quote">{{officer.quote}}</p>
+                        <p class="officer-desc">{{officer.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
-{% for officer in officers %}
-<div class="modal fade" id="officer_{{officer.id}}" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{officer.name}}</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <img class="officer-picture-modal" src="{{ officer.image_url }}"></img>
-                <p class="quote">{{officer.quote}}</p>
-                <p class="officer-desc">{{officer.description}}</p>
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
 {% endblock %}
