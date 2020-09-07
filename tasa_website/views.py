@@ -105,7 +105,7 @@ def add_event():
 
         return redirect(url_for('admin_panel'))
     except Exception as e:
-        print(e)
+        flash('Exception: ' + str(e))
         return redirect(url_for('admin_panel'))
 
 @app.route('/events/<int:event_id>', methods=['DELETE'])
