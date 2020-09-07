@@ -75,12 +75,15 @@ def add_event():
 
         res = fb_events.get_event(fb_event_id)
         title = res['name']
-        location = res.get('place', {'name': ''})['name']
+        if res['is_online']:
+            location = "Online"
+        else:
+            location = res.get('place', {'name': ''})['name']
 
         time_str, unix_time = helpers.convert_time(res['start_time'])
 
-        # another GET to get the cover photo
-        image = fb_events.get_cover_photo(fb_event_id)
+        # get cover photo
+        image = fb_events.get_cover_photo(res)
         # just resave it as a jpg
         image_ext = '.jpg'
 
@@ -102,7 +105,7 @@ def add_event():
 
         return redirect(url_for('admin_panel'))
     except Exception as e:
-        flash('Exception: ' + str(e))
+        print(e)
         return redirect(url_for('admin_panel'))
 
 @app.route('/events/<int:event_id>', methods=['DELETE'])
@@ -466,4 +469,6 @@ def check_valid_checkin(eventID, memberID):
     query = 'select * from event_checkins where eventID=? and memberID=?'
     checkins = query_db(query, (eventID, memberID))
     return len(checkins) == 0
+
+
 
