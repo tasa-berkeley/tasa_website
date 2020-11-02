@@ -230,6 +230,26 @@
     </div>
   </div>
 
+  <!-- <div class="modal fade" id="lateJarModal" tabindex="-1" role="dialog" aria-labelledby="lateJarModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="lateJarModalLabel">Stats</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="latejar" class="control-label">Late Jar</label>
+            <h6 name="latejar" id="late-jar-modal-name"></h6>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
 {% if session.logged_in %}
   <div class="alert alert-info" id="alert" role="alert">
       {% with messages = get_flashed_messages() %}
@@ -260,6 +280,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#chooseLateJar">Choose Late Jar</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
         </ul>
@@ -600,6 +621,32 @@
                     </li>
                   {% endfor %}
                 </ol>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="chooseLateJar" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Roll a Late Jar</h2>
+                <form action="{{ url_for('rollLateJar') }}" method=post enctype=multipart/form-data>
+                  <div class="form-group">
+                    <label for="radio-buttons">Type of late jar</label>
+                    <div class="radio-buttons">
+                      <div>
+                        <label for="easy">Easy</label>
+                        <input name=level type="radio" id="easy" value="easy" checked>
+                      </div>
+                      <div>
+                        <label for="hard">Hard</label>
+                        <input name=level type="radio" id="hard" value="hard">
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar</button>
+                </form>
               </div>
               <div class="col"></div>
             </div>

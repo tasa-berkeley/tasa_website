@@ -128,6 +128,40 @@ def admin_panel():
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
                         check_valid_checkin=check_valid_checkin, leaderboard=leaderboard)
 
+@app.route('/admin', methods=['POST'])
+def rollLateJar():
+    auth.check_login()
+
+    easyLateJars = ["Change your pfp to your first one for at least 3 days",
+                    "Chug a bottle (20 FL oz) of water",
+                    "Dance to https://www.youtube.com/watch?v=qqmmc7pl9Do",
+                    "Everyone comment on your first pfp",
+                    "Get your co to auction you (like SAD) on our FB page",
+                    "Instagram live yourself for like at least 10 minutes (and tell cab beforehand when you'll do it)",
+                    "Let Andrew/Alex/Daniel/Will caption your next TASA profile pic",
+                    "Let your co choose your zoom background for a day (must be appropriate)",
+                    "Make a lookbook with 5 outfits -- commentary required",
+                    "Make a post and compliment every single cabinet member",
+                    "Lipsync a music video (low quality, 2 minutes)",
+                    "Watch an anime episode with Tiff OR kdrama with steph",]
+    hardLateJars = ["Make 5 tik toks (and share username on a social media platform of your choice)",
+                    "Act a scene from a movie or drama",
+                    "Play Jeffrey or Nick in a game of chess",
+                    "Post a FANFICTION on wattpad and link it in FB group and UCBMFET",
+                    "Post at least 1 short vlog a day for a week on the cabinet page",
+                    "Recreate the current #1 tiktok",
+                    "Send a meme to everyone on cabinet that you think they'd like",
+                    "Book club with daniel :)",
+                    "Time lapse yourself doing a chloe ting workout",
+                    "Make a video of yourself doing an impression of everyone on cab and upload to facebook group"]
+
+    if request.form['level'] == 'easy':
+        flash(random.choice(easyLateJars))
+        return redirect(url_for('admin_panel'))
+    else:
+        flash(random.choice(hardLateJars))
+        return redirect(url_for('admin_panel'))
+
 @app.route('/officers', methods=['GET'])
 def officer_list():
     query = 'select * from officers order by position'
