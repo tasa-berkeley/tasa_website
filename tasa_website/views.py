@@ -130,6 +130,7 @@ def admin_panel():
 
 @app.route('/admin', methods=['POST'])
 def rollLateJar():
+    """Return a random easy or hard late jar."""
     auth.check_login()
 
     easyLateJars = ["Change your pfp to your first one for at least 3 days",
