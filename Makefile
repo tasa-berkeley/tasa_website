@@ -4,7 +4,7 @@ run: venv
 
 .PHONY: venv
 venv: requirements.txt
-	virtualenv venv
+	virtualenv -p python3 venv
 	venv/bin/pip install -r requirements.txt
 
 
