@@ -842,3 +842,19 @@ background-color: transparent;
 border: 1px solid transparent;
 border-radius: .25rem;
 }
+
+.googleCalendar{
+	position: relative;
+	height: 0;
+	width: 50%;
+	padding-bottom: 50%;
+  }
+  
+  .googleCalendar iframe{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+  }
+  
