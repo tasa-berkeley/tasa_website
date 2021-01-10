@@ -846,12 +846,12 @@ border-radius: .25rem;
 .googleCalendar{
 	position: relative;
 	height: 0;
-	padding-bottom: 75%;
+	padding-bottom: 50%;
 	overflow: hidden;
   }
   
   .googleCalendar iframe{
-	width: 75%;
+	width: 80%;
 	margin-left: auto; 
 	margin-right: auto;
   } 
