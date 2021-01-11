@@ -843,7 +843,7 @@ border: 1px solid transparent;
 border-radius: .25rem;
 }
 
-.googleCalendar{
+/* .googleCalendar{
 	position: relative;
 	height: 0;
 	padding-bottom: 45%;
@@ -854,4 +854,20 @@ border-radius: .25rem;
 	width: 80%;
 	margin-left: auto; 
 	margin-right: auto;
-  } 
+  } */
+
+  .googleCalendar {
+		position: relative;
+		padding-bottom: 40%;
+		height: 0;
+		overflow: hidden;
+	}
+	 
+	.googleCalendar iframe {
+		/* position: relative; */
+		top:0;
+		left: 0;
+		width: 70%;
+		margin-left: auto;
+		margin-right: auto;
+	}
