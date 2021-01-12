@@ -17,21 +17,25 @@ ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'gif', 'png', 'pdf', 'doc', 'docx'])
 
 POSITIONS = [
     'President',
-    'Internal Vice President',
     'External Vice President',
+    'Internal Vice President',
     'Treasurer',
     'Webmaster',
     'Outreach',
-    'Public Relations',
+    # 'Public Relations',
+    'Design',
+    'Marketing',
     'Family Head',
     'Historian',
     'Senior Advisor',
     'Family Head Intern',
     'Historian Intern',
-    'Public Relations Intern',
+    # 'Public Relations Intern',
     'Outreach Intern',
     'Treasurer Intern',
     'Webmaster Intern',
+    'Design Intern',
+    'Marketing Intern'
 ]
 
 IMAGE_MAXSIZE = (1024, 1024)
