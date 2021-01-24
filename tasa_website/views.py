@@ -164,10 +164,10 @@ def rollLateJar():
 
     if request.form['level'] == 'easy':
         flash(random.choice(easyLateJars))
-        #return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_panel'))
     else:
         flash(random.choice(hardLateJars))
-        #return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_panel'))
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
