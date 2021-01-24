@@ -134,34 +134,40 @@ def rollLateJar():
     auth.check_login()
 
     easyLateJars = ["Change your pfp to your first one for at least 3 days",
-                    "Chug a bottle (20 FL oz) of water",
                     "Dance to https://www.youtube.com/watch?v=qqmmc7pl9Do",
                     "Everyone comment on your first pfp",
-                    "Get your co to auction you (like SAD) on our FB page",
                     "Instagram live yourself for like at least 10 minutes (and tell cab beforehand when you'll do it)",
-                    "Let Andrew/Alex/Daniel/Will caption your next TASA profile pic",
+                    "Let Andrew/Daniel/Avery caption your next TASA profile pic",
                     "Let your co choose your zoom background for a day (must be appropriate)",
                     "Make a lookbook with 5 outfits -- commentary required",
                     "Make a post and compliment every single cabinet member",
                     "Lipsync a music video (low quality, 2 minutes)",
-                    "Watch an anime episode with Tiff OR kdrama with steph",]
+                    "Watch an anime episode with Tiff OR kdrama with steph OR loona vids with brandon and ash",
+                    "take over the tabling hour shifts of a cabinet member of your choice",
+                    "paint your nails a color of the exec's choice using nail polish / marker",
+                    "Play Jeffrey or Nick or Marg's brother in a game of chess",
+                    "watch shanie's twitch stream for minimum 20 mins and be active in chat",
+                    "change zoom profile pic to picture of exec's choice for a week",
+                    "be vanessa's hype man for a day",
+                    "coffee chat with andrew",
+                    "take a shot of anything with terrance/will"]
     hardLateJars = ["Make 5 tik toks (and share username on a social media platform of your choice)",
                     "Act a scene from a movie or drama",
-                    "Play Jeffrey or Nick in a game of chess",
-                    "Post a FANFICTION on wattpad and link it in FB group and UCBMFET",
+                    "Write a FANFICTION and post it in Cabinet FB group",
                     "Post at least 1 short vlog a day for a week on the cabinet page",
-                    "Recreate the current #1 tiktok",
+                    "Recreate https://www.facebook.com/groups/1343933772408499/permalink/2750477481754114",
                     "Send a meme to everyone on cabinet that you think they'd like",
-                    "Book club with daniel :)",
-                    "Time lapse yourself doing a chloe ting workout",
-                    "Make a video of yourself doing an impression of everyone on cab and upload to facebook group"]
+                    "time lapse yourself doing a chloe ting/emi wong/blogilates workout (10 minutes minimum)",
+                    "Make a video of yourself doing an impression of everyone on cab and upload to facebook group",
+                    "workout with terrance over zoom (min 10 mins)",
+                    "record yourself rapping 8 bars about anything (must be written by you)"]
 
     if request.form['level'] == 'easy':
         flash(random.choice(easyLateJars))
-        return redirect(url_for('admin_panel'))
+        #return redirect(url_for('admin_panel'))
     else:
         flash(random.choice(hardLateJars))
-        return redirect(url_for('admin_panel'))
+        #return redirect(url_for('admin_panel'))
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
