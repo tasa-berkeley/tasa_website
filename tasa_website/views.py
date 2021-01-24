@@ -497,6 +497,10 @@ def about():
 def donate():
     return render_template('donate.html')
 
+@app.route('/contact', methods=['GET'])
+def contact():
+    return render_template('contact.html')
+
 @app.context_processor
 def processor():
 
