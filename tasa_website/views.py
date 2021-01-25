@@ -163,6 +163,18 @@ def rollLateJar():
                     "Record yourself rapping 8 bars about anything (must be written by you)"]
 
     rolledLateJars = ""
+    """
+    choices = None
+    if request.form['level'] == 'easy':
+        choices = easyLateJars
+    else:
+        choices = hardLateJars
+    rolledLateJars = ""
+    for i in range(int(request.form['quantity'])):
+        currentNum = str(i+1)
+        rolledLateJars += "(" + currentNum + ") " + random.choice(easyLateJars) + "n"
+    flash(rolledLateJars)
+    """
     if request.form['level'] == 'easy':
         if int(request.form['quantity']) > 1:
             for x in range(1, int(request.form['quantity']) + 1):
