@@ -162,8 +162,6 @@ def rollLateJar():
                     "Workout with terrance over zoom (min 10 mins)",
                     "Record yourself rapping 8 bars about anything (must be written by you)"]
 
-    rolledLateJars = ""
-    """
     choices = None
     if request.form['level'] == 'easy':
         choices = easyLateJars
@@ -172,25 +170,8 @@ def rollLateJar():
     rolledLateJars = ""
     for i in range(int(request.form['quantity'])):
         currentNum = str(i+1)
-        rolledLateJars += "(" + currentNum + ") " + random.choice(easyLateJars) + "n"
+        rolledLateJars += "(" + currentNum + ") " + random.choice(choices) + "\n"
     flash(rolledLateJars)
-    """
-    if request.form['level'] == 'easy':
-        if int(request.form['quantity']) > 1:
-            for x in range(1, int(request.form['quantity']) + 1):
-                currentNum = str(x)
-                rolledLateJars += "(" + currentNum + ") " + random.choice(easyLateJars) + "\n"
-            flash(rolledLateJars)
-        else:
-            flash(random.choice(easyLateJars))
-    else:
-        if int(request.form['quantity']) > 1:
-            for x in range(1, int(request.form['quantity']) + 1):
-                currentNum = str(x)
-                rolledLateJars += "(" + currentNum + ") " + random.choice(hardLateJars) + "\n"
-            flash(rolledLateJars)
-        else:
-            flash(random.choice(hardLateJars))
             
     return redirect(url_for('admin_panel'))
 
