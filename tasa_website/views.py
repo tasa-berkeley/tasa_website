@@ -143,31 +143,45 @@ def rollLateJar():
                     "Make a post and compliment every single cabinet member",
                     "Lipsync a music video (low quality, 2 minutes)",
                     "Watch an anime episode with Tiff OR kdrama with steph OR loona vids with brandon and ash",
-                    "take over the tabling hour shifts of a cabinet member of your choice",
-                    "paint your nails a color of the exec's choice using nail polish / marker",
+                    "Take over the tabling hour shifts of a cabinet member of your choice",
+                    "Paint your nails a color of the exec's choice using nail polish / marker",
                     "Play Jeffrey or Nick or Marg's brother in a game of chess",
-                    "watch shanie's twitch stream for minimum 20 mins and be active in chat",
-                    "change zoom profile pic to picture of exec's choice for a week",
-                    "be vanessa's hype man for a day",
-                    "coffee chat with andrew",
-                    "take a shot of anything with terrance/will"]
+                    "Watch shanie's twitch stream for minimum 20 mins and be active in chat",
+                    "Change zoom profile pic to picture of exec's choice for a week",
+                    "Be vanessa's hype man for a day",
+                    "Coffee chat with andrew",
+                    "Take a shot of anything with terrance/will"]
     hardLateJars = ["Make 5 tik toks (and share username on a social media platform of your choice)",
                     "Act a scene from a movie or drama",
                     "Write a FANFICTION and post it in Cabinet FB group",
                     "Post at least 1 short vlog a day for a week on the cabinet page",
                     "Recreate https://www.facebook.com/groups/1343933772408499/permalink/2750477481754114",
                     "Send a meme to everyone on cabinet that you think they'd like",
-                    "time lapse yourself doing a chloe ting/emi wong/blogilates workout (10 minutes minimum)",
+                    "Time lapse yourself doing a chloe ting/emi wong/blogilates workout (10 minutes minimum)",
                     "Make a video of yourself doing an impression of everyone on cab and upload to facebook group",
-                    "workout with terrance over zoom (min 10 mins)",
-                    "record yourself rapping 8 bars about anything (must be written by you)"]
+                    "Workout with terrance over zoom (min 10 mins)",
+                    "Record yourself rapping 8 bars about anything (must be written by you)"]
 
+    rolledLateJars = ""
     if request.form['level'] == 'easy':
-        flash(random.choice(easyLateJars))
-        return redirect(url_for('admin_panel'))
+        if int(request.form['quantity']) > 1:
+            for x in range(1, int(request.form['quantity']) + 1):
+                currentNum = str(x)
+                rolledLateJars += "(" + currentNum + ") " + random.choice(easyLateJars) + "\n"
+            flash(rolledLateJars)
+        else:
+            flash(random.choice(easyLateJars))
     else:
-        flash(random.choice(hardLateJars))
-        return redirect(url_for('admin_panel'))
+        if int(request.form['quantity']) > 1:
+            for x in range(1, int(request.form['quantity']) + 1):
+                currentNum = str(x)
+                rolledLateJars += "(" + currentNum + ") " + random.choice(hardLateJars) + "\n"
+            flash(rolledLateJars)
+        else:
+            flash(random.choice(hardLateJars))
+            
+    return redirect(url_for('admin_panel'))
+
 
 @app.route('/officers', methods=['GET'])
 def officer_list():

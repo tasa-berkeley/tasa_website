@@ -641,7 +641,7 @@
                 <h2>Roll a Late Jar</h2>
                 <form action="{{ url_for('rollLateJar') }}" method=post enctype=multipart/form-data>
                   <div class="form-group">
-                    <label for="radio-buttons">Type of late jar</label>
+                    <label for="radio-buttons"><b>Type of late jar</b></label>
                     <div class="radio-buttons">
                       <div>
                         <label for="easy">Easy</label>
@@ -652,8 +652,16 @@
                         <input name=level type="radio" id="hard" value="hard">
                       </div>
                     </div>
+                    <p><b>Number of jars</b></p>
+                      <select id="numLateJars" name = "quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
                   </div>
-                  <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar</button>
+                  <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar(s)</button>
                 </form>
               </div>
               <div class="col"></div>
