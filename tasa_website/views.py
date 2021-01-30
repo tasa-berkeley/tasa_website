@@ -31,6 +31,7 @@ from . import FAMILY_IMAGE_FOLDER
 from . import IMAGE_FOLDER
 from . import OFFICER_IMAGE_FOLDER
 from . import FILES_FOLDER
+from . import SCRAPBOOK_FOLDER
 from . import ROOT
 from . import query_db
 
@@ -128,7 +129,7 @@ def admin_panel():
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
                         check_valid_checkin=check_valid_checkin, leaderboard=leaderboard)
 
-@app.route('/admin', methods=['POST'])
+@app.route('/latejar', methods=['POST'])
 def rollLateJar():
     """Return a random easy or hard late jar."""
     auth.check_login()
@@ -175,6 +176,23 @@ def rollLateJar():
             
     return redirect(url_for('admin_panel'))
 
+@app.route('/scrapbook', methods=['POST'])
+def add_picture():
+    print("hello")
+    auth.check_login()
+    print('hello')
+    try:
+        image = helpers.file_from_request(request)
+    except ValueError as e:
+        print('hello2')
+        flash('Exception: ' + str(e))
+        return redirect(url_for('admin_panel'))
+
+    print("hello3")
+    semToAddTo = request.form['semester']
+    helpers.save_request_file(request, SCRAPBOOK_FOLDER + semToAddTo + '/')
+    flash('New scrapbook image successfully posted')
+    return redirect(url_for('admin_panel'))
 
 @app.route('/officers', methods=['GET'])
 def officer_list():

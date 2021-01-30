@@ -284,6 +284,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addPicture">Add Scrapbook Image</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#chooseLateJar">Choose Late Jar</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
@@ -652,16 +653,43 @@
                         <input name=level type="radio" id="hard" value="hard">
                       </div>
                     </div>
-                    <p><b>Number of jars</b></p>
-                      <select id="numLateJars" name = "quantity">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                  </div>
+                  </div>  
+                  <div class="form-group">
+                    <label for="numLateJars">Number of jars</label>
+                    <select id="numLateJars" class="form-control" name = "quantity">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>  
                   <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar(s)</button>
+                </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="addPicture" role="tabpanel">
+            <div class="row welcome">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add a Picture</h2>
+                <form action="{{ url_for('add_picture') }}" method=post enctype=multipart/form-data>
+                  <div class="form-group">
+                    <label for="semesterOfImage">Semester</label>
+                    <select name=semester class="form-control" id="semesterOfImage">
+                      <option value="sp21">Spring 2021</option>
+                      <option value="fa21">Fall 2021</option>
+                      <option value="sp22">Spring 2022</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="scrapbookPicture">Image</label>
+                    <input class="form-control-file" type=file name=file id="scrapbookPicture">
+                  </div>
+                  <button class="btn btn-primary" type=submit>Add Scrapbook Picture</button>
                 </form>
               </div>
               <div class="col"></div>
