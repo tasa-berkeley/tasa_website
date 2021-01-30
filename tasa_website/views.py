@@ -178,17 +178,15 @@ def rollLateJar():
 
 @app.route('/scrapbook', methods=['POST'])
 def add_picture():
-    print("hello")
+    """Adds an image to the selected semester folder."""
     auth.check_login()
-    print('hello')
+
     try:
         image = helpers.file_from_request(request)
     except ValueError as e:
-        print('hello2')
         flash('Exception: ' + str(e))
         return redirect(url_for('admin_panel'))
 
-    print("hello3")
     semToAddTo = request.form['semester']
     helpers.save_request_file(request, SCRAPBOOK_FOLDER + semToAddTo + '/')
     flash('New scrapbook image successfully posted')
