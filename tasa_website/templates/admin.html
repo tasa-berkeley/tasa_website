@@ -206,7 +206,7 @@
     </div>
   </div>
 
-  
+
   <div class="modal fade" id="eventStatsModal" tabindex="-1" role="dialog" aria-labelledby="eventStatsModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -267,6 +267,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addPicture">Add Scrapbook Image</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewScrapbook">View Scrapbook</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#chooseLateJar">Choose Late Jar</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
@@ -290,6 +291,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="addOfficer" role="tabpanel">
             <div class="row welcome">
               <div class="col"></div>
@@ -351,6 +353,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="addFamily" role="tabpanel">
             <div class="row welcome">
               <div class="col"></div>
@@ -383,6 +386,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="viewEvents" role="tabpanel">
             <div class="row">
               <div class="col"></div>
@@ -403,6 +407,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="viewOfficers" role="tabpanel">
             <div class="row">
               <div class="col"></div>
@@ -424,6 +429,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="viewFamilies" role="tabpanel">
             <div class="row">
               <div class="col"></div>
@@ -444,6 +450,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="addFile" role="tabpanel">
             <div class="row welcome">
               <div class="col"></div>
@@ -464,6 +471,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="viewFiles" role="tabpanel">
             <div class="row">
               <div class="col"></div>
@@ -481,6 +489,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="addGeneralMember" role="tabpanel">
             <div class="row">
               <div class="col"></div>
@@ -678,6 +687,27 @@
             </div>
           </div>
 
+          <div class="tab-pane" id="viewScrapbook" role="tabpanel">
+            <div class="row welcome">
+              <div class="col"></div>
+              <div class="col">
+                <h2>View Scrapbook</h2>
+                {% for key, value in scrapbookSemesterImages.items() %}
+                <h5>{{key}}</h5>
+                <ul>
+                  {% for image in value %}
+                    <li>
+                      {{ image }} &nbsp;
+                      <a href="javascript:void(0);" onclick="deleteScrapbookImg('{{image}}', '{{key}}', '/scrapbook/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% endfor %}
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+
         </div>
       </div>
 {% endif %}
@@ -696,6 +726,16 @@ function deleteItem(id, name, endpoint) {
   }
 }
 
+function deleteScrapbookImg(imageName, semFolder, endpoint) {
+  if (confirm('Are you sure you want to delete ' + imageName + '?')) {
+    $.ajax({
+      url: endpoint + semFolder + '/' + imageName + '/',
+      data: { semFolder: semFolder, imageName: imageName  },
+      type: 'POST',
+    });
+    location.reload();
+  }
+}
 function deleteAll(endpoint) {
   if (confirm('Are you sure you want to do this?')) {
     if (confirm('Are you really sure?')) {

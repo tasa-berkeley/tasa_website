@@ -22,6 +22,9 @@ from flask import url_for
 from flask import Response
 from flask import send_file
 
+from os import listdir
+from os.path import isfile, join, isdir
+
 from tasa_website import auth
 from tasa_website import fb_events
 from tasa_website import helpers
@@ -126,8 +129,16 @@ def admin_panel():
     members = query_db('select * from members order by name')
     event_checkins = query_db('select * from event_checkins order by eventID')
     leaderboard = query_db('select * from members order by checkins desc')
+    scrapbookPath = join(ROOT, SCRAPBOOK_FOLDER)
+    scrapbookFolders = [dir for dir in listdir(scrapbookPath) if isdir(join(scrapbookPath, dir))]
+
+    scrapbookSemesterImages = {}
+    for folder in scrapbookFolders:
+        directoryPath = join(ROOT, SCRAPBOOK_FOLDER, folder)
+        scrapbookSemesterImages[folder] = [f for f in listdir(directoryPath) if isfile(join(directoryPath, f))]
+
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
-                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard)
+                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, scrapbookSemesterImages=scrapbookSemesterImages)
 
 @app.route('/latejar', methods=['POST'])
 def rollLateJar():
@@ -151,7 +162,8 @@ def rollLateJar():
                     "Change zoom profile pic to picture of exec's choice for a week",
                     "Be vanessa's hype man for a day",
                     "Coffee chat with andrew",
-                    "Take a shot of anything with terrance/will"]
+                    "Take a shot of anything with terrance/will",
+                    "Go thru marg's hinge likes and provide commentary with her"]
     hardLateJars = ["Make 5 tik toks (and share username on a social media platform of your choice)",
                     "Act a scene from a movie or drama",
                     "Write a FANFICTION and post it in Cabinet FB group",
@@ -176,7 +188,7 @@ def rollLateJar():
             
     return redirect(url_for('admin_panel'))
 
-@app.route('/scrapbook', methods=['POST'])
+@app.route('/scrapbook/add', methods=['POST'])
 def add_picture():
     """Adds an image to the selected semester folder."""
     auth.check_login()
@@ -191,6 +203,21 @@ def add_picture():
     helpers.save_request_file(request, SCRAPBOOK_FOLDER + semToAddTo + '/')
     flash('New scrapbook image successfully posted')
     return redirect(url_for('admin_panel'))
+
+@app.route('/scrapbook/<semFolder>/<imageName>/', methods=['POST'])
+def delete_image(semFolder, imageName):
+    """Deletes the scrapbook image from the directory"""
+    print('hello')
+    auth.check_login()
+    print('hello')
+
+    filePath = join(ROOT, SCRAPBOOK_FOLDER, semFolder, imageName)
+    print(filePath)
+    try:
+        os.remove(filePath)
+    except OSError as e:
+        print("Error: %s - %s." % (e.filename, e.strerror))
+    return 'Deleted file'
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
