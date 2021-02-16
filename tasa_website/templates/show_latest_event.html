@@ -8,12 +8,8 @@
 		    <li data-target="#eventCarousel" data-slide-to="2"></li>
 		  </ol>
 		  <div class="carousel-inner">
-			<div class="carousel-item active">
-				<a href="https://bit.ly/tasa-sp21intern" target="0"><img src="../static/images/final_intern_app.jpg" class="d-block w-100"></a>
-			</div>
 		  	{% for event in events %}
-			<!-- <div class="carousel-item {% if loop.index == 1 %}active{% endif %}"> -->
-		    <div class="carousel-item {% if loop.index == 1 %}{% endif %}">
+			<div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
 		      <a href="{{event.link}}" target="_blank"><img src="{{event.image_url}}" class="d-block w-100"></a>
 		    </div>
 		    {% endfor %}

@@ -43,8 +43,7 @@ from . import query_db
 @app.route('/')
 def index():
     events = query_db('select title, time, location, link, image_url, unix_time from events order by unix_time desc')
-    # upcoming_events = events[:3]
-    upcoming_events = events[:2]
+    upcoming_events = events[:3]
     if len(upcoming_events) == 0:
         return render_template('show_latest_event.html')
     return render_template('show_latest_event.html', events=upcoming_events)
