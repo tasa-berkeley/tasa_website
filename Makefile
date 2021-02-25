@@ -1,6 +1,6 @@
 .PHONY: run
 run: venv
-	venv/bin/python ./run.py
+	venv/bin/python ./run.py --noauth_local_webserver
 
 .PHONY: venv
 venv: requirements.txt
