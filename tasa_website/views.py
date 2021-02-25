@@ -1,3 +1,9 @@
+from __future__ import print_function
+
+from googleapiclient import discovery
+from httplib2 import Http
+from oauth2client import file, client, tools
+
 import json
 import os
 import random
@@ -550,6 +556,131 @@ def donate():
 @app.route('/contact', methods=['GET'])
 def contact():
     return render_template('contact.html')
+
+@app.route('/scrapbook/', methods=['GET'])
+def scrapbookMainPage():
+    """
+    The scrapbook main page displays carousels for each semester with rotating 3 event cover photos.
+    Returns event cover photos to be used for each semester carousel
+    """
+    serviceID = driveAPI_authentication()
+    service = serviceID["service"]
+    id = serviceID["id"]
+
+    # Search for all of the semester folders present in the scrapbook folder
+    semFolders = fileSearch(service, "'" + id + "' in parents")
+
+    # Grabs the names of each semester folder
+    semFolderNameIDs = {}   # {name of semester folder: ID of folder}
+    for f in range(0, len(semFolders)):
+        semFolderName = semFolders[f].get('name')
+        semFolderNameIDs[semFolderName] = semFolders[f].get('id')
+
+    # For each semester:
+    #   Search for all event folders
+    #   Get name and ID of each event folder
+    #   For each event folder:
+    #       Get ID of event cover photo
+    eventCoverPhotos = {}   # {name of semester folder: {event name: ID of cover photo}}
+    for semester, semFolderID in semFolderNameIDs.items():
+        semEvents = fileSearch(service, "'" + semFolderID + "' in parents")
+
+        # Get name and id of each event folder
+        eventsNameID = {}   # {name of event folder: ID of event folder}
+        for event in range(0, len(semEvents)):
+            eventName = semEvents[event].get('name')
+            eventID = semEvents[event].get('id')
+            eventsNameID[eventName] = eventID
+
+        # Get ID of event cover photos
+        eventCoverIDs = {}  # {name of event: ID of cover photo}
+        for eventName, eventID in eventsNameID.items():
+            # Gets event cover photo IDs
+            imgIDs = fileSearch(service, "'" + eventID + "' in parents and name contains 'cover photo'")
+            if len(imgIDs) > 0:
+                eventCoverIDs[eventName] = imgIDs[0].get('id')
+            else:
+                continue
+        eventCoverPhotos[semester] = eventCoverIDs
+
+    print('eventCoverPhotos:', eventCoverPhotos)
+    return render_template('scrapbook.html', eventCoverPhotos=eventCoverPhotos)
+
+@app.route('/scrapbook/<chosenSemester>', methods=['GET'])
+def scrapbookIndividualSem(chosenSemester):
+    """Page for a single semester will display carousels for each event with 3 rotating event images in the carousel."""
+    serviceID = driveAPI_authentication()
+    service = serviceID["service"]
+    id = serviceID["id"]
+
+    # Search for chosen semester's folder and its name/ID
+    semFolder = fileSearch(service, "'" + id + "' in parents and name='" + chosenSemester + "'")
+    semFolderID = semFolder[0].get('id')
+
+    # Get all event folders within the current semester folder
+    semEvents = fileSearch(service, "'" + semFolderID + "' in parents")
+
+    # Get name and id of each event folder
+    eventsNameID = {}   # {name of event folder: ID of event folder}
+    for event in range(0, len(semEvents)):
+        eventName = semEvents[event].get('name')
+        eventID = semEvents[event].get('id')
+        eventsNameID[eventName] = eventID
+
+    imgIDsToPass = {}   # {name of event: [IDs of the 3 preview event images]}
+    for event, eventID in eventsNameID.items():
+        imgIDs = fileSearch(service, "'" + eventID + "' in parents and not name contains 'cover photo'", 
+                            pageSize = 3, fieldsParameters = "nextPageToken, files(id)")
+        eventImgIDs = []
+        for id in range(0, len(imgIDs)):
+            eventImgIDs.append(imgIDs[id].get('id'))
+        imgIDsToPass[event] = eventImgIDs
+
+    print('imgIDsToPass:', imgIDsToPass)
+    return render_template('scrapbook_semester_page.html', imgIDsToPass=imgIDsToPass)
+
+def driveAPI_authentication():
+    """
+    Helper function that handles authentication for the Google Drive API.
+    Returns the ID of the Scrapbook Folder.
+    """
+    SCOPES = 'https://www.googleapis.com/auth/drive.readonly.metadata'
+    store = file.Storage('storage.json')
+    creds = store.get()
+    if not creds or creds.invalid:
+        flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+        creds = tools.run_flow(flow, store)
+    service = discovery.build('drive', 'v3', http=creds.authorize(Http()))
+
+    # Call the Drive v3 API and search for Scrapbook folder
+    folderId = service.files().list(q = "mimeType = 'application/vnd.google-apps.folder' and name = 'Website Scrapbook Images'", 
+                                    pageSize=10, fields="nextPageToken, files(id, name)").execute()
+    folderIdResult = folderId.get('files', [])
+    id = folderIdResult[0].get('id')
+
+    serviceID = {"service": service, "id": id}
+    return serviceID
+
+def fileSearch(service, queryParameters, pageSize = None, fieldsParameters = None):
+    """
+    A helper function that searches for all files within a given Drive folder ID.
+    Returns a list of file IDs and their respective names.
+    """
+    if not pageSize and not fieldsParameters:
+        results = service.files().list(q = queryParameters, 
+                                fields = "nextPageToken, files(id, name)").execute()
+    elif not pageSize and fieldsParameters:
+        results = service.files().list(q = queryParameters, 
+                                        fields = fieldsParameters).execute()
+    elif pageSize and not fieldsParameters:
+        results = service.files().list(q = queryParameters, 
+                                        pageSize = pageSize, fields = "nextPageToken, files(id, name)").execute()
+    else:
+        results = service.files().list(q = queryParameters, 
+                                        pageSize = pageSize, fields = fieldsParameters).execute()
+
+    filesToReturn = results.get('files', [])
+    return filesToReturn
 
 @app.context_processor
 def processor():
