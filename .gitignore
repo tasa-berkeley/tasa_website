@@ -6,3 +6,5 @@ tasa_website/static/files
 tasa_website/static/images
 tasa_website.db
 venv/
+.vscode
+*.json
