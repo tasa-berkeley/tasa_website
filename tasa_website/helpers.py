@@ -28,14 +28,14 @@ POSITIONS = [
     'Family Head',
     'Historian',
     'Senior Advisor',
-    'Family Head Intern',
-    'Historian Intern',
-    # 'Public Relations Intern',
-    'Outreach Intern',
     'Treasurer Intern',
     'Webmaster Intern',
+    # 'Public Relations Intern',
+    'Outreach Intern',
     'Design Intern',
-    'Marketing Intern'
+    'Marketing Intern',
+    'Family Head Intern',
+    'Historian Intern'
 ]
 
 IMAGE_MAXSIZE = (1024, 1024)
