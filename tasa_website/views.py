@@ -558,8 +558,9 @@ def contact():
 @app.route('/scrapbook/', methods=['GET'])
 def scrapbookMainPage():
     """
-    The scrapbook main page displays carousels for each semester with rotating 3 event cover photos.
-    Returns event cover photos to be used for each semester carousel
+    The scrapbook main page displays carousels for each semester with various event images.
+    Returns a dictionary of lists containing the IDs of the images to be displayed in the
+    semesters' carousels.
     """
     serviceID = driveAPI_authentication()
     service = serviceID["service"]
@@ -574,7 +575,6 @@ def scrapbookMainPage():
         semFolderName = semFolders[f].get('name')
         semFolderNameIDs[semFolderName] = semFolders[f].get('id')
 
-
     # Get the IDs of 9 image files in each semester folder
     imgIDsToPass = {}   # {semester: [IDs of semester images]}
     for semester, semFolderID in semFolderNameIDs.items():
@@ -588,39 +588,6 @@ def scrapbookMainPage():
 
     print('imgIDsToPass:', imgIDsToPass)
     return render_template('scrapbook.html', imgIDsToPass=imgIDsToPass)
-
-@app.route('/scrapbook/<chosenSemester>', methods=['GET'])
-def scrapbookIndividualSem(chosenSemester):
-    """Page for a single semester will display carousels for each event with 3 rotating event images in the carousel."""
-    serviceID = driveAPI_authentication()
-    service = serviceID["service"]
-    id = serviceID["id"]
-
-    # Search for chosen semester's folder and its name/ID
-    semFolder = fileSearch(service, "'" + id + "' in parents and name='" + chosenSemester + "'")
-    semFolderID = semFolder[0].get('id')
-
-    # Get all event folders within the current semester folder
-    semEvents = fileSearch(service, "'" + semFolderID + "' in parents")
-
-    # Get name and id of each event folder
-    eventsNameID = {}   # {name of event folder: ID of event folder}
-    for event in range(0, len(semEvents)):
-        eventName = semEvents[event].get('name')
-        eventID = semEvents[event].get('id')
-        eventsNameID[eventName] = eventID
-
-    imgIDsToPass = {}   # {name of event: [IDs of the 3 preview event images]}
-    for event, eventID in eventsNameID.items():
-        imgIDs = fileSearch(service, "'" + eventID + "' in parents and not name contains 'cover photo'", 
-                            pageSize = 3, fieldsParameters = "nextPageToken, files(id)")
-        eventImgIDs = []
-        for id in range(0, len(imgIDs)):
-            eventImgIDs.append(imgIDs[id].get('id'))
-        imgIDsToPass[event] = eventImgIDs
-
-    print('imgIDsToPass:', imgIDsToPass)
-    return render_template('scrapbook_semester_page.html', imgIDsToPass=imgIDsToPass)
 
 def driveAPI_authentication():
     """
