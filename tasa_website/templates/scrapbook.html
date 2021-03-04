@@ -6,29 +6,16 @@
         </h1>
       </div>
 
-      <div class="container-fluid">
-        {% for semester, events in eventCoverPhotos.items() %}
-          {% if loop.first %}
-          <div class="row row-fluid row-pad event">
-          {% elif loop.index0 % 3 == 0 and not loop.first %}
-          </div>
-          <div class="row row-fluid row-pad event">
-          {% endif %}
-          <div class="col-md-4 col-pad">
+      {% for semester, semImgs in imgIDsToPass.items() %}
+      <div class="semester-carousels">
+        <h2>{{ semester }}</h2>
             {% set semesterCarousel = 'carousel-' + loop.index0|string %}
             <div id="{{semesterCarousel}}" class="carousel slide" data-interval="false" data-ride="carousel">
-              <ol class="carousel-indicators">
-                <li data-target="#{{semesterCarousel}}" data-slide-to="0" class="active"></li>
-                <li data-target="#{{semesterCarousel}}" data-slide-to="1"></li>
-                <li data-target="#{{semesterCarousel}}" data-slide-to="2"></li>
-              </ol>
               <div class="carousel-inner">
-                {% for eventName, imgID in events.items() %}
+                {% for imgID in semImgs %}
                 {% set imgID = 'https://drive.google.com/uc?export=view&id=' + imgID %}
                 <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
-                  <a href="https://loonatheworldus.com/" target="_blank">
                     <img src="{{ imgID }}" class="d-block w-100">
-                  </a>
                 </div>
                 {% endfor %} 
               </div>
@@ -41,14 +28,6 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
-            <h3>{{ semester }}</h3>
-            <form action="{{ url_for('scrapbookIndividualSem', chosenSemester=semester) }}" method='get'>
-              <button type="submit" name="chosenSemester" value="{{ semester }}" class="btn-link">{{ semester }}</button>
-            </form>
-          </div>
-          {% if loop.last %}
-          </div>
-          {% endif %}
-        {% endfor %}
         </div>
+        {% endfor %}
 {% endblock %}  

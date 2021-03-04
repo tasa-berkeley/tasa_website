@@ -566,7 +566,7 @@ def scrapbookMainPage():
     id = serviceID["id"]
 
     # Search for all of the semester folders present in the scrapbook folder
-    semFolders = fileSearch(service, "'" + id + "' in parents")
+    semFolders = fileSearch(service, "'" + id + "' in parents and trashed = false")
 
     # Grabs the names of each semester folder
     semFolderNameIDs = {}   # {name of semester folder: ID of folder}
@@ -574,35 +574,20 @@ def scrapbookMainPage():
         semFolderName = semFolders[f].get('name')
         semFolderNameIDs[semFolderName] = semFolders[f].get('id')
 
-    # For each semester:
-    #   Search for all event folders
-    #   Get name and ID of each event folder
-    #   For each event folder:
-    #       Get ID of event cover photo
-    eventCoverPhotos = {}   # {name of semester folder: {event name: ID of cover photo}}
+
+    # Get the IDs of 9 image files in each semester folder
+    imgIDsToPass = {}   # {semester: [IDs of semester images]}
     for semester, semFolderID in semFolderNameIDs.items():
-        semEvents = fileSearch(service, "'" + semFolderID + "' in parents")
+        imgIDs = fileSearch(service, "'" + semFolderID + "' in parents", 
+                                pageSize = 9, fieldsParameters = "nextPageToken, files(id)")
 
-        # Get name and id of each event folder
-        eventsNameID = {}   # {name of event folder: ID of event folder}
-        for event in range(0, len(semEvents)):
-            eventName = semEvents[event].get('name')
-            eventID = semEvents[event].get('id')
-            eventsNameID[eventName] = eventID
+        semImgIDs = []
+        for id in range(0, len(imgIDs)):
+            semImgIDs.append(imgIDs[id].get('id'))
+        imgIDsToPass[semester] = semImgIDs
 
-        # Get ID of event cover photos
-        eventCoverIDs = {}  # {name of event: ID of cover photo}
-        for eventName, eventID in eventsNameID.items():
-            # Gets event cover photo IDs
-            imgIDs = fileSearch(service, "'" + eventID + "' in parents and name contains 'cover photo'")
-            if len(imgIDs) > 0:
-                eventCoverIDs[eventName] = imgIDs[0].get('id')
-            else:
-                continue
-        eventCoverPhotos[semester] = eventCoverIDs
-
-    print('eventCoverPhotos:', eventCoverPhotos)
-    return render_template('scrapbook.html', eventCoverPhotos=eventCoverPhotos)
+    print('imgIDsToPass:', imgIDsToPass)
+    return render_template('scrapbook.html', imgIDsToPass=imgIDsToPass)
 
 @app.route('/scrapbook/<chosenSemester>', methods=['GET'])
 def scrapbookIndividualSem(chosenSemester):
@@ -671,11 +656,11 @@ def fileSearch(service, queryParameters, pageSize = None, fieldsParameters = Non
         results = service.files().list(q = queryParameters, 
                                         fields = fieldsParameters).execute()
     elif pageSize and not fieldsParameters:
-        results = service.files().list(q = queryParameters, 
-                                        pageSize = pageSize, fields = "nextPageToken, files(id, name)").execute()
+        results = service.files().list(q = queryParameters, pageSize = pageSize, 
+                                        fields = "nextPageToken, files(id, name)").execute()
     else:
-        results = service.files().list(q = queryParameters, 
-                                        pageSize = pageSize, fields = fieldsParameters).execute()
+        results = service.files().list(q = queryParameters, pageSize = pageSize,
+                                        fields = fieldsParameters).execute()
 
     filesToReturn = results.get('files', [])
     return filesToReturn
