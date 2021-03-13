@@ -6,10 +6,12 @@ body {
 	padding: 0;
 	width: 100%;
 	line-height: 200%;
+	box-sizing: unset;
 }
 
 html {
     overflow-y:scroll;
+	overflow-x: hidden;
 }
 
 .navbar {
@@ -444,7 +446,7 @@ html {
 }
 
 .eventSplash {
-	background-image: url("../images/sp20v1events.jpg")
+	background-image: url("../images/sp20v1events.jpg");
 	font-family: 'Yantramanav', sans-serif;
 	display: block;
 	background-position: 0% 30%;
@@ -827,6 +829,8 @@ h3.event-subheader {
     .officer-picture-modal {
         width: 250px;
         height: 250px;
+		overflow-x: hidden;
+		overflow-y: hidden;
     }
 }
 
