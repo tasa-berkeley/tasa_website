@@ -59,3 +59,11 @@ create table event_checkins(
   memberID integer not null
   memberName text not null
 );
+
+drop table if exists late_jars;
+create table late_jars(
+  id integer primary key autoincrement,
+  name text not null,
+  lateJars TEXT NOT null
+);
+
