@@ -6,10 +6,12 @@ body {
 	padding: 0;
 	width: 100%;
 	line-height: 200%;
+	box-sizing: unset;
 }
 
 html {
     overflow-y:scroll;
+	overflow-x: hidden;
 }
 
 .navbar {
@@ -865,6 +867,8 @@ h3.event-subheader {
     .officer-picture-modal {
         width: 250px;
         height: 250px;
+		overflow-x: hidden;
+		overflow-y: hidden;
     }
 }
 
