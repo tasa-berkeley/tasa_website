@@ -133,7 +133,6 @@ def admin_panel():
     members = query_db('select * from members order by name')
     event_checkins = query_db('select * from event_checkins order by eventID')
     leaderboard = query_db('select * from members order by checkins desc')
-    lateJars = query_db('select * from late_jars order by id')
     scrapbookPath = join(ROOT, SCRAPBOOK_FOLDER)
     scrapbookFolders = [dir for dir in listdir(scrapbookPath) if isdir(join(scrapbookPath, dir))]
 
@@ -143,13 +142,13 @@ def admin_panel():
         scrapbookSemesterImages[folder] = [f for f in listdir(directoryPath) if isfile(join(directoryPath, f))]
 
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
-                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, scrapbookSemesterImages=scrapbookSemesterImages, lateJars = lateJars)
+                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, scrapbookSemesterImages=scrapbookSemesterImages)
 
-@app.route('/rolling', methods=['POST'])
-def roll():
+@app.route('/latejar', methods=['POST'])
+def rollLateJar():
     """Return a random easy or hard late jar."""
     auth.check_login()
-    print("HERE")
+
     easyLateJars = ["Change your pfp to your first one for at least 3 days",
                     "Dance to https://www.youtube.com/watch?v=qqmmc7pl9Do",
                     "Everyone comment on your first pfp",
@@ -544,63 +543,6 @@ def update_checkin(member_id):
         return "Checked in"
     return "Already checked in for this event"
 
-@app.route('/lateJars', methods=['POST'])
-def add_late_jars():
-    auth.check_login()
-
-    name = request.form['name']
-    easyLateJars = ["Change your pfp to your first one for at least 3 days",
-                    "Dance to https://www.youtube.com/watch?v=qqmmc7pl9Do",
-                    "Everyone comment on your first pfp",
-                    "Instagram live yourself for like at least 10 minutes (and tell cab beforehand when you'll do it)",
-                    "Let Andrew/Daniel/Avery caption your next TASA profile pic",
-                    "Let your co choose your zoom background for a day (must be appropriate)",
-                    "Make a lookbook with 5 outfits -- commentary required",
-                    "Make a post and compliment every single cabinet member",
-                    "Lipsync a music video (low quality, 2 minutes)",
-                    "Watch an anime episode with Tiff OR kdrama with steph OR loona vids with brandon and ash",
-                    "Take over the tabling hour shifts of a cabinet member of your choice",
-                    "Paint your nails a color of the exec's choice using nail polish / marker",
-                    "Play Jeffrey or Nick or Marg's brother in a game of chess",
-                    "Watch shanie's twitch stream for minimum 20 mins and be active in chat",
-                    "Change zoom profile pic to picture of exec's choice for a week",
-                    "Be vanessa's hype man for a day",
-                    "Coffee chat with andrew",
-                    "Take a shot of anything with terrance/will",
-                    "Go thru marg's hinge likes and provide commentary with her"]
-    hardLateJars = ["Make 5 tik toks (and share username on a social media platform of your choice)",
-                    "Act a scene from a movie or drama",
-                    "Write a FANFICTION and post it in Cabinet FB group",
-                    "Post at least 1 short vlog a day for a week on the cabinet page",
-                    "Recreate https://www.facebook.com/groups/1343933772408499/permalink/2750477481754114",
-                    "Send a meme to everyone on cabinet that you think they'd like",
-                    "Time lapse yourself doing a chloe ting/emi wong/blogilates workout (10 minutes minimum)",
-                    "Make a video of yourself doing an impression of everyone on cab and upload to facebook group",
-                    "Workout with terrance over zoom (min 10 mins)",
-                    "Record yourself rapping 8 bars about anything (must be written by you)"]
-
-    choices = None
-    if request.form['level'] == 'easy':
-        choices = easyLateJars
-    else:
-        choices = hardLateJars
-    rolledLateJars = ""
-    for i in range(int(request.form['quantity'])):
-        currentNum = str(i+1)
-        rolledLateJars = "(" + currentNum + ") " + random.choice(choices) + "\n"
-        query = 'insert into late_jars (name, lateJars) values (?, ?)'
-        query_db(query, [name, rolledLateJars])
-    flash('New late jar added')
-
-    return redirect(url_for('admin_panel'))
-
-@app.route('/lateJars/<int:jar_id>', methods=['DELETE'])
-def delete_jar(jar_id):
-    auth.check_login()
-    query = 'delete from late_jars where id = ?'
-    query_db(query, (jar_id,))
-    return 'Deleted Late Jar'
-
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')
@@ -704,5 +646,6 @@ def check_valid_checkin(eventID, memberID):
     checkins = query_db(query, (eventID, memberID))
     return len(checkins) == 0
 
+    
 
 
