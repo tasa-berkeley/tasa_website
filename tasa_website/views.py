@@ -130,16 +130,9 @@ def admin_panel():
     event_checkins = query_db('select * from event_checkins order by eventID')
     leaderboard = query_db('select * from members order by checkins desc')
     lateJars = query_db('select * from late_jars order by id')
-    scrapbookPath = join(ROOT, SCRAPBOOK_FOLDER)
-    scrapbookFolders = [dir for dir in listdir(scrapbookPath) if isdir(join(scrapbookPath, dir))]
-
-    scrapbookSemesterImages = {}
-    for folder in scrapbookFolders:
-        directoryPath = join(ROOT, SCRAPBOOK_FOLDER, folder)
-        scrapbookSemesterImages[folder] = [f for f in listdir(directoryPath) if isfile(join(directoryPath, f))]
 
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
-                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, scrapbookSemesterImages=scrapbookSemesterImages, lateJars = lateJars)
+                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, lateJars = lateJars)
 
 @app.route('/rolling', methods=['POST'])
 def roll():
@@ -188,37 +181,6 @@ def roll():
     flash(rolledLateJars)
             
     return redirect(url_for('admin_panel'))
-
-@app.route('/scrapbook/add', methods=['POST'])
-def add_picture():
-    """Adds an image to the selected semester folder."""
-    auth.check_login()
-
-    try:
-        image = helpers.file_from_request(request)
-    except ValueError as e:
-        flash('Exception: ' + str(e))
-        return redirect(url_for('admin_panel'))
-
-    semToAddTo = request.form['semester']
-    helpers.save_request_file(request, SCRAPBOOK_FOLDER + semToAddTo + '/')
-    flash('New scrapbook image successfully posted')
-    return redirect(url_for('admin_panel'))
-
-@app.route('/scrapbook/<semFolder>/<imageName>/', methods=['POST'])
-def delete_image(semFolder, imageName):
-    """Deletes the scrapbook image from the directory"""
-    print('hello')
-    auth.check_login()
-    print('hello')
-
-    filePath = join(ROOT, SCRAPBOOK_FOLDER, semFolder, imageName)
-    print(filePath)
-    try:
-        os.remove(filePath)
-    except OSError as e:
-        print("Error: %s - %s." % (e.filename, e.strerror))
-    return 'Deleted file'
 
 @app.route('/officers', methods=['GET'])
 def officer_list():
@@ -541,7 +503,7 @@ def update_checkin(member_id):
     return "Already checked in for this event"
 
 @app.route('/lateJars', methods=['POST'])
-def add_late_jars():
+def roll_late_jars():
     auth.check_login()
 
     name = request.form['name']
