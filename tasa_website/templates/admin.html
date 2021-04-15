@@ -269,7 +269,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewLateJars">View Late Jars</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addLateJar">Add Late Jars</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#rollLateJar">Roll Late Jars</a></li>
         </ul>
 
         <div class="tab-content">
@@ -560,6 +560,7 @@
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="viewLateJars" role = "tabpanel">
             <div class ="row" >
               <div class="col"></div>
@@ -573,17 +574,18 @@
                       <a href="javascript:void(0);" onclick="deleteItem({{jar.id}}, '{{jar.name}}', '/lateJars/')">Delete</a>
                     </li>
                   {% endfor %}
-                  </ul>
+                </ul>
               </div>
               <div class="col"></div>
             </div>
           </div>
-          <div class="tab-pane" id="addLateJar" role="tabpanel">
+
+          <div class="tab-pane" id="rollLateJar" role="tabpanel">
             <div class="row">
               <div class="col"></div>
               <div class="col">
-                <h2>Add a Late Jar</h2>
-                <form action="{{ url_for('add_late_jars') }}" method=post>
+                <h2>Roll a Late Jar</h2>
+                <form action="{{ url_for('roll_late_jars') }}" method=post>
                   <div class="form-group">
                     <label for="officerName">Name</label>
                     <input name=name type="text" class="form-control" id="officerName">
@@ -611,12 +613,13 @@
                       <option value="5">5</option>
                     </select>
                   </div>  
-                <button class="btn btn-primary" type=submit name=submitButton>Add Late Jar</button>
+                <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar</button>
               </form>
               </div>
               <div class="col"></div>
             </div>
           </div>
+
           <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel">
             <div class="row">
               <div class="col"></div>
@@ -680,7 +683,11 @@
               <div class="col"></div>
             </div>
           </div>
+<<<<<<< HEAD
          
+=======
+          
+>>>>>>> master
         </div>
       </div>
 {% endif %}

@@ -8,3 +8,4 @@ tasa_website.db
 venv/
 .vscode
 *.json
+updatesite.sh
