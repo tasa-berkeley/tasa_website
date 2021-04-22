@@ -58,7 +58,13 @@
               <li class="nav-item"><a class="nav-link active" href="/events">Events</a></li>
               <li class="nav-item"><a class="nav-link active" href="/officers">Officers</a></li>
               <li class="nav-item"><a class="nav-link active" href="/families">Families</a></li>
-              <li class="nav-item"><a class="nav-link active" href="/scrapbook">Scrapbook</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">Scrapbook</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/scrapbook/fa19">Fall 2019</a></li>
+                  <li><a class="dropdown-item" href="/scrapbook/sp20">Spring 2020</a></li>
+                </ul>
+              </li>
               <li class="nav-item"><a class="nav-link active" href="/files">Files</a></li>
               <li class="nav-item"><a class="nav-link active" href="/donate">Donate</a></li>
               <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
@@ -160,5 +166,23 @@
             </div>
           </div>
         </footer>
+        <script>
+          $(document).ready(function() {  
+              function toggleNavbarMethod() {  
+                  if ($(window).width() > 768) {  
+                      $('.navbar .dropdown').on('mouseover', function(){  
+                          $('.dropdown-toggle', this).trigger('click');   
+                      }).on('mouseout', function(){  
+                          $('.dropdown-toggle', this).trigger('click').blur();  
+                      });  
+                  }  
+                  else {  
+                      $('.navbar .dropdown').off('mouseover').off('mouseout');  
+                  }  
+              }  
+              toggleNavbarMethod();  
+              $(window).resize(toggleNavbarMethod);  
+          });   
+        </script>
         </body>
         </html>

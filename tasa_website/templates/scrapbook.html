@@ -8,7 +8,7 @@
 
       {% for semester, semImgs in imgIDsToPass.items() %}
       <div class="semester-carousels">
-        <h2>{{ semester }}</h2>
+        <h1>{{ semester }}</h1>
             {% set semesterCarousel = 'carousel-' + loop.index0|string %}
             <div id="{{semesterCarousel}}" class="carousel slide" data-interval="false" data-ride="carousel">
               <div class="carousel-inner">

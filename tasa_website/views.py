@@ -538,8 +538,8 @@ def donate():
 def contact():
     return render_template('contact.html')
 
-@app.route('/scrapbook/', methods=['GET'])
-def scrapbookMainPage():
+@app.route('/scrapbook/<semester>', methods=['GET'])
+def scrapbookPage(semester):
     """
     The scrapbook main page displays carousels for each semester with various event images.
     Returns a dictionary of lists containing the IDs of the images to be displayed in the
@@ -548,20 +548,22 @@ def scrapbookMainPage():
     serviceID = driveAPI_authentication()
     service = serviceID["service"]
     id = serviceID["id"]
+    semDictionary = {'sp20': 'Spring 2020', 'fa19': 'Fall 2019'}
+    specifiedSem = semDictionary[semester]
 
-    # Search for all of the semester folders present in the scrapbook folder
-    semFolders = fileSearch(service, "'" + id + "' in parents and trashed = false")
+    # Search for the specified semester folder in the scrapbook folder
+    semFolders = fileSearch(service, "'" + id + "' in parents and trashed=false and name='" + specifiedSem + "' ")
 
-    # Grabs the names of each semester folder
+    # Grabs the names of the semester folder
     semFolderNameIDs = {}   # {name of semester folder: ID of folder}
     for f in range(0, len(semFolders)):
         semFolderName = semFolders[f].get('name')
         semFolderNameIDs[semFolderName] = semFolders[f].get('id')
 
-    # Get the IDs of 9 image files in each semester folder
+    # Get the IDs of 9 image files in the semester folder
     imgIDsToPass = {}   # {semester: [IDs of semester images]}
     for semester, semFolderID in semFolderNameIDs.items():
-        imgIDs = fileSearch(service, "'" + semFolderID + "' in parents", 
+        imgIDs = fileSearch(service, "'" + semFolderID + "' in parents and trashed=false", 
                                 pageSize = 9, fieldsParameters = "nextPageToken, files(id)")
 
         semImgIDs = []
