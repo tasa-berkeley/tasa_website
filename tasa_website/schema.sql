@@ -63,7 +63,7 @@ create table event_checkins(
 drop table if exists late_jars;
 create table late_jars(
   id integer primary key autoincrement,
-  name text not null,
-  lateJars TEXT NOT null
+  difficulty TEXT NOT null,
+  jar TEXT NOT null
 );
 

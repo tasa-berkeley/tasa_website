@@ -270,6 +270,7 @@
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewLateJars">View Late Jars</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#rollLateJar">Roll Late Jars</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addLateJar">Add Late Jars</a></li>
         </ul>
 
         <div class="tab-content">
@@ -569,43 +570,61 @@
                 <ul id='memberListView'>
                   {% for jar in lateJars %}
                     <li>
-                      <label>{{ jar.name }}</label>  <a>: </a>
-                      <label>{{ jar.lateJars }}</label>  
-                      <a href="javascript:void(0);" onclick="deleteItem({{jar.id}}, '{{jar.name}}', '/lateJars/')">Delete</a>
+                      <label>{{ jar.difficulty }}</label>  <a> - </a>
+                      <label>{{ jar.jar }}</label>  
+                      <a href="javascript:void(0);" onclick="deleteItem({{jar.id}}, '{{jar.jar}}', '/lateJars/')">Delete</a>
                     </li>
                   {% endfor %}
-                </ul>
+                  </ul>
               </div>
               <div class="col"></div>
             </div>
           </div>
-
+          <div class="tab-pane" id="addLateJar" role="tabpanel">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col">
+                <h2>Add a Late Jar</h2>
+                <form action="{{ url_for('add_late_jars') }}" method=post>
+                  <div class="form-group">
+                    <label for="newLateJar">New Late Jar</label>
+                    <input name=newLateJar type="text" class="form-control" id="newLateJar">
+                  </div> 
+                  <div class="form-group">
+                    <label for="difficulty">Difficulty</label>
+                    <select name=difficulty class="form-control" id="difficulty" required>
+                      <option value="Easy" selected>Easy</option>
+                      <option value="Hard">Hard</option>
+                    </select>
+                  </div>
+                <button class="btn btn-primary" type=submit name=submitButton>Add</button>
+              </form>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
           <div class="tab-pane" id="rollLateJar" role="tabpanel">
             <div class="row">
               <div class="col"></div>
               <div class="col">
                 <h2>Roll a Late Jar</h2>
-                <form action="{{ url_for('roll_late_jars') }}" method=post>
-                  <div class="form-group">
-                    <label for="officerName">Name</label>
-                    <input name=name type="text" class="form-control" id="officerName">
-                  </div>
+                <form action="{{ url_for('roll') }}" method=post>
                   <div class="form-group">
                     <label for="radio-buttons"><b>Type of late jar</b></label>
                     <div class="radio-buttons">
                       <div>
                         <label for="easy">Easy</label>
-                        <input name=level type="radio" id="easy" value="easy" checked>
+                        <input name=level type="radio" id="easy" value="Easy" checked>
                       </div>
                       <div>
                         <label for="hard">Hard</label>
-                        <input name=level type="radio" id="hard" value="hard">
+                        <input name=level type="radio" id="hard" value="Hard">
                       </div>
                     </div>
                   </div>  
                   <div class="form-group">
                     <label for="numLateJars">Number of jars</label>
-                    <select id="numLateJars" class="form-control" name = "quantity">
+                    <select id="numLateJars" class="form-control" name ="quantity">
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -683,7 +702,7 @@
               <div class="col"></div>
             </div>
           </div>
-          
+
         </div>
       </div>
 {% endif %}
