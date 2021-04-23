@@ -563,12 +563,17 @@
           </div>
 
           <div class="tab-pane" id="viewLateJars" role = "tabpanel">
-            <div class ="row" >
-              <div class="col"></div>
-              <div class="col">
+            <div class = "row" >
+              <div class = "col"></div>
+              <div class = "col">
                 <h2>All Late Jars in DB:</h2>
+              </div>                
+              <div class = "col"></div>                                
+            </div>
+            <div class ="row" >
+              <div class="col">
                 <ul id='memberListView'>
-                  {% for jar in lateJars %}
+                  {% for jar in lateJars if jar.difficulty == 'Easy' %}
                     <li>
                       <label>{{ jar.difficulty }}</label>  <a> - </a>
                       <label>{{ jar.jar }}</label>  
@@ -577,7 +582,17 @@
                   {% endfor %}
                   </ul>
               </div>
-              <div class="col"></div>
+              <div class="col">
+                <ul id='memberListView'>
+                  {% for jar in lateJars if jar.difficulty == 'Hard' %}
+                    <li>
+                      <label>{{ jar.difficulty}}</label>  <a> - </a>
+                      <label>{{ jar.jar }}</label>  
+                      <a href="javascript:void(0);" onclick="deleteItem({{jar.id}}, '{{jar.jar}}', '/lateJars/')">Delete</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+              </div>
             </div>
           </div>
           <div class="tab-pane" id="addLateJar" role="tabpanel">
