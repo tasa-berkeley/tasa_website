@@ -571,7 +571,6 @@ def scrapbookPage(semester):
             semImgIDs.append(imgIDs[id].get('id'))
         imgIDsToPass[semester] = semImgIDs
 
-    print('imgIDsToPass:', imgIDsToPass)
     return render_template('scrapbook.html', imgIDsToPass=imgIDsToPass)
 
 def driveAPI_authentication():
