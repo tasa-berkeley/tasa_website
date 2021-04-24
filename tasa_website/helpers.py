@@ -17,8 +17,8 @@ ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'gif', 'png', 'pdf', 'doc', 'docx'])
 
 POSITIONS = [
     'President',
-    'External Vice President',
     'Internal Vice President',
+    'External Vice President',
     'Treasurer',
     'Webmaster',
     'Outreach',
