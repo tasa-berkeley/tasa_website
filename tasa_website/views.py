@@ -583,12 +583,14 @@ def driveAPI_authentication():
     creds = store.get()
     if not creds or creds.invalid:
         flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
-        creds = tools.run_flow(flow, store)
+        args = tools.argparser.parse_args()
+        args.noauth_local_webserver = True
+        creds = tools.run_flow(flow, store, args)
     service = discovery.build('drive', 'v3', http=creds.authorize(Http()))
 
     # Call the Drive v3 API and search for Scrapbook folder
     folderId = service.files().list(q = "mimeType = 'application/vnd.google-apps.folder' and name = 'Website Scrapbook Images'", 
-                                    pageSize=10, fields="nextPageToken, files(id, name)").execute()
+                                    pageSize=10, fields="nextPageToken,f files(id, name)").execute()
     folderIdResult = folderId.get('files', [])
     id = folderIdResult[0].get('id')
 
