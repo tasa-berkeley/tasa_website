@@ -801,6 +801,12 @@ h3.event-subheader {
 		margin-top: -1.8em;
 	}
 
+	.scrapbookSplash {
+		height: 25em;
+		background-position: 30% 0;
+		margin-top: -1.8em;
+	}
+
 }
 
 .parallax-image-wrapper {
