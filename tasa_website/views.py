@@ -583,7 +583,7 @@ def driveAPI_authentication():
     creds = store.get()
     if not creds or creds.invalid:
         flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
-        args = tools.argparser.parse_args()
+        args, unknown = tools.argparser.parse_known_args()
         args.noauth_local_webserver = True
         creds = tools.run_flow(flow, store, args)
     service = discovery.build('drive', 'v3', http=creds.authorize(Http()))
