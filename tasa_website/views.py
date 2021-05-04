@@ -181,9 +181,17 @@ def roll():
         choices = [row[2] for row in choices]
         
     rolledLateJars = ""
+    chosen = []
+
     for i in range(int(request.form['quantity'])):
         currentNum = str(i+1)
-        rolledLateJars += "(" + currentNum + ") " + random.choice(choices) + "\n"
+        rolled = random.choice(choices)
+
+        while rolled in chosen:
+            rolled = random.choice(choices)
+        
+        rolledLateJars += "(" + currentNum + ") " + rolled + "\n"
+        chosen.append(rolled)
 
     flash(rolledLateJars)
             

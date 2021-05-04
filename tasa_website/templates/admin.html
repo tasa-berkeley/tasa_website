@@ -577,7 +577,7 @@
                     <li>
                       <label>{{ jar.difficulty }}</label>  <a> - </a>
                       <label>{{ jar.jar }}</label>  
-                      <a href="javascript:void(0);" onclick="deleteItem({{jar.id}}, '{{jar.jar}}', '/lateJars/')">Delete</a>
+                      <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -586,9 +586,9 @@
                 <ul id='memberListView'>
                   {% for jar in lateJars if jar.difficulty == 'Hard' %}
                     <li>
-                      <label>{{ jar.difficulty}}</label>  <a> - </a>
+                      <label>{{ jar.difficulty }}</label>  <a> - </a>
                       <label>{{ jar.jar }}</label>  
-                      <a href="javascript:void(0);" onclick="deleteItem({{jar.id}}, '{{jar.jar}}', '/lateJars/')">Delete</a>
+                      <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -732,6 +732,7 @@ function deleteItem(id, name, endpoint) {
       url: endpoint + id,
       type: 'DELETE',
     });
+    console.log("hi")
     location.reload();
   }
 }
