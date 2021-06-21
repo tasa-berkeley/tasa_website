@@ -2,7 +2,7 @@ Flask==0.10.1
 Jinja2==2.11.3
 MarkupSafe==0.23
 Pillow==8.2.0
-PyYAML==3.12
+PyYAML==5.4
 Werkzeug==0.15.3
 argparse==1.2.1
 gunicorn==19.4.1
