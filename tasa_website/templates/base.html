@@ -17,7 +17,7 @@
   <link rel="icon" type="image/ico" href="https://tasa.berkeley.edu/images/assets/favicon.ico"/>
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link href='https://fonts.googleapis.com/css?family=Yantramanav:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Rubik:300,400,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
   <!-- Tasa custom CSS -->
   <link href="{{ url_for('static', filename='css/tasa_v0.0.3.css') }}" rel="stylesheet">
@@ -42,11 +42,11 @@
     <!-- End Google Analytics -->
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-dark sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="/">
-          <img src="../static/images/assets/logo.png" width="30" height="30" alt="">
+          <img src="../static/images/assets/bk-logo.png" width="30" height="30" alt="">
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
               <span class="navbar-toggler-icon"></span>
@@ -67,7 +67,6 @@
               </li>
               <li class="nav-item"><a class="nav-link active" href="/files">Files</a></li>
               <li class="nav-item"><a class="nav-link active" href="/donate">Donate</a></li>
-              <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -90,54 +89,62 @@
       <footer class="footer">
         <div class="container-fluid">
           <div class="row row-fluid">
-            <div class="col-md-1"></div>
-            <div class="col-md-2 col-pad">
-              <h3>Site Map</h3>
+            <div class="col-md"></div>
+            <div class="col-md-3 col-pad">
+              <h5>SITE MAP</h5>
               <ul class="list-unstyled">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/events">Events</a></li>
-                <li><a href="/officers">Officers</a></li>
-                <li><a href="/families">Families</a></li>
-                <li><a href="/scrapbook">Scrapbook</a></li>
-                <li><a href="/files">Files Archives</a></li>
-                <li><a href="/donate">Donate</a></li>
-                <li><a href="https://www.ocf.berkeley.edu/~tasa/old_site/">Old Site</a></li>
+                <li><a href="/"><div class="links">Home</div></a></li>
+                <li><a href="/about"><div class="links">About</div></a></li>
+                <li><a href="/events"><div class="links">Events</div></a></li>
+                <li><a href="/officers"><div class="links">Officers</div></a></li>
+                <li><a href="/families"><div class="links">Families</div></a></li>
+                <li><a href="/scrapbook"><div class="links">Scrapbook</div></a></li>
+                <li><a href="/files"><div class="links">Files Archives</div></a></li>
+                <li><a href="/donate"><div class="links">Donate</div></a></li>
+                <li><a href="https://www.ocf.berkeley.edu/~tasa/old_site/"><div class="links">Old Site</div></a></li>
               </ul>
             </div>
             <div class="col-md-3 col-pad">
-              <h3>Links Out</h3>
-              <ul class="list-unstyled">
-                <li><a href="http://taiwaneseamerican.org" target="_new">TaiwaneseAmerican.org</a></li>
-                <li><a href="https://tsa.berkeley.edu" target="_new">Taiwanese Student Association</a></li>
-                <li><a href="https://tacl.org/tap1/" target="_new">Taiwanese American Professionals (TAP)</a></li>
-                <li><a href="https://itasa.org" target="_new">Intercollegiate Taiwanese American Student Association (ITASA)</a></li>
-              </ul>
-              <a href="https://www.ocf.berkeley.edu" target="_new"><img style='width:auto;height:auto;' src="https://www.ocf.berkeley.edu/hosting-logos/ocf-hosted-penguin.png" alt="Hosted by the OCF" width="128" height="36" style="border:0" /></a>
-            </div>
-            <div class="col-md-3 col-pad">
-              <h3>Contact</h3>
+              <h5>CONTACT</h5>
               <ul class="list-unstyled">
 <!--                 <li><h5>Tabling Hours</h5>
                   <p class="text-muted">
                     Upper Sproul<br>
                     Monday-Friday 11am - 3pm</p>
                   </li> -->
-                <li><h5>Virtual Tabling Hours</h5>
-                  <p class="text-muted">
-                    Discord<br>
-                    Monday-Friday 11am-12pm and 7pm-10pm PST</p>
+                  
+                <li><h6>Tabling Hours:</h6>
+                  <p class="links text-muted">
+                    Behind Sather Gate<br>
+                    Monday - Friday<br>11am - 2pmPST</p><br>
                   </li>
-                  <li><h5>Email</h5>
-                    <a href="mailto:tasa.berkeley@gmail.com">Cabinet</a><br>
-                    <a href="mailto:margaret.chiang@berkeley.edu">President</a><br>
-                    <a href="mailto:brandon.yu@berkeley.edu">Webmaster</a>
+                  <li><h6>Email:</h6>
+                    <a href="mailto:tasa.berkeley@gmail.com"><div class="links">Cabinet</div></a>
+                    <a href="mailto:elizabethswang@berkeley.edu"><div class="links">President</div></a>
+                    <a href="mailto:matthew2024@berkeley.edu"><div class="links">Webmaster</div></a>
                   </li>
                 </ul>
               </div>
+            <div class="col-md-3 col-pad">
+              <h5>LINKS OUT</h5>
+              <ul class="list-unstyled">
+                <li><a href="http://taiwaneseamerican.org" target="_new"><div class="links">TaiwaneseAmerican.org</div></a></li>
+                <li><a href="https://tsa.berkeley.edu" target="_new"><div class="links">Taiwanese Student Association</div></a></li>
+                <li><a href="https://tacl.org/tap1/" target="_new"><div class="links">Taiwanese American Professionals (TAP)</div></a></li>
+                <li><a href="https://itasa.org" target="_new"><div class="links">Intercollegiate Taiwanese American Student Association (ITASA)</div></a></li>
+              </ul>
+              <br>
+              <a href="http://eepurl.com/vI0-D" target="_new"><img class="padded" src="../static/images/assets/email-2-240.png" width="35" height="35" /></a>
+              <a href="https://www.facebook.com/tasa.berkeley" target="_new"><img class="padded" src="../static/images/assets/facebook-1-240.png" width="35" height="35" /> </a>
+              <a href="https://www.instagram.com/tasa.berkeley/" target="_new"><img class="padded" src="../static/images/assets/instagram-11-240.png" width="35" height="35" /></a>
+              <a href="https://discord.gg/XYRacvEGTx" target="_new"><img class="padded" src="../static/images/assets/discord-1-240.png" width="35" height="35" /> </a>
 
+              <br><br><a href="https://www.ocf.berkeley.edu" target="_new"><img style='width:auto;height:auto;' src="https://www.ocf.berkeley.edu/hosting-logos/ocf-hosted-penguin.png" alt="Hosted by the OCF" width="128" height="36" style="border:0" /></a>
+            </div>
+            
+              <!--
               <div class="col-md-2 col-pad">
-                <h3>Support</h3>
+                <h4>Support</h4>
                 <ul class="list-unstyled">
                   <li><h5>Mailing List</h5>
                     <a href="http://eepurl.com/vI0-D" target="_new">Subscribe</a>
@@ -153,7 +160,8 @@
       
                 </ul>
               </div>
-              <div class="col-md-1"></div>
+              -->
+              <div class="col-md"></div>
             </div>
             <div class="row row-fluid copyright">
               <div class="col-md-5 col-center-block">

@@ -1,6 +1,6 @@
 body {
 	font-size: 16px;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 300;
 	margin: 0;
 	padding: 0;
@@ -15,15 +15,12 @@ html {
 }
 
 .navbar {
-	background-color: #000000;
-	background: #000000;
+	background-color: #e5e4ec!important;
 	border-color: transparent;
-	opacity: 0.8;
 }
 
-
 .nav li a {
-	color:white;
+	color:rgb(90, 90, 90);
 }
 
 /* ============ desktop view ============ */
@@ -43,12 +40,8 @@ html {
 /* ============ desktop view .end// ============ */
 
 .nav > li > a:hover {
-  color: #A9A9A9;
-  text-decoration: none;
-  background-color: #000000;
-  -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
-     -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
-          box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+  color: #000000;
+  text-decoration: none;  
 }
 
 .dropdown-item a:hover {
@@ -60,8 +53,8 @@ html {
 }
 
 .dropdown-menu {
-	background: rgba(0,0,0,0.8); 
-	color: rgb(191, 188, 188);
+	background: rgba(255, 255, 255, 0.8); 
+	color: rgb(77, 77, 77);
 }
 
 .secondSplash {
@@ -74,11 +67,12 @@ html {
 		rgba(0, 0, 0, 0.5)
 		),
 	url("../images/sp20v1home1.jpg");
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	background-position: 47% 35%;
 	display: block;
 	background-size: 100% auto;
 	background-attachment: fixed;
+	height: 40em;
 }
 
 .thirdSplash {
@@ -91,21 +85,23 @@ html {
 		rgba(0, 0, 0, 0.2)
 		),
 	url("../images/sp20v1home2.jpg");
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	-webkit-background-position: 47% 35%;
 	background-position: 47% 35%;
 	display: block;
 	background-size: 100% auto;
 	background-attachment: fixed;
+	height: 40em;
 }
 .third-title {
 	font-size: 6em;
 	color: white;
 	position: static;
 	padding-left: 1em;
-	padding-top: 3.5em;
+	padding-top: 5.5em;
 	text-shadow: 2px;
 	text-shadow: 1px 1px 10px #000000;
+	margin: 0;
 }
 
 .flex-wrapper {
@@ -143,6 +139,7 @@ html {
 
 .welcome {
 	padding-bottom:2em;
+	background-color: #e5e4ec;
 }
 
 .black-box {
@@ -196,50 +193,52 @@ html {
 	}
 
 	.main-title {
-		font-size: 3em;
-		margin-top: 1em;
-		margin-bottom: 2em;
+		font-size: 2em;
+		margin-top: 7em;
+		margin-bottom: 5em;
 		text-align:center;
 		color: white;
-		opacity: .7;
 		-webkit-box-ordinal-group: 3;
 		-webkit-order: 2;
 		-ms-flex-order: 2;
 		order: 2;
-		text-shadow: 1px 1px 10px #000000;
 	}
 
 	.splash {
 		-webkit-background-position: 60% 55%;
 		background-position: 60% 55%;
 		vertical-align: top;
-		font-family: 'Yantramanav', sans-serif;
+		font-family: 'Rubik', sans-serif;
 		display: block;
 		background-size: cover;
 		background-attachment: scroll;
 	}
 
 	.second-title {
-		font-size: 2.5em;
+		font-size: 2em;
 		color: white;
 		position: static;
 		text-align:center;
 		padding-left: .5em;
-		padding-top: 7em;
+		padding-top: 16em;
 		padding-bottom: 1em;
 		padding-right: .5em;
 		text-shadow: 1px 1px 10px #000000;
+		margin: 0;
+
 	}
 	.third-title {
-		font-size: 2.5em;
+		font-size: 2em;
 		color: white;
-		position: static;
-		padding-left: .5em;
-		padding-top: 6em;
+		position: static;	
+		padding-left: 0;
+		padding-top: 18em;
 		padding-bottom: 2em;
 		padding-right: .5em;
 		text-align: center;
 		text-shadow: 1px 1px 10px #000000;
+		margin: 0;
+
 	}
 }
 
@@ -268,49 +267,77 @@ html {
 	}
 
 	.main-title {
-		font-size: 5em;
+		font-size: 2.5em;
 		color: white;
-		opacity: .7;
 		-webkit-box-ordinal-group: 3;
 		-webkit-order: 2;
 		-ms-flex-order: 2;
 		order: 2;
-		margin-left: .5em;
-		margin-top: 5.6em;
-		text-shadow: 1px 1px 10px #000000;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+		margin-top: 9em;
+		z-index: 3;
+
 	}
 
 
 	.splash {
-		height: 40em;
+		height: 50em;
 		width: 100%;
 		background-position: 63% 55%;
 		vertical-align: top;
-		font-family: 'Yantramanav', sans-serif;
+		font-family: 'Rubik', sans-serif;
 		display: block;
 		background-size: cover;
 		background-attachment: scroll;
 	}
 
 	.second-title {
-		font-size: 4.2em;
+		font-size: 3.5em;
 		color: white;
 		position: static;
-		padding-left: 1em;
-		padding-top: 3.5em;
+		padding-left: 4.5em;
+		padding-top: 10em;
 		padding-bottom: 1em;
 		margin: .5em;
 		text-shadow: 1px 1px 10px #000000;
+		margin: 0;
+
 	}
 	.third-title {
-		font-size: 4.2em;
+		font-size: 3.5em;
 		color: white;
 		position: static;
 		padding-left: 1em;
-		padding-top: 3.5em;
+		padding-top: 10em;
 		padding-bottom: 1em;
 		text-shadow: 1px 1px 10px #000000;
 		margin: .5em;
+		margin-top: 0;
+	}
+	.blue-box {
+		background-color: rgb(99, 122, 190);
+		width: 360px;
+		height: 200px;
+		position: absolute;
+		opacity: 0.7;
+		margin-top: 16em;
+		z-index: 2;
+		animation: Slide_Right_Op 1.2s ease;
+
+	}
+	.red-box {
+		background-color:#fd8a7d;
+		width: 1000px;
+		height: 200px;
+		position: absolute;
+		opacity: 0.5;
+		margin-top: 20em;
+		margin-left: 8em;
+		z-index: 1;
+		animation: Slide_Left_Op 1.5s ease;
+
 	}
 }
 
@@ -330,41 +357,165 @@ html {
 	}
 
 	.main-title {
-		font-size: 6em;
+		font-size: 3.5em;
+		font-weight: 500;
 		color: white;
-		opacity: .7;
 		-webkit-box-ordinal-group: 3;
 		-webkit-order: 2;
 		-ms-flex-order: 2;
 		order: 2;
-		margin-left: .5em;
-		margin-top: 4.7em;
-		text-shadow: 1px 1px 10px #000000;
-	}
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+		margin-top: 7em;
+		z-index: 3;
 
+	}
 	.splash {
-		height: 40em;
+		height: 54em;
 		width: 100%;
 		background-position: 47% 55%;
 		vertical-align: top;
-		font-family: 'Yantramanav', sans-serif;
+		font-family: 'Rubik', sans-serif;
 		display: block;
 		background-size: cover;
+
 	}
 
 	.second-title {
 		font-size: 5em;
 		color: white;
 		position: static;
-		padding-left: 1em;
-		padding-top: 4.25em;
+		text-align: right;
+		padding-right: 1em;
+		padding-top: 6.5em;
 		padding-bottom: .25em;
 		text-shadow: 1px 1px 10px #000000;
+		margin: 0;
+	}
+	.blue-box {
+		background-color: rgb(99, 122, 190);
+		width: 613px;
+		height: 300px;
+		position: absolute;
+		opacity: 0.7;
+		margin-top: 15em;
+		z-index: 2;
+		animation: Slide_Right_Op 1.2s ease;
+
+	}
+	.red-box {
+		background-color:#fd8a7d;
+		width: 1500px;
+		height: 300px;
+		position: absolute;
+		opacity: 0.5;
+		margin-top: 20em;
+		margin-left: 16em;
+		z-index: 1;
+		animation: Slide_Left_Op 1.5s ease;
+
 	}
 }
 
+@keyframes Slide_Left_Op {
+	0% {
+		transform: translateX(100%);
 
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
 
+@keyframes Slide_Right_Op {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes Slide_Left {
+	0% {
+		transform: translateX(100%);
+		opacity: 0;
+
+	}
+	100% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes Slide_Right {
+	0% {
+		transform: translateX(-100%);
+		opacity: 0;
+
+	}
+	100% {
+		transform: translateX(0);
+		opacity: 1;
+
+	}
+}
+
+@keyframes Slide_Up {
+	0% {
+		transform: translateY(100%);
+		opacity: 0;
+
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+.first_text{
+	text-align: center;
+}
+
+.Slide_Up {
+	animation-name: Slide_Up;
+}
+
+.Slide_Left {
+	animation-name: Slide_Left;
+}
+
+.Slide_Right {
+	animation-name: Slide_Right;
+}
+
+.first_title {
+	animation-delay: 2.5s;
+}
+.first_body {
+	animation-delay: 3s;
+}
+
+.second_title {
+	animation-delay: 5.5s;
+}
+
+.second_body {
+	animation-delay: 6s
+}
+
+.third_title {
+	animation-delay: 8.5s
+}
+
+.third_body {
+	animation-delay: 9s
+}
+
+.animate {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
 
 .noselect {
 	-webkit-touch-callout: none;
@@ -375,23 +526,36 @@ html {
 	user-select: none;
 }
 
-.text {
-
-}
-
 .upcoming-event {
 	width: 100%;
 	height: auto;
 	margin-bottom: 1em;
 }
 
+.pink {
+	background-color: #e7877b;
+	color: white;
+}
+
+.blue {
+	background-color: rgb(131, 139, 187);
+	color: white;
+}
 
 .footer {
-	background-color: #000000;
+	background-color: #e5e4ec;
 	padding-top: 3em;
-	margin-top: 3em;
-	color: white;
+	margin-top: 0;
+	color: rgb(119, 119, 119);
 	font-size:1em;
+}
+
+.links {
+	color:rgb(27, 27, 27) !important
+}
+
+.padded {
+	margin: 0.5em;
 }
 
 .copyright {
@@ -431,7 +595,7 @@ html {
 	background-size: cover;
 	width: 100%;
 	vertical-align: top;
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 }
 
@@ -449,7 +613,7 @@ html {
 	background-size: cover;
 	width: 100%;
 	vertical-align: top;
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 33%;
 }
@@ -475,7 +639,7 @@ html {
 
 .eventSplash {
 	background-image: url("../images/sp20v1events.jpg");
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 30%;
 	background-size: cover;
@@ -541,7 +705,7 @@ h3.event-subheader {
 
 .scrapbookSplash {
 	background-image: url("../images/sp21v1scrapbook.jpg");
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 30%;
 	background-size: cover;
@@ -575,7 +739,7 @@ h3.event-subheader {
 }
 
 .officer-splash {
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 30%;
 	background-size: cover;
@@ -593,7 +757,7 @@ h3.event-subheader {
 }
 
 .files-splash {
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 40%;
 	background-size: cover;
@@ -611,7 +775,7 @@ h3.event-subheader {
 }
 
 .checkin-splash {
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 40%;
 	background-size: cover;
@@ -629,7 +793,7 @@ h3.event-subheader {
 }
 
 .donate-splash {
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	display: block;
 	background-position: 0% 15%;
 	background-size: cover;
@@ -921,10 +1085,11 @@ border-radius: .25rem;
 
 .desktopCalendar {
 	position: relative;
-	padding-bottom: 40%;
+	padding-bottom: 30%;
 	width: 100%;
 	height: 0;
 	overflow: hidden;
+	background-color: rgb(131, 139, 187);
 }
 	
 .desktopCalendar iframe {
@@ -952,6 +1117,8 @@ border-radius: .25rem;
 	overflow: hidden;
 	margin-left: auto;
 	margin-right: auto;
+	background-color: rgb(131, 139, 187);
+
 }
 	
 .mobileCalendar iframe {
