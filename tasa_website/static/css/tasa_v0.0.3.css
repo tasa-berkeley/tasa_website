@@ -513,7 +513,12 @@ html {
 .Slide_Right {
 	animation-name: Slide_Right;
 }
-
+.main_title {
+	animation-delay: 1s;
+}
+.subtitle {
+	animation-delay: 2s;
+}
 .first_title {
 	animation-delay: 2.5s;
 }
