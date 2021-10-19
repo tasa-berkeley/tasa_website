@@ -18,7 +18,10 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Rubik:300,400,700' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Overlock:regular,bold&subset=Latin">
+  <link href='https://fonts.googleapis.com/css?family=Overlock:600,400,300' rel='stylesheet' type='text/css'>
+
   <!-- Tasa custom CSS -->
   <link href="{{ url_for('static', filename='css/tasa_v0.0.3.css') }}" rel="stylesheet">
 
@@ -42,11 +45,11 @@
     <!-- End Google Analytics -->
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="/">
-          <img src="../static/images/assets/bk-logo.png" width="30" height="30" alt="">
+          <img src="../static/images/assets/logo.png" width="30" height="30" alt="">
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
               <span class="navbar-toggler-icon"></span>
@@ -54,19 +57,19 @@
           </div>
           <div id="collapsable" class="navbar-collapse collapse justify-content-end">
             <ul class="nav">
-              <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
-              <li class="nav-item"><a class="nav-link active" href="/events">Events</a></li>
-              <li class="nav-item"><a class="nav-link active" href="/officers">Officers</a></li>
-              <li class="nav-item"><a class="nav-link active" href="/families">Families</a></li>
+              <li class="nav-item"><a class="nav-link active nav-widen" href="/about">About</a></li>
+              <li class="nav-item"><a class="nav-link active nav-widen" href="/events">Events</a></li>
+              <li class="nav-item"><a class="nav-link active nav-widen" href="/officers">Officers</a></li>
+              <li class="nav-item"><a class="nav-link active nav-widen" href="/families">Families</a></li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown">Scrapbook</a>
+                <a class="nav-link dropdown-toggle nav-widen" data-toggle="dropdown">Scrapbook</a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="/scrapbook/fa19">Fall 2019</a></li>
                   <li><a class="dropdown-item" href="/scrapbook/sp20">Spring 2020</a></li>
                 </ul>
               </li>
-              <li class="nav-item"><a class="nav-link active" href="/files">Files</a></li>
-              <li class="nav-item"><a class="nav-link active" href="/donate">Donate</a></li>
+              <li class="nav-item"><a class="nav-link active nav-widen" href="/files">Files</a></li>
+              <li class="nav-item"><a class="nav-link active nav-widen" href="/donate">Donate</a></li>
             </ul>
           </div>
         </div>
@@ -86,6 +89,13 @@
                   });
                 }
             </script>
+            <script type="text/javascript">
+              $(function () {
+                $(document).scroll(function () {
+                  var $nav = $(".navbar-fixed-top");
+                  $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+              });
+            });</script>
       <footer class="footer">
         <div class="container-fluid">
           <div class="row row-fluid">
@@ -115,8 +125,8 @@
                   
                 <li><h6>Tabling Hours:</h6>
                   <p class="links text-muted">
-                    Behind Sather Gate<br>
-                    Monday - Friday<br>11am - 2pmPST</p><br>
+                    Upper Sproul<br>
+                    Monday - Friday<br>11am - 3pm PST</p><br>
                   </li>
                   <li><h6>Email:</h6>
                     <a href="mailto:tasa.berkeley@gmail.com"><div class="links">Cabinet</div></a>

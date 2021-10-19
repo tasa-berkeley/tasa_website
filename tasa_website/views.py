@@ -82,6 +82,7 @@ def add_event():
             raise Exception('Bad URL')
 
         res = fb_events.get_event(fb_event_id)
+        print(res)
         title = res['name']
         if res['is_online']:
             location = "Online"
@@ -142,6 +143,7 @@ def admin_panel():
 def roll():
     """Return a random easy or hard late jar."""
     auth.check_login()
+    """
     easyLateJars = ["Change your pfp to your first one for at least 3 days",
                     "Dance to https://www.youtube.com/watch?v=qqmmc7pl9Do",
                     "Everyone comment on your first pfp",
@@ -171,7 +173,7 @@ def roll():
                     "Make a video of yourself doing an impression of everyone on cab and upload to facebook group",
                     "Workout with terrance over zoom (min 10 mins)",
                     "Record yourself rapping 8 bars about anything (must be written by you)"]
-
+    """
     choices = None
     if request.form['level'] == 'Easy':
         choices = query_db('select * from late_jars where difficulty = "Easy" order by id')
@@ -434,7 +436,7 @@ def download_checkin_info():
     for entry in lst:
         event_dict[entry[0]].append(entry[1])
         member_dict[entry[1]].append(entry[0])
-    
+        
     event_lst = []
     member_lst = []
     for k,v in event_dict.items():

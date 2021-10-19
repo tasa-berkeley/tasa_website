@@ -1,6 +1,6 @@
 body {
 	font-size: 16px;
-	font-family: 'Rubik', sans-serif;
+	font-family: 'raleway', sans-serif;
 	font-weight: 300;
 	margin: 0;
 	padding: 0;
@@ -15,12 +15,34 @@ html {
 }
 
 .navbar {
-	background-color: #e5e4ec!important;
 	border-color: transparent;
 }
 
 .nav li a {
-	color:rgb(90, 90, 90);
+	color:rgb(255, 255, 255);
+}
+
+.nav-widen {
+	padding: 0.1rem 1.5rem;
+}
+
+.navbar-fixed-top.scrolled {
+	background-color: rgb(48, 48, 48) !important;
+	transition: background-color 200ms linear;
+	position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.navbar-fixed-top{ 
+	background-color: rgba(255, 255, 255, 0)!important;
+	transition:background-color 200ms linear; 
+	position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
 }
 
 /* ============ desktop view ============ */
@@ -40,7 +62,7 @@ html {
 /* ============ desktop view .end// ============ */
 
 .nav > li > a:hover {
-  color: #000000;
+  color: #8a9cc2;
   text-decoration: none;  
 }
 
@@ -53,7 +75,8 @@ html {
 }
 
 .dropdown-menu {
-	background: rgba(255, 255, 255, 0.8); 
+	background: rgba(255, 255, 255, 0); 
+	border:rgba(27, 27, 27, 0);
 	color: rgb(77, 77, 77);
 }
 
@@ -67,7 +90,7 @@ html {
 		rgba(0, 0, 0, 0.5)
 		),
 	url("../images/sp20v1home1.jpg");
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	background-position: 47% 35%;
 	display: block;
 	background-size: 100% auto;
@@ -85,7 +108,7 @@ html {
 		rgba(0, 0, 0, 0.2)
 		),
 	url("../images/sp20v1home2.jpg");
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	-webkit-background-position: 47% 35%;
 	background-position: 47% 35%;
 	display: block;
@@ -125,14 +148,14 @@ html {
 
 .splash {
 		background-image:
-		-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/lowresSplash.jpg");
+		-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/taipei.jpg");
 		background-image:
 		linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-		url("../images/lowresSplash.jpg");
+		url("../images/taipei.jpg");
 		background-size: 100% auto;
   		background-attachment: fixed;
 }
@@ -148,6 +171,7 @@ html {
 	height:40em;
 	vertical-align: top;
 }
+
 
 /* Phones */
 @media (max-width: 767px)
@@ -167,6 +191,7 @@ html {
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
+		height: 60em;
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: normal;
 		-webkit-flex-direction: column;
@@ -208,7 +233,7 @@ html {
 		-webkit-background-position: 60% 55%;
 		background-position: 60% 55%;
 		vertical-align: top;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Overlock', sans-serif;
 		display: block;
 		background-size: cover;
 		background-attachment: scroll;
@@ -283,11 +308,11 @@ html {
 
 
 	.splash {
-		height: 50em;
+		height: 60em;
 		width: 100%;
 		background-position: 63% 55%;
 		vertical-align: top;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Overlock', sans-serif;
 		display: block;
 		background-size: cover;
 		background-attachment: scroll;
@@ -358,7 +383,7 @@ html {
 
 	.main-title {
 		font-size: 3.5em;
-		font-weight: 500;
+		font-weight: 200;
 		color: white;
 		-webkit-box-ordinal-group: 3;
 		-webkit-order: 2;
@@ -372,11 +397,11 @@ html {
 
 	}
 	.splash {
-		height: 54em;
+		height: 60em;
 		width: 100%;
 		background-position: 47% 55%;
 		vertical-align: top;
-		font-family: 'Rubik', sans-serif;
+		font-family: 'Overlock', sans-serif;
 		display: block;
 		background-size: cover;
 
@@ -488,7 +513,12 @@ html {
 .Slide_Right {
 	animation-name: Slide_Right;
 }
-
+.main_title {
+	animation-delay: 1s;
+}
+.subtitle {
+	animation-delay: 2s;
+}
 .first_title {
 	animation-delay: 2.5s;
 }
@@ -583,20 +613,21 @@ html {
 
 .about-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/sp20v1about.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/fa21v1about.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.1)
 		),
-	url("../images/sp20v1about.jpg");
-	height: 33em;
+	url("../images/fa21v1about.jpg");
+	height: 40em;
 	background-size: cover;
 	width: 100%;
 	vertical-align: top;
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
+	background-position-y: 45%;
 }
 
 .family-splash {
@@ -609,18 +640,18 @@ html {
 		rgba(0, 0, 0, 0.4)
 		),
 	url("../images/sp20v1families.jpg");
-	height: 33em;
+	height: 40em;
 	background-size: cover;
 	width: 100%;
 	vertical-align: top;
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
 	background-position: 0% 33%;
 }
 
 .family1 {
 	background-position: 11% 0%;
-	font-family: 'Yantramanav', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	display: block;
 	background-size: cover;
 	height: 27em;
@@ -632,32 +663,32 @@ html {
 .head-title {
 	color: white;
 	font-size: 7em;
-	padding-top: 3.5em;
+	padding-top: 4.5em;
 	padding-left: 1em;
 	text-shadow: 1px 1px 10px #000000;
 }
 
 .eventSplash {
-	background-image: url("../images/sp20v1events.jpg");
-	font-family: 'Rubik', sans-serif;
+	background-image: url("../images/fa21v1events.jpg");
+	font-family: 'Overlock', sans-serif;
 	display: block;
 	background-position: 0% 30%;
 	background-size: cover;
-	height: 33em;
+	height: 40em;
 	width: 100%;
 	position: relative;
 }
 
 .darken-event {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/sp20v1events.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/fa21v1events.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.3)
 		),
-	url("../images/sp20v1events.jpg");
+	url("../images/fa21v1events.jpg");
 }
 
 
@@ -705,11 +736,11 @@ h3.event-subheader {
 
 .scrapbookSplash {
 	background-image: url("../images/sp21v1scrapbook.jpg");
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
 	background-position: 0% 30%;
 	background-size: cover;
-	height: 33em;
+	height: 40em;
 	width: 100%;
 	position: relative;
 }
@@ -739,47 +770,47 @@ h3.event-subheader {
 }
 
 .officer-splash {
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
-	background-position: 0% 30%;
+	background-position: 0% 65%;
 	background-size: cover;
-	height: 33em;
+	height: 40em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1officers.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa21v1officers.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/sp20v1officers.jpg");
+	url("../images/fa21v1officers.jpg");
 }
 
 .files-splash {
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
-	background-position: 0% 40%;
+	background-position: 0% 9%;
 	background-size: cover;
-	height: 33em;
+	height: 40em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1files.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa21v1files.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/sp20v1files.jpg");
+	url("../images/fa21v1files.jpg");
 }
 
 .checkin-splash {
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
 	background-position: 0% 40%;
 	background-size: cover;
-	height: 33em;
+	height: 40em;
 	width: 100%;
 	background-image:
 	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1checkin.jpg");
@@ -793,27 +824,27 @@ h3.event-subheader {
 }
 
 .donate-splash {
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Overlock', sans-serif;
 	display: block;
-	background-position: 0% 15%;
+	background-position: 0% 25%;
 	background-size: cover;
-	height: 33em;
+	height: 40em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp20v1donate.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa21v1donate.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/sp20v1donate.jpg");
+	url("../images/fa21v1donate.jpg");
 }
 
 .officer-title {
 	color: white;
 	font-size: 7em;
-	padding-top: 3.80em;
+	padding-top: 4.80em;
 	padding-left: 1em;
 	text-shadow: 1px 1px 10px #000000;
 }
