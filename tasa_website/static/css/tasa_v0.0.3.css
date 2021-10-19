@@ -1074,13 +1074,21 @@ p.file-text {
 	font-size: 1.5em;
 }
 
-navbar-toggler {
+@media (max-width: 575px) { 
+	.navbar-header {
+		width: 100%;
+	}
+}
+
+
+.navbar-toggler {
 padding: .25rem .75rem;
 font-size: 1.25rem;
 line-height: 1;
 background-color: transparent;
 border: 1px solid transparent;
 border-radius: .25rem;
+float: right;
 }
 
 .desktopCalendar {
