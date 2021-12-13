@@ -137,7 +137,7 @@ def admin_panel():
     lateJars = query_db('select * from late_jars order by id')
 
     return render_template('admin.html', events=events, officers=officers, families=families, files=files, members=members,
-                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, lateJars = lateJars)
+                        check_valid_checkin=check_valid_checkin, leaderboard=leaderboard, lateJars=lateJars)
 
 @app.route('/rolling', methods=['POST'])
 def roll():
@@ -483,8 +483,6 @@ def get_checkins():
 
 @app.route('/checkin/<int:member_id>', methods=['POST'])
 def update_checkin(member_id):
-    auth.check_login()
-
     name = request.form['name']
     checkins = request.form['checkins']
     returning = (int(checkins) > 0)
@@ -582,6 +580,12 @@ def scrapbookPage(semester):
         imgIDsToPass[semester] = semImgIDs
 
     return render_template('scrapbook.html', imgIDsToPass=imgIDsToPass)
+
+@app.route('/event-checkin', methods=['GET'])
+def eventCheckin():
+    events = query_db('select * from events order by unix_time desc')
+    members = query_db('select * from members order by name')
+    return render_template('event-checkin.html', events=events, members=members, check_valid_checkin=check_valid_checkin)
 
 def driveAPI_authentication():
     """

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+  {% block content %}
+  <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel" style="background-color:lightblue; height:93vh;" >
+    <div class="row">
+      <div class="col"></div>
+      <div class="col">
+        <br>
+        <br>
+        <h2>Check-in!</h2>
+        <br>
+        <p> Please select the event you are attending here!</p>
+        <select id="eventSelect" class="custom-select">
+            <option selected>Event</option>
+            {% for event in events %}
+                <option value={{ event.id }}>{{ event.title }} [{{ event.id }}]</option>
+            {% endfor %}
+          </select>
+          <br>
+          <br>
+          <p> Please select your name here!</p>
+          <select id="memberSelect" class="custom-select">
+            <option selected>Name</option>
+            {% for member in members %}
+                <option value={{ member.id }}>{{ member.name }} [{{ member.id }}] [{{ member.checkins }}]</option>
+            {% endfor %}
+          </select>
+          <br>
+          <br>
+          
+          <button type="button" onclick="checkinToEvent()" class="btn btn-info">Check-in</button>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  
+<script type="text/javascript">
+
+/* 
+    Takes in string and returns num in brackets
+    TASA: Tea Time [157] returns 157 
+*/
+let breakIndex = 0
+function findNum(str) {
+    let id = ""
+    for (let i = str.length - 2; i >= 0; i--) {
+        if (str.charAt(i) === "[") {
+            breakIndex = i
+            break
+        }
+        id += str.charAt(i)
+        
+
+    }
+    return parseInt(id.split("").reverse().join(""))
+}
+
+function checkinToEvent() {
+    const DEFAULT_EVENT = "Event"
+    const DEFAULT_NAME = "Name"
+    const e = document.getElementById("eventSelect")
+    const event = e.options[e.selectedIndex].text
+    const eventID = findNum(event)
+
+    const m = document.getElementById("memberSelect")
+    const member = m.options[m.selectedIndex].text
+    const memberCheckins = findNum(member)
+    const memberID = findNum(member.slice(0, breakIndex))
+    if(member == DEFAULT_NAME || event == DEFAULT_EVENT) {
+        alert("Please select an event and name")
+        return 
+    } 
+    $.ajax({
+        url: '/checkin/' + memberID,
+        type: 'POST',
+        data: { name: member, checkins: memberCheckins + 1, eventName: event, eventID: eventID }
+    });
+    alert(member + ", you have checked in to " + event + "!")
+    location.reload()
+}
+</script>
+{% endblock %}
