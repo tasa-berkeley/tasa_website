@@ -1,6 +1,6 @@
 {% extends "base.html" %}
   {% block content %}
-  <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel" style="background-color:lightblue; heightvh;" >
+  <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel" style="background-color:lightblue; height : 85vh;" >
     <div class="row">
       <div class="col"></div>
       <div class="col">
@@ -74,8 +74,12 @@ function checkinToEvent() {
         type: 'POST',
         data: { name: member, checkins: memberCheckins + 1, eventName: event, eventID: eventID }
     });
-    alert(member + ", you have checked in to " + event + "!")
-    location.reload()
+
+    var expires = (new Date(Date.now()+ 2*60*60*1000)).toUTCString();
+    let cookieID = Math.floor(Math.random() * (10000000000 - 1) + 1)
+    document.cookie = "confirmationID=" + cookieID + ";expires=" + expires + ";path=/;"
+    window.location.href = "{{url_for('checkin_successful') }}" + "?id=" + cookieID;
+    //location.reload()
 }
 </script>
 {% endblock %}
