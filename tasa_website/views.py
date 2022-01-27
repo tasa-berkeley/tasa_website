@@ -363,11 +363,11 @@ def add_file():
     flash('New file successfully posted')
     return redirect(url_for('admin_panel'))
 
-@app.route('/files', methods=['GET'])
+@app.route('/join', methods=['GET'])
 def files():
     query = 'select * from files'
     files = query_db(query)
-    return render_template('files.html', files=files)
+    return render_template('join.html', files=files)
 
 @app.route('/files/<int:file_id>', methods=['DELETE'])
 def delete_file(file_id):
@@ -646,6 +646,13 @@ def check_valid_checkin(eventID, memberID):
     checkins = query_db(query, (eventID, memberID))
     return len(checkins) == 0
 
+@app.route('/checkin_successful', methods=['GET'])
+def checkin_successful():
+    id = request.args.get('id')
+    if id == request.cookies.get('confirmationID'):
+        return render_template('checkin_successful.html')
+    else:
+        return "<p>Check-in Invalid</p>"
     
 
 
