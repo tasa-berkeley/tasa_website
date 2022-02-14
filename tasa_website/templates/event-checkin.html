@@ -11,7 +11,7 @@
         <p> Please select the event you are attending here!</p>
         <select id="eventSelect" class="custom-select">
             <option selected>Event</option>
-            {% for event in events %}
+            {% for event in upcoming %}
                 <option value={{ event.id }}>{{ event.title }} [{{ event.id }}]</option>
             {% endfor %}
           </select>
