@@ -7,7 +7,7 @@
         <br>
         <br>
         <h2>Check-in!</h2>
-        <p> If you don't see your name in the drop down menu fill out <a href="https://forms.gle/cs91GyoeV9isE2GF6" target="_blank">this Google Form</a> here so we can add you our database! </p>
+        <p> If you don't see your name in the dropdown menu fill out <a href="https://forms.gle/cs91GyoeV9isE2GF6" target="_blank">this Google Form</a> here so we can add you our database! </p>
         <br>
         <p> Please select the event you are attending here!</p>
         <select id="eventSelect" class="custom-select">
@@ -22,7 +22,7 @@
           <select id="memberSelect" class="custom-select">
             <option selected>Name</option>
             {% for member in members %}
-                <option value={{ member.id }}>{{ member.name }} [{{ member.id }}] [{{ member.checkins }}]</option>
+                <option value={{ member.id }}>{{ member.name }} [{{ member.id }}] </option>
             {% endfor %}
           </select>
           <br>
