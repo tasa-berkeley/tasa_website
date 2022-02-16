@@ -61,7 +61,7 @@ def event_list():
     recent = []
     current_time = int(time.time())
     for event in events:
-        if event['unix_time'] + 300 > current_time: # +300 to allow for check-in to ongoing events
+        if event['unix_time'] + 7200 > current_time: # +7200 to allow for check-in to ongoing events
             upcoming.append(event)
         else:
             recent.append(event)
