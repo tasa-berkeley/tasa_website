@@ -61,7 +61,7 @@ def event_list():
     recent = []
     current_time = int(time.time())
     for event in events:
-        if event['unix_time'] > current_time:
+        if event['unix_time'] + 7200 > current_time: # +7200 to allow for check-in to ongoing events
             upcoming.append(event)
         else:
             recent.append(event)
@@ -572,7 +572,7 @@ def scrapbookPage(semester):
     imgIDsToPass = {}   # {semester: [IDs of semester images]}
     for semester, semFolderID in semFolderNameIDs.items():
         imgIDs = fileSearch(service, "'" + semFolderID + "' in parents and trashed=false", 
-                                pageSize = 9, fieldsParameters = "nextPageToken, files(id)")
+                                pageSize = 11, fieldsParameters = "nextPageToken, files(id)")
 
         semImgIDs = []
         for id in range(0, len(imgIDs)):
