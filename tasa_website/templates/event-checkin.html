@@ -22,7 +22,7 @@
           <select id="memberSelect" class="custom-select">
             <option selected>Name</option>
             {% for member in members %}
-                <option value={{ member.id }}>{{ member.name }} [{{ member.id }}] [{{ member.checkins }}] </option>
+                <option value={{ member.id }}>{{ member.name }} </option>
             {% endfor %}
           </select>
           <br>
@@ -52,6 +52,7 @@ function findNum(str) {
         
 
     }
+  
     return parseInt(id.split("").reverse().join(""))
 }
 
@@ -60,12 +61,16 @@ function checkinToEvent() {
     const DEFAULT_NAME = "Name"
     const e = document.getElementById("eventSelect")
     const event = e.options[e.selectedIndex].text
+    const event_name = event.slice(event.indexOf("]") + 1)
+    //const event_name1 = event_name.slice(1, event_name.indexOf("[") - 1)
     const eventID = findNum(event)
-
     const m = document.getElementById("memberSelect")
     const member = m.options[m.selectedIndex].text
-    const memberCheckins = findNum(member)
+    const member_name = member.slice(0, member.indexOf("[")-1)
+    const memberCheckins = findNum(member);
     const memberID = findNum(member.slice(0, breakIndex))
+
+  
     if(member == DEFAULT_NAME || event == DEFAULT_EVENT) {
         alert("Please select an event and name")
         return 
@@ -73,14 +78,16 @@ function checkinToEvent() {
     $.ajax({
         url: '/checkin/' + memberID,
         type: 'POST',
-        data: { name: member, checkins: memberCheckins + 1, eventName: event, eventID: eventID }
+        data: { name: member_name, checkins: memberCheckins + 1, eventName: event, eventID: eventID }
     });
 
     var expires = (new Date(Date.now()+ 2*60*60*1000)).toUTCString();
     let cookieID = Math.floor(Math.random() * (10000000000 - 1) + 1)
     document.cookie = "confirmationID=" + cookieID + ";expires=" + expires + ";path=/;"
+    location.reload()
     window.location.href = "{{url_for('checkin_successful') }}" + "?id=" + cookieID;
-    //location.reload()
+
+   
 }
 </script>
 {% endblock %}
