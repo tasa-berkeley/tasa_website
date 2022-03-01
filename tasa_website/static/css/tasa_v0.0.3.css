@@ -650,16 +650,14 @@ html {
 }
 
 .family1 {
-	background-position: 50% 0%;
+	background-position: 50% 50%;
 	font-family: 'Roboto', sans-serif;
 	display: block;
-	background-size: cover;
+	background-size: contain;
 	height: 20em;
-	border-style: solid;
-	border-width: .4em;
-	border-color: #DDDDDD;
 	width: 100%
 }
+
 
 .head-title {
 	color: white;
