@@ -653,10 +653,20 @@ html {
 	background-position: 50% 50%;
 	font-family: 'Roboto', sans-serif;
 	display: block;
+	background-size: cover;
+	height: 20em;
+	width: 100%
+}
+
+.sponsor {
+	background-position: 50% 50%;
+	font-family: 'Roboto', sans-serif;
+	display: block;
 	background-size: contain;
 	height: 20em;
 	width: 100%
 }
+
 
 
 .head-title {
