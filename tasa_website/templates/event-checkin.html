@@ -22,7 +22,7 @@
           <select id="memberSelect" class="custom-select">
             <option selected>Name</option>
             {% for member in members %}
-                <option value={{ member.id }}>{{ member.name }} </option>
+                <option value={{ member.id }}>{{ member.name }} [{{ member.id }}] [{{ member.checkins }}]</option>
             {% endfor %}
           </select>
           <br>
