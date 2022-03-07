@@ -656,7 +656,7 @@ html {
 	font-family: 'Roboto', sans-serif;
 	display: block;
 	background-size: cover;
-	height: 20em;
+	padding-top: 100%;
 	width: 100%
 }
 
@@ -665,7 +665,7 @@ html {
 	font-family: 'Roboto', sans-serif;
 	display: block;
 	background-size: contain;
-	height: 20em;
+	padding-top: 100%;
 	width: 100%
 }
 
