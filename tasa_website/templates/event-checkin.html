@@ -1,6 +1,6 @@
 {% extends "base.html" %}
   {% block content %}
-  <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel" style="background-color:lightblue; height : 85vh;" >
+  <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel" style="background-color:lightblue; height : 130vh;" >
     <div class="row">
       <div class="col"></div>
       <div class="col">
@@ -22,7 +22,11 @@
           <select id="memberSelect" class="custom-select">
             <option selected>Name</option>
             {% for member in members %}
+<<<<<<< HEAD
                 <option value={{ member.id }}>{{ member.name}} [{{ member.id }}] [{{ member.checkins }}]</option>
+=======
+                <option value={{ member.id }}>{{ member.name }} [{{ member.id }}] [{{ member.checkins }}]</option>
+>>>>>>> 088652988442a6ebc6ea5a9d6305574e77fdd332
             {% endfor %}
           </select>
           <br>
