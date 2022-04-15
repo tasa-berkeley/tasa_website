@@ -22,7 +22,7 @@
           <select id="memberSelect" class="custom-select">
             <option selected>Name</option>
             {% for member in members %}
-                <option value={{ member.id }}>{{ member.name }} </option>
+                <option value={{ member.id }}>{{ member.name}} [{{ member.id }}] [{{ member.checkins }}]</option>
             {% endfor %}
           </select>
           <br>
@@ -84,7 +84,6 @@ function checkinToEvent() {
     var expires = (new Date(Date.now()+ 2*60*60*1000)).toUTCString();
     let cookieID = Math.floor(Math.random() * (10000000000 - 1) + 1)
     document.cookie = "confirmationID=" + cookieID + ";expires=" + expires + ";path=/;"
-    location.reload()
     window.location.href = "{{url_for('checkin_successful') }}" + "?id=" + cookieID;
 
    
