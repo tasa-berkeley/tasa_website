@@ -556,7 +556,7 @@ def scrapbookPage(semester):
     serviceID = driveAPI_authentication()
     service = serviceID["service"]
     id = serviceID["id"]
-    semDictionary = {'sp20': 'Spring 2020', 'fa19': 'Fall 2019', 'fa21': 'Fall 2021'}
+    semDictionary = {'sp20': 'Spring 2020', 'fa19': 'Fall 2019', 'fa21': 'Fall 2021', 'sp22': 'Spring 2022'}
     specifiedSem = semDictionary[semester]
 
     # Search for the specified semester folder in the scrapbook folder
