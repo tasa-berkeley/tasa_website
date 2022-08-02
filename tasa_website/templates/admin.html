@@ -7,6 +7,7 @@
 <link href='https://fonts.googleapis.com/css?family=Yantramanav:300' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 <link href="{{ url_for('static', filename='css/tasa_v0.0.1.css') }}" rel="stylesheet">
+<link rel="icon" type="image/ico" href="../static/images/assets/bk-logo.png"/>
 </head>
 <body>
   <div class="modal fade" id="officerModal" tabindex="-1" role="dialog" aria-labelledby="officerModalLabel">
@@ -566,8 +567,8 @@
               <div class = "col"></div>
               <div class = "col">
                 <h2>All Late Jars in DB:</h2>
-              </div>                
-              <div class = "col"></div>                                
+              </div>
+              <div class = "col"></div>
             </div>
             <div class ="row" >
               <div class="col">
@@ -575,7 +576,7 @@
                   {% for jar in lateJars if jar.difficulty == 'Easy' %}
                     <li>
                       <label>{{ jar.difficulty }}</label>  <a> - </a>
-                      <label>{{ jar.jar }}</label>  
+                      <label>{{ jar.jar }}</label>
                       <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
                     </li>
                   {% endfor %}
@@ -586,7 +587,7 @@
                   {% for jar in lateJars if jar.difficulty == 'Hard' %}
                     <li>
                       <label>{{ jar.difficulty }}</label>  <a> - </a>
-                      <label>{{ jar.jar }}</label>  
+                      <label>{{ jar.jar }}</label>
                       <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
                     </li>
                   {% endfor %}
@@ -603,7 +604,7 @@
                   <div class="form-group">
                     <label for="newLateJar">New Late Jar</label>
                     <input name=newLateJar type="text" class="form-control" id="newLateJar">
-                  </div> 
+                  </div>
                   <div class="form-group">
                     <label for="difficulty">Difficulty</label>
                     <select name=difficulty class="form-control" id="difficulty" required>
@@ -635,7 +636,7 @@
                         <input name=level type="radio" id="hard" value="Hard">
                       </div>
                     </div>
-                  </div>  
+                  </div>
                   <div class="form-group">
                     <label for="numLateJars">Number of jars</label>
                     <select id="numLateJars" class="form-control" name ="quantity">
@@ -645,7 +646,7 @@
                       <option value="4">4</option>
                       <option value="5">5</option>
                     </select>
-                  </div>  
+                  </div>
                 <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar</button>
               </form>
               </div>

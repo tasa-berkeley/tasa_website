@@ -35,9 +35,9 @@ html {
     left: 0;
     z-index: 1030;
 }
-.navbar-fixed-top{ 
+.navbar-fixed-top{
 	background-color: rgba(255, 255, 255, 0)!important;
-	transition:background-color 200ms linear; 
+	transition:background-color 200ms linear;
 	position: fixed;
     top: 0;
     right: 0;
@@ -47,7 +47,7 @@ html {
 
 /* ============ desktop view ============ */
 @media only screen and (min-width: 768px) {
-	.nav .nav-item .dropdown-menu { 
+	.nav .nav-item .dropdown-menu {
 		display: none;
 	}
 
@@ -58,12 +58,12 @@ html {
 	.nav .nav-item .dropdown-menu {
 		margin-top:0;
 	}
-}	
+}
 /* ============ desktop view .end// ============ */
 
 .nav > li > a:hover {
   color: #8a9cc2;
-  text-decoration: none;  
+  text-decoration: none;
 }
 
 .dropdown-item a:hover {
@@ -75,7 +75,7 @@ html {
 }
 
 .dropdown-menu {
-	background: rgba(255, 255, 255, 0); 
+	background: rgba(255, 255, 255, 0);
 	border:rgba(27, 27, 27, 0);
 	color: rgb(77, 77, 77);
 }
@@ -255,7 +255,7 @@ html {
 	.third-title {
 		font-size: 2em;
 		color: white;
-		position: static;	
+		position: static;
 		padding-left: 0;
 		padding-top: 18em;
 		padding-bottom: 2em;
@@ -442,7 +442,7 @@ html {
 
 	}
 
-	
+
 }
 
 @keyframes Slide_Left_Op {
@@ -1117,7 +1117,7 @@ p.file-text {
 	font-size: 1.5em;
 }
 
-@media (max-width: 575px) { 
+@media (max-width: 575px) {
 	.navbar-header {
 		width: 100%;
 	}
@@ -1142,7 +1142,7 @@ float: right;
 	overflow: hidden;
 	background-color: rgb(131, 139, 187);
 }
-	
+
 .desktopCalendar iframe {
 	position: absolute;
 	top:0;
@@ -1156,7 +1156,7 @@ float: right;
 	text-align: center;
 }
 @media only screen and (max-width: 550px) {
-	.desktopCalendar 
+	.desktopCalendar
 	{display:none;}
 	}
 
@@ -1171,7 +1171,7 @@ float: right;
 	background-color: rgb(131, 139, 187);
 
 }
-	
+
 .mobileCalendar iframe {
 	position: absolute;
 	top:0;
@@ -1186,7 +1186,7 @@ float: right;
 }
 
 @media only screen and (min-width: 550px) {
-	.mobileCalendar 
+	.mobileCalendar
 	{display:none;}
 	}
 
