@@ -22,8 +22,9 @@ POSITIONS = [
     'Treasurer',
     'Webmaster',
     'Outreach',
-    'Design',
-    'Marketing',
+    # 'Design',
+    # 'Marketing',
+    'Public Relations',
     'Family Head',
     'Historian',
     'Senior Advisor',
@@ -32,10 +33,9 @@ POSITIONS = [
     'Outreach Intern',
     'Design Intern',
     'Marketing Intern',
+    'Public Relations Intern',
     'Family Head Intern',
     'Historian Intern'
-    'Public Relations',
-    'Public Relations Intern',
 
 ]
 
