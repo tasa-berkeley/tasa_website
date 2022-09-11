@@ -8,16 +8,21 @@ POSITIONS = [
     'Treasurer',
     'Webmaster',
     'Outreach',
-    'Public Relations',
+    'Design',
+    'Marketing',
     'Family Head',
     'Historian',
     'Senior Advisor',
-    'Family Head Intern',
-    'Historian Intern',
-    'Public Relations Intern',
-    'Outreach Intern',
     'Treasurer Intern',
     'Webmaster Intern',
+    'Outreach Intern',
+    'Design Intern',
+    'Marketing Intern',
+    'Family Head Intern',
+    'Historian Intern'
+    'Public Relations',
+    'Public Relations Intern',
+
 ]
 
 def connect_db():

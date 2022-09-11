@@ -22,7 +22,6 @@ POSITIONS = [
     'Treasurer',
     'Webmaster',
     'Outreach',
-    'Public Relations',
     'Design',
     'Marketing',
     'Family Head',
@@ -30,12 +29,14 @@ POSITIONS = [
     'Senior Advisor',
     'Treasurer Intern',
     'Webmaster Intern',
-    'Public Relations Intern',
     'Outreach Intern',
     'Design Intern',
     'Marketing Intern',
     'Family Head Intern',
     'Historian Intern'
+    'Public Relations',
+    'Public Relations Intern',
+
 ]
 
 IMAGE_MAXSIZE = (1024, 1024)
