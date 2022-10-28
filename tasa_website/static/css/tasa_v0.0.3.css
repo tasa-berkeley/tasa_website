@@ -1103,11 +1103,12 @@ h3.event-subheader {
     line-height: 1.2;
 }
 
-.testimonial-member-picture {
+
+.test-picture {
 	height: 380px;
 	margin-left: 80px;
 	margin-bottom: 10px;
-		object-fit: contain;
+	object-fit: contain;
 	border-radius: 50%;
 	background-color: black;
     padding: 7px;
