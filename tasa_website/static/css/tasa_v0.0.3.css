@@ -798,6 +798,24 @@ h3.event-subheader {
 	url("../images/fa22v1officers.jpg");
 }
 
+.testimonials-splash {
+	font-family: 'Overlock', sans-serif;
+	display: block;
+	background-position: 0% 65%;
+	background-size: cover;
+	height: 40em;
+	width: 100%;
+	background-image:
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa22v1testimonials.jpg");
+	background-image:
+	linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.0),
+		rgba(0, 0, 0, 0.2)
+		),
+	url("../images/fa22v1testimonials.jpg");
+}
+
 .files-splash {
 	font-family: 'Overlock', sans-serif;
 	display: block;
@@ -1083,6 +1101,25 @@ h3.event-subheader {
     padding: 15px;
     font-size: 15px;
     line-height: 1.2;
+}
+
+.testimonial-member-picture {
+	height: 380px;
+	margin-left: 80px;
+	margin-bottom: 10px;
+		object-fit: contain;
+	border-radius: 50%;
+	background-color: black;
+    padding: 7px;
+	text-align: center;
+}
+
+.bolder {
+	text-shadow: 0px 1px, 1px 0px, 1px 1px;
+}
+
+.bold {
+	font-weight: bold;
 }
 
 .officer-member span {
