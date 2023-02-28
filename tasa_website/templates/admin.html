@@ -375,7 +375,7 @@
                     </div>
                     <div class="form-group">
                       <label for="familyIntern">Family Intern</label>
-                      <input name=family_Intern type="text" class="form-control" id="familyIntern">
+                      <input name=family_intern type="text" class="form-control" id="familyIntern">
                     </div>
                     <div class="form-group">
                       <label for="familyDescription">Description</label>
@@ -446,7 +446,7 @@
                       {{ family.family_name }}
                       <a href="javascript:void(0);" data-toggle="modal" data-target="#familyModal"
                           data-name="{{family.family_name}}" data-id="{{family.id}}" data-familyhead1="{{family.family_head1}}"
-                          data-familyhead2="{{family.family_head2}}" data-description="{{family.description}}">Update</a>
+                          data-familyhead2="{{family.family_head2}}" data-familyintern="{{family.family_intern}}" data-description="{{family.description}}">Update</a>
                       <a href="javascript:void(0);" onclick="deleteItem({{family.id}}, '{{family.family_name}}', '/families/')">Delete</a>
                     </li>
                   {% endfor %}
