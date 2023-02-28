@@ -106,6 +106,10 @@
               <textarea type="text" name="family_head2" class="form-control" id="family-modal-familyhead2"></textarea>
             </div>
             <div class="form-group">
+              <label for="family_head_intern" class="control-label">Family Head Intern:</label>
+              <textarea type="text" name="family_head_intern" class="form-control" id="family-modal-familyheadintern"></textarea>
+            </div>
+            <div class="form-group">
               <label for="file" class="control-label">Image:</label>
               <input type=file name=file class="form-control-file"></input>
             </div>
@@ -374,8 +378,8 @@
                       <input name=family_head2 type="text" class="form-control" id="familyHead2">
                     </div>
                     <div class="form-group">
-                      <label for="familyIntern">Family Intern</label>
-                      <input name=family_intern type="text" class="form-control" id="familyIntern">
+                      <label for="familyHeadIntern">Family Head Intern</label>
+                      <input name=family_head_intern type="text" class="form-control" id="familyHeadIntern">
                     </div>
                     <div class="form-group">
                       <label for="familyDescription">Description</label>
@@ -446,7 +450,7 @@
                       {{ family.family_name }}
                       <a href="javascript:void(0);" data-toggle="modal" data-target="#familyModal"
                           data-name="{{family.family_name}}" data-id="{{family.id}}" data-familyhead1="{{family.family_head1}}"
-                          data-familyhead2="{{family.family_head2}}" data-familyintern="{{family.family_intern}}" data-description="{{family.description}}">Update</a>
+                          data-familyhead2="{{family.family_head2}}" data-familyheadintern="{{family.family_head_intern}}" data-description="{{family.description}}">Update</a>
                       <a href="javascript:void(0);" onclick="deleteItem({{family.id}}, '{{family.family_name}}', '/families/')">Delete</a>
                     </li>
                   {% endfor %}
@@ -825,12 +829,14 @@ $('#familyModal').on('show.bs.modal', function(e) {
   const description = link.data('description');
   const familyhead1 = link.data('familyhead1');
   const familyhead2 = link.data('familyhead2');
+  const familyheadintern = link.data('familyheadintern');
   const modal = $(this);
   modal.find('.modal-title').text('Updating ' + name);
   modal.find('#family-modal-name').val(name);
   modal.find('#family-modal-description').val(description);
   modal.find('#family-modal-familyhead1').val(familyhead1);
   modal.find('#family-modal-familyhead2').val(familyhead2);
+  modal.find('#family-modal-familyheadintern').val(familyheadintern);
 
   const updateUrl = '/families/' + id;
   modal.find('#family-modal-form').attr('action', updateUrl);
