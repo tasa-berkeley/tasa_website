@@ -302,7 +302,7 @@ def add_family():
     description = request.form['description']
 
     query = 'insert into families (family_name, family_head1, family_head2, family_head_intern, description, image_url)'\
-            'values (?, ?, ?, ?, ?)'
+            'values (?, ?, ?, ?, ?, ?)'
     query_db(query, [family_name, family_head1, family_head2, family_head_intern, description, image_url])
     flash('New family successfully posted')
     return redirect(url_for('admin_panel'))
