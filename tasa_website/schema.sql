@@ -31,6 +31,7 @@ create table families(
     family_name text not null,
     family_head1 text not null,
     family_head2 text not null,
+    family_head_intern text not null,
     description text not null,
     image_url text not null
 );

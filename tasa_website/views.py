@@ -298,11 +298,12 @@ def add_family():
     family_name = request.form['family_name']
     family_head1 = request.form['family_head1']
     family_head2 = request.form['family_head2']
+    family_head_intern = request.form['family_head_intern']
     description = request.form['description']
 
-    query = 'insert into families (family_name, family_head1, family_head2, description, image_url)'\
+    query = 'insert into families (family_name, family_head1, family_head2, family_head_intern, description, image_url)'\
             'values (?, ?, ?, ?, ?)'
-    query_db(query, [family_name, family_head1, family_head2, description, image_url])
+    query_db(query, [family_name, family_head1, family_head2, family_head_intern, description, image_url])
     flash('New family successfully posted')
     return redirect(url_for('admin_panel'))
 
@@ -313,6 +314,7 @@ def edit_family(family_id):
     family_name = request.form['family_name']
     family_head1 = request.form['family_head1']
     family_head2 = request.form['family_head2']
+    family_head_intern = request.form['family_head_intern']
     description = request.form['description']
 
     if helpers.check_file_in_request(request):
@@ -323,17 +325,17 @@ def edit_family(family_id):
             return redirect(url_for('admin_panel'))
         query = (
             'update families '
-            'set family_name=?, family_head1=?, family_head2=?, description=?, image_url=? '
+            'set family_name=?, family_head1=?, family_head2=?, family_head_intern=?, description=?, image_url=? '
             'where id=?'
         )
-        query_db(query, [family_name, family_head1, family_head2, description, image_url, family_id])
+        query_db(query, [family_name, family_head1, family_head2, family_head_intern, description, image_url, family_id])
     else:
         query = (
             'update families '
-            'set family_name=?, family_head1=?, family_head2=?, description=?'
+            'set family_name=?, family_head1=?, family_head2=?, family_head_intern=?, description=?'
             'where id=?'
         )
-        query_db(query, [family_name, family_head1, family_head2, description, family_id])
+        query_db(query, [family_name, family_head1, family_head2, family_head_intern, description, family_id])
     flash('Updated ' + family_name)
     return redirect(url_for('admin_panel'))
 
@@ -346,7 +348,7 @@ def delete_family(family_id):
 
 @app.route('/families', methods=['GET'])
 def families():
-    query = 'select family_name, family_head1, family_head2, description, image_url from families'
+    query = 'select family_name, family_head1, family_head2, family_head_intern, description, image_url from families'
     families = query_db(query)
     return render_template('families.html', families=families)
 
