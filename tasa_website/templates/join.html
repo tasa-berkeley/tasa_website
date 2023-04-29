@@ -1,26 +1,148 @@
 {% extends "base.html" %}
   {% block content %}
 
+  <link rel="stylesheet" href="tasa_v0.0.3.css">
   <div id="slide1" class="files-splash">
         <h1 class="head-title noselect">
           Join us!
         </h1>
       </div>
-      <div class="container-fluid">
-        <div class="row row-pad event">
-          <div class="col-md-12 col-pad">
-            <ul>
-            {% for file in files %}
-              <li>
-                <p class="file-text">
-                  <a href="{{file.file_url}}">{{file.name}}</a>
-                </p>
-              </li>
-            {% endfor %}
-            </ul>
-          </div>
-        </div>
+
+      <!-- For the form links -->
+    <div class="container-fluid">
+      <div class="row row-pad event">
+        <div class="col-md-12 col-pad">
+          <h1><span class="bolder">Useful Links and Resources:</span></h1>
+          <ul>
+          {% for file in files %}
+            <li>
+              <p class="file-text">
+                <a href="{{file.file_url}}">{{file.name}}</a>
+              </p>
+            </li>
+          {% endfor %}
+          </ul>
         </div>
       </div>
+      </div>
+    </div>
 
+     <!--  Temporary Code to see if Accordion FAQ Works :D -> Help from W3School  -->
+     <!-- FAQ Page questions and answers -->
+     <div class="container-fluid">
+      <div class="row row-pad event">
+        <div class="col-md-12 col-pad">
+          <h1><span class="bolder">Frequently Asked Questions:</span></h1>
+     
+          <button class="accordion"><h4>Do I need to be Taiwanese to join TASA?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify"> 
+                No! We encourage all students from all backgrounds to join TASA! We have many diverse students in our organization, and each one of them helps make TASA the incredible community it is. 
+                TASA provides a welcoming environment for members from diverse backgrounds to come together and celebrate their unique experiences while connecting over their shared passion for Taiwanese 
+                American heritage and culture. We welcome everyone to come and enjoy the incredible things that TASA offers as long as you have an interest in anything Taiwanese!
+              </p>
+            </div>
+       
+          <button class="accordion"><h4>What are the prices associated with TASA?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                Although membership is not required to attend any of our general events, we do have membership fees of $10 per semester, $15 per year, or a $25 lifetime membership fee that comes with a 
+                free t-shirt, all of which contribute to funding for our events and membership discounts! Refer to our donation page for more information! Feel free to reach out for any questions too!
+              </p>
+            </div>
+
+          <button class="accordion"><h4>Where are the general meetings at TASA?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                We typically hold our general events in the Social Sciences Building! We always specify
+                the room numbers or the location in our Instagram posts and announcements! Make sure to stay updated with our socials!
+              </p>
+            </div>
+          
+          <button class="accordion"><h4>What are general events like?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                Each semester we always have a 0.5/1st/2nd General Event! Our 0.5 GEN event allows people interested in TASA to meet the officers and mingle with the TASA community! 
+                Our 1st GEN event formally introduces the incredible semester-specific activities, events, and families in a themed-event for general members. 
+                And, our 2nd GEN event is organized by our interns to wrap up the semester! We also have bi-weekly events that promote Taiwanese culture and heritage ranging from mid-autumn 
+                festivals to Taiwanese night market-themed events! These general events are super fun and also provide more information about Taiwanese culture. It is also a great way to meet 
+                new people and connect with other Taiwanese-American students on campus!
+              </p>
+            </div>
+
+          <button class="accordion"><h4>What is the best way to stay updated on everything TASA?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                We primarily announce our events on Instagram and Facebook! We also have a general event calendar at the bottom of the TASA website home page that includes general, family, 
+                and collaborative event information! All of our socials can always be found on our website's about page or at our table at Upper Sproul from 11 AM to 2PM every week day! 
+                Here's our <a href="https://www.instagram.com/tasa.berkeley/" target="_blank">Instagram</a> and 
+                <a href="https://www.facebook.com/tasa.berkeley" target="_blank">Facebook</a>, and 
+                <a href="https://berkeley.us6.list-manage.com/subscribe?u=9eec0da79b013380e34061d39&id=38d3c5d02c" target="_blank">Mailing List</a> for a quick reference!
+              </p>
+            </div>
+       
+          <button class="accordion"><h4>How can I be more involved with TASA?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                TASA is an incredible community that creates unforgettable memories for those who want to have fun and enjoy Taiwanese culture/heritage! Our general events and family events 
+                are great ways to become involved in the community and get to know our wonderful members! We also offer intern positions each semester where people can get a behind-the-scenes 
+                look at how we organize events and get closer to our cabinet members!
+              </p>
+            </div>
+
+          <button class="accordion"><h4>What is the difference between TSA and TASA?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                TASA generally caters to Taiwanese-American students or students with an interest in Taiwanese heritage and focuses on spreading awareness about Taiwanese-American culture at Berkeley. 
+                The Taiwanese Student Association (TSA) is an organization that focuses more on providing a community for Taiwanese students here at Berkeley and hosts several amazing events throughout 
+                the semester! Both of our organizations celebrate Taiwanese heritage and culture and collaborate often with each other to bring you the best of Taiwan!  
+                Feel free to come to any of our events!
+              </p>
+            </div>
+
+          <button class="accordion"><h4>What are families and how does the system work?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                Families are smaller communities in TASA that are set up by our wonderful family heads! Families are typically themed and participate in different activities/events 
+                together throughout the semester. Joining a TASA family is an amazing way to get closer to people in TASA! You can sign up anytime during the semester using the preference 
+                form linked on the website, and we will pair you up with one of the families!
+              </p>
+            </div>
+       
+          <button class="accordion"><h4>What is the commitment for TASA like?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                There is no consistent commitment for TASA (feel free to come to whichever events you are able to attend!), but we would love to see people come to events, 
+                so we can get to know more of you! Especially for the events our incredible families work to put together for family members, we encourage everyone to come out 
+                and join the community throughout the semester!
+              </p>
+            </div>
+
+          <button class="accordion"><h4>What are interns and why should I apply to be one?</h4></button>
+            <div class="new_panel">
+              <p class="text-justify">
+                Interns are cabinet members who have the opportunity to shadow a specific TASA officer for a semester to learn behind-the-scenes responsibilities, 
+                see how TASA operates, and get closer with our cabinet family. As a part of an intern class each semester, you'll have the chance to get closer to other interns, 
+                enjoy cabinet events, and help contribute to TASA. We encourage anyone who wants to get closer with TASA to apply! Take a look at our testimonials page for some experiences 
+                from some of our past interns and apply to be an intern if interested! We will release the application at the beginning of each semester, so stay tuned!
+              </p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Allow user to hover over the accordion panel and then transition/highlight the accordion background colors after/before hover -->
+    <script>
+      for (var i = 0; i < document.getElementsByClassName("accordion").length; i++) {
+          document.getElementsByClassName("accordion")[i].addEventListener("click", function() {
+          this.classList.toggle("after-click");
+          if (this.nextElementSibling.style.display === "block") {
+            this.nextElementSibling.style.display = "none";
+          } else {
+            this.nextElementSibling.style.display = "block";
+          }
+        });
+      }
+    </script>
+        
    {% endblock %}
