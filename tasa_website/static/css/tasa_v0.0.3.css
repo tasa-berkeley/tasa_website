@@ -1250,3 +1250,31 @@ float: right;
 #tab-pane {
 	height:100vh;
 }
+
+.faq-accordion {
+	font-size: 11px;
+	background-color: rgb(255, 255, 255);
+	color: #444;
+	padding: 11px;
+	width: 100%;
+	height: 49px;
+	text-align: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	transition: 0.423s;
+  }
+  .faq-accordion:hover {
+	height: 49px;
+	background-color: rgb(212, 212, 212);
+  }
+  .after-click {
+	height: 49px;
+	background-color: rgb(255, 255, 255);
+  }
+  .new_panel {
+	padding: 0 11px;
+	background-color: rgb(255, 255, 255);
+	display: none;
+	overflow: hidden;
+  }
