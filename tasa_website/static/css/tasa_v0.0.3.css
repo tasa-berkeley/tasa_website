@@ -662,6 +662,7 @@ html {
 
 .sponsor {
 	background-position: 50% 50%;
+	background-repeat: no-repeat;
 	font-family: 'Roboto', sans-serif;
 	display: block;
 	background-size: contain;
