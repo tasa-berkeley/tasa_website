@@ -1285,7 +1285,7 @@ float: right;
   /*   To eliminate overlap of Accordion text in mobile  */ 
 
 /* Draft 3 */
-@media (max-width: 767px) {
+@media (max-width: 520px) {
 
 	.faq-accordion {
 		font-size: 11px;
