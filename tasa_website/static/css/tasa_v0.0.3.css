@@ -1261,6 +1261,7 @@ float: right;
 	height: 49px;
 	text-align: left;
 	border: none;
+	box-sizing: border-box;
 	outline: none;
 	cursor: pointer;
 	transition: 0.423s;
@@ -1276,6 +1277,45 @@ float: right;
   .new_panel {
 	padding: 0 11px;
 	background-color: rgb(255, 255, 255);
+	box-sizing: border-box;
 	display: none;
 	overflow: hidden;
   }
+
+  /*   To eliminate overlap of Accordion text in mobile  */ 
+
+/* Draft 3 */
+@media (max-width: 767px) {
+
+	.faq-accordion {
+		font-size: 11px;
+		background-color: rgb(255, 255, 255);
+		color: #444;
+		padding: 11px;
+		width: 100%;
+		height: 74px;
+		text-align: left;
+		border: none;
+		box-sizing: border-box;
+		outline: none;
+		cursor: pointer;
+		transition: 0.423s;
+	  }
+	  .faq-accordion:hover {
+		height: 77px;
+		background-color: rgb(212, 212, 212);
+	  }
+	  .after-click {
+		height: 78px;
+		background-color: rgb(255, 255, 255);
+	  }
+	  .new_panel {
+		padding: 0 11px;
+		background-color: rgb(255, 255, 255);
+		box-sizing: border-box;
+		display: none;
+		overflow: hidden;
+	  }
+	
+
+}
