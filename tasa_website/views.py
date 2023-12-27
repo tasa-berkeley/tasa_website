@@ -583,11 +583,11 @@ def scrapbookPage(semester):
 
     return render_template('scrapbook.html', imgIDsToPass=imgIDsToPass)
 
-@app.route('/event-checkin', methods=['GET'])
+@app.route('/testimonials', methods=['GET'])
 def eventCheckin():
     events = query_db('select * from events order by unix_time desc')
     members = query_db('select * from members order by name')
-    return render_template('event-checkin.html', events=events, members=members, check_valid_checkin=check_valid_checkin)
+    return render_template('testimonials.html', events=events, members=members, check_valid_checkin=check_valid_checkin)
 
 def driveAPI_authentication():
     """
