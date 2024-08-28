@@ -408,7 +408,7 @@
                       <a href="javascript:void(0);" data-toggle="modal" data-target="#eventStatsModal"
                           data-attendance='{{ event.attendance }}' data-new_attendance='{{ event.new_attendance }}'
                           data-returning_attendance='{{ event.returning_attendance }}'>Stats</a>&nbsp;
-                      <a href="javascript:void(0);" onclick="deleteItem(event.id, '{{event.title}}', '/events/')">Delete</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{event.id}} '{{event.title}}', '/events/')">Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -430,7 +430,7 @@
                           data-name="{{officer.name}}" data-id="{{officer.id}}" data-year="{{officer.year}}"
                           data-major="{{officer.major}}" data-position={{officer.position}} data-quote="{{officer.quote}}"
                           data-description="{{officer.description}}">Update</a>&nbsp;
-                      <a href="javascript:void(0);" onclick="deleteItem(officer.id, '{{officer.name}}', '/officers/')">Delete</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{officer.id}}, '{{officer.name}}', '/officers/')">Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -451,7 +451,7 @@
                       <a href="javascript:void(0);" data-toggle="modal" data-target="#familyModal"
                           data-name="{{family.family_name}}" data-id="{{family.id}}" data-familyhead1="{{family.family_head1}}"
                           data-familyhead2="{{family.family_head2}}" data-familyheadintern="{{family.family_head_intern}}" data-description="{{family.description}}">Update</a>
-                      <a href="javascript:void(0);" onclick="deleteItem(family.id, '{{family.family_name}}', '/families/')">Delete</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{family.id}}, '{{family.family_name}}', '/families/')">Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -490,7 +490,7 @@
                   {% for file in files %}
                     <li>
                       {{ file.name }} &nbsp;
-                      <a href="javascript:void(0);" onclick="deleteItem(file.id, '{{file.name}}', '/files/')">Delete</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{file.id}}, '{{file.name}}', '/files/')">Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -558,7 +558,7 @@
                           data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
                           data-email="{{member.email}}" data-findable={{member.findable}} data-checkins="{{member.checkins}}"
                           >Update</a>
-                      <a href="javascript:void(0);" onclick="deleteItem(member.id, '{{member.name}}', '/members/')">Delete</a>
+                      <a href="javascript:void(0);" onclick="deleteItem({{member.id}}, '{{member.name}}', '/members/')">Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -586,7 +586,7 @@
                     <li>
                       <label>{{ jar.difficulty }}</label>  <a> - </a>
                       <label>{{ jar.jar }}</label>
-                      <a href="javascript:void(0);" onclick='deleteItem(jar.id,"{{jar.jar}}", "/lateJars/")'>Delete</a>
+                      <a href="javascript:void(0);" onclick='deleteItem({{jar.id}},"{{jar.jar}}", "/lateJars/")'>Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
@@ -597,7 +597,7 @@
                     <li>
                       <label>{{ jar.difficulty }}</label>  <a> - </a>
                       <label>{{ jar.jar }}</label>
-                      <a href="javascript:void(0);" onclick='deleteItem(jar.id, "{{jar.jar}}", "/lateJars/")'>Delete</a>
+                      <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
                     </li>
                   {% endfor %}
                   </ul>
