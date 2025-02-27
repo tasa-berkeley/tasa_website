@@ -22,8 +22,8 @@ POSITIONS = [
     'Treasurer',
     'Webmaster',
     'Outreach',
-    # 'Design',
-    # 'Marketing',
+    'Design',
+    'Marketing',
     'Public Relations',
     'Family Head',
     'Historian',
@@ -36,7 +36,6 @@ POSITIONS = [
     'Public Relations Intern',
     'Family Head Intern',
     'Historian Intern'
-
 ]
 
 IMAGE_MAXSIZE = (1024, 1024)
