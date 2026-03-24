@@ -19,25 +19,23 @@ POSITIONS = [
     'President',
     'Internal Vice President',
     'External Vice President',
-    'Webmaster',
-    'Design',
-    'Social',
     'Treasurer',
+    'Webmaster',
     'Outreach',
+    'Design',
     'Marketing',
     'Public Relations',
     'Family Head',
     'Historian',
-    'Webmaster Intern',
-    'Design Intern',
-    'Social Intern',
+    'Senior Advisor',
     'Treasurer Intern',
+    'Webmaster Intern',
     'Outreach Intern',
+    'Design Intern',
     'Marketing Intern',
     'Public Relations Intern',
     'Family Head Intern',
-    'Historian Intern',
-    'Senior Advisor'
+    'Historian Intern'
 ]
 
 IMAGE_MAXSIZE = (1024, 1024)
