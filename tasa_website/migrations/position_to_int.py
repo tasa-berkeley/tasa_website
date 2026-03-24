@@ -5,24 +5,25 @@ POSITIONS = [
     'President',
     'Internal Vice President',
     'External Vice President',
-    'Treasurer',
     'Webmaster',
-    'Outreach',
     'Design',
+    'Social',
+    'Treasurer',
+    'Outreach',
     'Marketing',
     'Public Relations',
     'Family Head',
     'Historian',
-    'Senior Advisor',
-    'Treasurer Intern',
     'Webmaster Intern',
-    'Outreach Intern',
     'Design Intern',
+    'Social Intern',
+    'Treasurer Intern',
+    'Outreach Intern',
     'Marketing Intern',
     'Public Relations Intern',
     'Family Head Intern',
-    'Historian Intern'
-
+    'Historian Intern',
+    'Senior Advisor'
 ]
 
 def connect_db():
