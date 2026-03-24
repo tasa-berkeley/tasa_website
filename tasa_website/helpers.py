@@ -19,23 +19,25 @@ POSITIONS = [
     'President',
     'Internal Vice President',
     'External Vice President',
-    'Treasurer',
     'Webmaster',
-    'Outreach',
     'Design',
+    'Social',
+    'Treasurer',
+    'Outreach',
     'Marketing',
     'Public Relations',
     'Family Head',
     'Historian',
-    'Senior Advisor',
-    'Treasurer Intern',
     'Webmaster Intern',
-    'Outreach Intern',
     'Design Intern',
+    'Social Intern',
+    'Treasurer Intern',
+    'Outreach Intern',
     'Marketing Intern',
     'Public Relations Intern',
     'Family Head Intern',
-    'Historian Intern'
+    'Historian Intern',
+    'Senior Advisor'
 ]
 
 IMAGE_MAXSIZE = (1024, 1024)
@@ -93,7 +95,7 @@ def save_request_file(request, save_folder):
         # compress and resize the image
         img = Image.open(f)
         img.thumbnail(IMAGE_MAXSIZE)
-        img.save(f_path, format='JPEG', quality=95, optimize=True, progressive=True)
+        img.convert('RGB').save(f_path, format='JPEG', quality=95, optimize=True, progressive=True)
     else:
         f.save(f_path)
     return f_url
