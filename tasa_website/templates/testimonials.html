@@ -1,164 +1,30 @@
 {% extends "base.html" %}
+{% from "_macros.html" import img_or_placeholder %}
+
+{% block title %}Testimonials — TASA @ Berkeley{% endblock %}
+
 {% block content %}
+<div class="mx-auto max-w-4xl px-4 py-16 sm:px-6">
+  <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">Hear from our Members!</h1>
 
-<div id="slide1" class="testimonials-splash">
-  <h1 class="head-title noselect">
-    Testimonials
-  </h1>
+  {% if not testimonials %}
+    <p class="mt-12 text-neutral-500">Testimonials are coming soon &mdash; check back shortly!</p>
+  {% endif %}
+
+  <div class="mt-12 space-y-10">
+    {% for t in testimonials %}
+      <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+        <div class="flex-none">
+          {{ img_or_placeholder(static_image(t.image_url), t.name, 'h-36 w-36 rounded-full border border-neutral-200 object-cover', 'square') }}
+        </div>
+        <div class="flex-1 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
+          <p class="font-semibold text-accent-700">{{ t.question }}</p>
+          <p class="mt-3 leading-relaxed text-neutral-700">{{ t.response }}</p>
+          <p class="mt-4 font-semibold text-neutral-900">{{ t.name }}</p>
+          <p class="text-sm text-neutral-500">{{ t.position }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
-
-<div class="container-fluid">
-  <div class="row row-fluid">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-5 col-pad col-pad-top-3">
-      <h2></h2>
-      <img class="test-picture" src="./static/images/officers/katherine_chen_t.jpg" onmouseover="this.src='./static/images/officers/funny_katherine_chen_t.jpg';" onmouseout="this.src='./static/images/officers/katherine_chen_t.jpg';"></img>
-    </div>
-    <div class="col-md-5 col-pad col-pad-top-3">
-      <h2>How was your TASA intern experience?</h2>
-      <p>
-        I loved being TASA intern because I actually got to make amazing memories with some the kindest 
-        most genuine people in Berkeley. I'm so grateful for all the people I've gotten to meet, and as intern, I 
-        was able to make lasting connections that I will forever appreciate.</p>
-        
-        <span class="bolder">Katherine Chen</span>
-        <br/>
-        <span class="bold">Outreach Intern, Outreach Officer</span>
-      </div>
-    
-  </div>
-  <div class="row row-fluid">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-5 col-pad col-pad-top-3">
-      <h2></h2>
-      <img class="test-picture" src="./static/images/officers/cathi_chiu_t.jpg" onmouseover="this.src='./static/images/officers/funny_cathi_chiu_t.jpg';" onmouseout="this.src='./static/images/officers/cathi_chiu_t.jpg';"></img>
-    </div>
-    <div class="col-md-5 col-pad col-pad-top-3">
-      <h2>What does TASA LOVE mean to you?</h2>
-      <p>
-        To me, TASA LOVE means a sense of belonging. Growing up in and spending the majority of my life time in Taiwan, 
-        I was looking for somewhere with a sense of home in college. And TASA happens to be that home. When I'm happy, 
-        there is someone to share the happiness with. When I'm down, there is someone who cares about my feelings. I've 
-        never felt so welcomed and have sought the old comfort that I was used to in Taiwan. I've created some of the 
-        most unforgettable memories while in TASA, and formed the most amazing friendships that I can't ever ask for 
-        elsewhere. Because of that, I want to share this TASA LOVE with everyone! </p>
-        <span class="bolder">Cathi Chiu </span>
-        <br/>
-        <span class="bold">Historian Intern, Public Relations Officer, External Vice President</span>
-      </div>
-    </div>
-  </div>
-
-<div class="row row-fluid">
-  <div class="col-md-1">
-  </div>
-  <div class="col-md-5 col-pad ">
-    <h2></h2>
-    <img class="test-picture" src="./static/images/officers/ryan_hsu_t.jpg" onmouseover="this.src='./static/images/officers/funny_ryan_hsu_t.jpg';" onmouseout="this.src='./static/images/officers/ryan_hsu_t.jpg';"></img>
-  </div>
-  <div class="col-md-5 col-pad col-pad-top-3">
-    <h2>What was something you didn't expect as a TASA intern?</h2>
-    <p>
-      I didn't expect the TASA community to be so welcoming towards interns! As soon as I joined,  
-      I felt a strong sense of community where I belonged despite joining so recently. 
-      I would definitely recommend this experience for anyone looking for their Berkeley family!
-    </p>
-      
-      <span class="bolder">Ryan Hsu</span>
-      <br/>
-      <span class="bold">Treasurer Intern, Treasurer Officer, Internal Vice President</span>
-    </div>
-  
-    <div class="row row-fluid">
-      <div class="col-md-1">
-      </div>
-      <div class="col-md-5 col-pad col-pad-top-3">
-        <h2></h2>
-        <img class="test-picture" src="./static/images/officers/charlize_chen_t.jpg" onmouseover="this.src='./static/images/officers/funny_charlize_chen_t.jpg';" onmouseout="this.src='./static/images/officers/charlize_chen_t.jpg';"></img>
-      </div>
-      <div class="col-md-5 col-pad col-pad-top-3">
-        <h2>Who should consider applying to your position? Would you recommend being an officer?</h2>
-        <p>
-          Even though I applied to Historian with limited photography experience, I have been able to slowly 
-          develop my skills and have loved capturing small moments at TASA events. As historian, 
-          I have the privilege of visually showcasing our welcoming community, the excitement of meeting new people, 
-          and genuine care that TASA members dedicate to the club. While historians may typically be on the sidelines 
-          during events, everyone in the club sees and acknowledges your hard work. Being Historian has been an 
-          unexpectedly gratifying experience and I could not recommend it more! </p>
-          <span class="bolder">Charlize Chen</span>
-          <br/>
-          <span class="bold">Family Head Intern, Historian Officer</span>
-        </div>
-
-        <div class="row row-fluid">
-          <div class="col-md-1">
-          </div>
-          <div class="col-md-5 col-pad col-pad-top-3">
-            <h2></h2>
-            <img class="test-picture" src="./static/images/officers/kailyn_yu_t.jpg" onmouseover="this.src='./static/images/officers/funny_kailyn_yu_t.jpg';" onmouseout="this.src='./static/images/officers/kailyn_yu_t.jpg';"></img>
-          </div>
-          <div class="col-md-5 col-pad col-pad-top-3">
-            <h2>What was your favorite TASA event/memory as a member? </h2>
-            <p>
-              0.5 Gen Boba Run! This was the first event I went to for TASA, and I was very nervous about going because 
-              I didn't know anyone there and didn't know what to expect. When I walked up to the group of people gathered 
-              at the Glade, a super sweet and friendly person came up to me and introduced herself to me. We ended up 
-              getting along extremely well, and now she's my officer and one of my best friends here at Berkeley :) 
-              I also met some of my fellow interns at this event and other general members whom I would see continue 
-              to return to club events. This makes me extremely thankful for having gone to that first meeting because 
-              I have now found myself a community that supports me and accepts me for who I am. </p>
-              
-              <span class="bolder">Kailyn Yu</span>
-              <br/>
-              <span class="bold">Family Head Intern, Family Head Officer, President</span>
-            </div>
-        </div>
-
-        <div class="row row-fluid">
-          <div class="col-md-1">
-          </div>
-          <div class="col-md-5 col-pad col-pad-top-3">
-            <h2></h2>
-            <img class="test-picture" src="./static/images/officers/matt_chen_t.jpg" onmouseover="this.src='./static/images/officers/funny_matt_chen_t.jpg';" onmouseout="this.src='./static/images/officers/matt_chen_t.jpg';"></img>
-          </div>
-          <div class="col-md-5 col-pad col-pad-top-3">
-            <h2>How was your experience in TASA and what did you learn from your position?</h2>
-            <p>
-              TASA has been a big part of my college life and I learned a lot in my position as a Fam Head. 
-              One of the most important things I have learned is event organizing as well as scheduling to make 
-              sure certain events will be smoothly ran and at an available time for everyone.</p>
-
-              <span class="bolder">Matthew Chen</span>
-              <br/>
-              <span class="bold">Family Head Intern, Family Head Officer</span>
-            </div>
-        </div>
-
-        <div class="row row-fluid">
-          <div class="col-md-1">
-          </div>
-          <div class="col-md-5 col-pad col-pad-top-3">
-            <h2></h2>
-            <img class="test-picture" src="./static/images/officers/sean_wang_t.jpg" onmouseover="this.src='./static/images/officers/funny_sean_wang_t.jpg';" onmouseout="this.src='./static/images/officers/sean_wang_t.jpg';"></img>
-          </div>
-          <div class="col-md-5 col-pad col-pad-top-3">
-            <h2>How was your TASA intern experience? Would you recommend it?</h2>
-            <p>
-              I really enjoyed my TASA intern experience because 
-              of the friends and memories I made out of it. Being 
-              surrounded by a great group of people helped make my 
-              first semester of college a lot better. I was able to go on 
-              spontaneous trips, explore the area, and hangout with my fellow interns often. 
-              I would definitely recommend becoming an intern. </p>
-              <span class="bolder">Sean Wang</span>
-              <br/>
-              <span class="bold">Treasurer Intern, Treasurer Officer</span>
-            </div>
-        </div>
-
-</div>
-</div>
-
 {% endblock %}

@@ -1,11 +1,31 @@
+# Python
+__pycache__/
 *.pyc
-*.DS_Store
-log
-config.yaml
-tasa_website/static/files
-tasa_website/static/images
-tasa_website.db
 venv/
-.vscode
-*.json
-updatesite.sh
+.venv/
+*.egg-info/
+
+# Environment / secrets
+.env
+
+# Database (instance folder holds the sqlite file)
+instance/
+*.db
+
+# Uploaded images (live only on the server; keep the folder via .placeholder)
+tasa_website/static/images/officers/*
+!tasa_website/static/images/officers/.placeholder
+tasa_website/static/images/families/*
+!tasa_website/static/images/families/.placeholder
+tasa_website/static/images/testimonials/*
+!tasa_website/static/images/testimonials/.placeholder
+
+# Tailwind standalone binary (downloaded per machine, see README)
+tailwindcss
+tailwindcss.exe
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+node_modules/

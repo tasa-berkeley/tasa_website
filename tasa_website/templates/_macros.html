@@ -1,0 +1,31 @@
+{# Shared template macros #}
+
+{# Render a stored/derived image URL, falling back to a gray placeholder. kind: 'square' | 'wide' #}
+{% macro img_or_placeholder(url, alt='', classes='', kind='square') -%}
+  {%- if url -%}
+    <img src="{{ url }}" alt="{{ alt }}" class="{{ classes }}" loading="lazy">
+  {%- else -%}
+    <img src="{{ url_for('static', filename='images/placeholders/' + kind + '.svg') }}" alt="" class="{{ classes }}" loading="lazy">
+  {%- endif -%}
+{%- endmacro %}
+
+{# Section heading used across public pages #}
+{% macro heading(text, id='') %}
+  <h2 {% if id %}id="{{ id }}"{% endif %} class="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-900">{{ text }}</h2>
+{% endmacro %}
+
+{# A labeled form field with validation errors (admin + login forms) #}
+{% macro form_field(f, rows=0) %}
+  <div>
+    {{ f.label(class="mb-1 block text-sm font-medium text-neutral-700") }}
+    {% set base = "w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-200" %}
+    {% if rows %}
+      {{ f(class=base, rows=rows) }}
+    {% else %}
+      {{ f(class=base) }}
+    {% endif %}
+    {% for error in f.errors %}
+      <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endmacro %}

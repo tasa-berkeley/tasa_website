@@ -1,38 +1,50 @@
 {% extends "base.html" %}
-  {% block content %}
-  <div id="slide1" class="family-splash">
-        <h1 class="head-title noselect">
-          Families
-        </h1>
+{% from "_macros.html" import img_or_placeholder %}
+
+{% block title %}Families — TASA @ Berkeley{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-6xl px-4 py-16 sm:px-6" x-data="{ selected: null }">
+  <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">Our Families</h1>
+  <p class="mt-4 max-w-2xl text-neutral-600">
+    Families are smaller groups within TASA that hang out year-round. Click a family to learn more about it.
+  </p>
+
+  {% if not families %}
+    <p class="mt-12 text-neutral-500">Family profiles are coming soon &mdash; check back shortly!</p>
+  {% endif %}
+
+  <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {% for family in families %}
+      <button type="button"
+              @click="selected = (selected === {{ family.id }} ? null : {{ family.id }})"
+              class="rounded-2xl border text-left transition"
+              :class="selected === {{ family.id }} ? 'border-accent-400 ring-2 ring-accent-200' : 'border-neutral-200 hover:border-accent-300'">
+        <div class="overflow-hidden rounded-t-2xl">
+          {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'aspect-[4/3] w-full object-cover', 'wide') }}
+        </div>
+        <div class="p-4">
+          <p class="font-semibold text-neutral-900">{{ family.family_name }}</p>
+          <p class="mt-1 text-sm text-neutral-500">{{ family.heads() }}</p>
+        </div>
+      </button>
+    {% endfor %}
+  </div>
+
+  {% for family in families %}
+    <section x-show="selected === {{ family.id }}" x-cloak
+             class="mt-10 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-10">
+      <div class="overflow-hidden rounded-2xl border border-neutral-200">
+        {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'max-h-[32rem] w-full object-cover', 'wide') }}
       </div>
-
-      <div class="container-fluid">
-        <div class="row row-pad event">
-          <div class="col-md-12 col-pad">
-            <h2>Family System</h2>
-            <p class="text-justify">Aside from our weekly events, TASA also offers our members the opportunity to meet new people outside of the college setting through smaller meet-ups that usually take place on the weekends. The family system works with smaller groups within the larger TASA community, which allows our members to make friends through the comfort of a closer environment. Activities with the families usually include going out for dinner at the many restuarants around Berkeley, exploring places such as Emeryville or San Francisco, or even cozy game nights where members can make fresh baked cookies.</p>
-          </div>
-        </div>
-        <div class="row row-pad event">
-             {% for family in families %}
-                <div class="family-image-container col-md-4">
-                  <div class="family1 mobile-height" style="background-image: url({{ family.image_url }})">
-
-
-                    </div>
-                    <h2 class="officer-name">{{ family.family_name }} | {{ family.family_head1 }} & {{family.family_head2}} & {{ family.family_head_intern }}</h2>
-                        <p class="text-justify officer-desc officer-pad">
-                        {{ family.description}}</p>
-                </div>
-             {% endfor %}  
-          </div>
-        </div>
-      <!-- <div class="container-fluid">
-        <div class="row row-pad event">
-          <div class="col-md-12 col-pad">
-            <h3 style="text-align: center;"><a href="https://forms.gle/dwFf6hm5bjuyQLiT7" target="_blank">Check-In for Family Events Here!! </a></h3>
-          </div>
-        </div>
-      </div> -->
-
-  {% endblock %}
+      <h2 class="mt-8 text-3xl font-semibold tracking-tight">{{ family.family_name }}</h2>
+      <p class="mt-1 text-lg font-medium text-accent-700">{{ family.heads() }}</p>
+      <p class="mt-4 leading-relaxed text-neutral-700">{{ family.description }}</p>
+      <button type="button" @click="selected = null"
+              class="mt-6 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100">
+        Close
+      </button>
+    </section>
+  {% endfor %}
+</div>
+{% endblock %}

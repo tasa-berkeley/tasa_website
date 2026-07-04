@@ -1,62 +1,41 @@
 import os
-import string
-import sqlite3
-import yaml
+from datetime import date
 
-from contextlib import closing
 from flask import Flask
-from flask import g
 
-# configuration
-CWD = os.getcwd()
-ROOT = 'tasa_website/'
-DATABASE = 'tasa_website/tasa_website.db'
-CONFIG = 'tasa_website/config.yaml'
-DEBUG = True
-IMAGE_FOLDER = 'static/images/events/'
-OFFICER_IMAGE_FOLDER = 'static/images/officers/'
-FAMILY_IMAGE_FOLDER = 'static/images/families/'
-FILES_FOLDER = 'static/files/'
-SCRAPBOOK_FOLDER = 'static/images/scrapbook/'
+from .config import Config
+from .extensions import csrf, db
 
-secrets = {}
-with open(CONFIG, 'r') as config:
-    secrets = yaml.load(config)
 
-SECRET_KEY = secrets['secret']
+def create_app(test_config=None):
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object(Config)
+    os.makedirs(app.instance_path, exist_ok=True)
+    app.config.setdefault('SQLALCHEMY_DATABASE_URI', Config.database_uri(app.instance_path))
+    if test_config:
+        app.config.update(test_config)
 
-app = Flask(__name__)
-app.config.from_object(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 megabytes
+    for key in ('OFFICER_IMAGE_FOLDER', 'FAMILY_IMAGE_FOLDER', 'TESTIMONIAL_IMAGE_FOLDER'):
+        os.makedirs(os.path.join(app.root_path, *app.config[key].split('/')), exist_ok=True)
 
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+    db.init_app(app)
+    csrf.init_app(app)
 
-def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+    from .views import admin, auth, public
+    app.register_blueprint(public.bp)
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(admin.bp)
 
-@app.before_request
-def before_request():
-    g.db = connect_db()
-    g.db.row_factory = sqlite3.Row
+    from . import cli, helpers
+    cli.register(app)
 
-@app.teardown_request
-def teardown_request(exception):
-    db = getattr(g, 'db', None)
-    if db is not None:
-        db.close()
+    @app.context_processor
+    def inject_globals():
+        return {
+            'position_title': helpers.position_title,
+            'static_image': helpers.static_image,
+            'site_image': helpers.site_image,
+            'current_year': date.today().year,
+        }
 
-def query_db(query, args=(), one=False):
-    cur = g.db.execute(query, args)
-    rv = cur.fetchall()
-    g.db.commit()
-    cur.close()
-    return (rv[0] if rv else None) if one else rv
-
-# This is really ugly, but allows us to use decorators in views.py
-# See http://flask.pocoo.org/docs/0.12/patterns/packages/
-import tasa_website.views
-import tasa_website.auth
+    return app

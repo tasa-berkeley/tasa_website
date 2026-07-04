@@ -1,38 +1,36 @@
 {% extends "base.html" %}
+{% from "_macros.html" import img_or_placeholder %}
+
+{% block title %}Officers — TASA @ Berkeley{% endblock %}
+
 {% block content %}
-<div id="slide1" class="officer-splash">
-    <div class="officer-title noselect">
-      Officers
-    </div>
-</div>
-<div class="container">
-    <div class="officer-member-container">
+<div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+  <h1 class="text-center text-4xl font-semibold tracking-tight sm:text-5xl">Meet our Officers!</h1>
+
+  {% if not sections %}
+    <p class="mt-12 text-center text-neutral-500">Officer profiles are coming soon &mdash; check back shortly!</p>
+  {% endif %}
+
+  {% for section_name, officers in sections %}
+    <section class="mt-14">
+      <h2 class="text-xl font-semibold text-neutral-900">
+        {{ section_name }}
+        <span class="ml-2 align-middle text-sm font-normal text-neutral-400">{{ officers | length }}</span>
+      </h2>
+      <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
         {% for officer in officers %}
-        <div onmouseover="this.style.cursor='pointer'" class="officer-member grow" data-toggle="modal" data-target="#officer_{{officer.id}}">
-            <img class="officer-member-picture" src="{{ officer.image_url }}"></img>
-            <div class="officer-member-info">
-                <span class="name">{{ officer.name }}</span>
-                <span class="position_name">{{ convert_position(officer.position) }}</span>
-                <span class="major">{{ officer.major }}</span>
-                <span class="year">{{ officer.year }}</span>
+          <div>
+            <div class="overflow-hidden rounded-2xl border border-neutral-200">
+              {{ img_or_placeholder(static_image(officer.image_url), officer.name, 'aspect-square w-full object-cover', 'square') }}
             </div>
-        </div>
-        <div class="modal fade" id="officer_{{officer.id}}" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">{{officer.name}}</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <img class="officer-picture-modal" src="{{ officer.image_url }}"></img>
-                        <p class="quote">{{officer.quote}}</p>
-                        <p class="officer-desc">{{officer.description}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <p class="mt-3 font-semibold text-neutral-900">{{ officer.name }}</p>
+            <p class="text-sm font-medium text-accent-700">{{ position_title(officer.position) }}</p>
+            <p class="text-sm text-neutral-500">{{ officer.major }}</p>
+            <p class="text-sm text-neutral-500">Class of {{ officer.year }}</p>
+          </div>
         {% endfor %}
-    </div>
+      </div>
+    </section>
+  {% endfor %}
 </div>
 {% endblock %}

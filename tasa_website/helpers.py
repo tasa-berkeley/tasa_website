@@ -1,20 +1,16 @@
-# Helper functions and stuff
+"""Positions, officer grouping, and the image upload pipeline."""
 import os
+import posixpath
 import random
-import re
 import string
-import time
 
-import dateutil.parser
-from flask import abort
-from flask import session
+from flask import current_app, url_for
 from PIL import Image
-from werkzeug.utils import secure_filename
 
-from . import ROOT
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'gif', 'png'}
 
-ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'gif', 'png', 'pdf', 'doc', 'docx'])
-
+# The officers table stores position as an index into this list, so the list
+# order is load-bearing: append new titles, never reorder existing ones.
 POSITIONS = [
     'President',
     'Internal Vice President',
@@ -35,68 +31,94 @@ POSITIONS = [
     'Marketing Intern',
     'Public Relations Intern',
     'Family Head Intern',
-    'Historian Intern'
+    'Historian Intern',
 ]
+
+SECTION_ORDER = ['Executive Board', 'Officers', 'Interns', 'Senior Advisors']
 
 IMAGE_MAXSIZE = (1024, 1024)
 
-img_formats = {
-    'image/jpeg': 'JPEG',
-    'image/png': 'PNG',
-    'image/gif': 'GIF'
-}
+
+def position_title(index):
+    if 0 <= index < len(POSITIONS):
+        return POSITIONS[index]
+    return 'Officer'
+
+
+def position_section(index):
+    """Map a position index to its section on the officers page."""
+    if not 0 <= index < len(POSITIONS):
+        return 'Officers'
+    if index <= 2:  # President, Internal VP, External VP
+        return 'Executive Board'
+    title = POSITIONS[index]
+    if title == 'Senior Advisor':
+        return 'Senior Advisors'
+    if title.endswith('Intern'):
+        return 'Interns'
+    return 'Officers'
+
+
+def officer_sections(officers):
+    """Bucket officers into ordered (section name, officers) pairs, skipping empty sections."""
+    buckets = {name: [] for name in SECTION_ORDER}
+    for officer in officers:
+        buckets[position_section(officer.position)].append(officer)
+    for bucket in buckets.values():
+        bucket.sort(key=lambda o: (o.position, o.name))
+    return [(name, buckets[name]) for name in SECTION_ORDER if buckets[name]]
+
+
+def static_image(image_url):
+    """Turn a stored image path ('static/images/officers/X.jpg') into a servable URL."""
+    if not image_url:
+        return None
+    return url_for('static', filename=image_url.removeprefix('static/'))
+
+
+def site_image(filename):
+    """URL for a hand-placed photo in static/images/site/, or None until one is added."""
+    rel = 'images/site/' + filename
+    if os.path.exists(os.path.join(current_app.static_folder, *rel.split('/'))):
+        return url_for('static', filename=rel)
+    return None
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def convert_time(time_str):
-    # turns the ISO-8601 format time given to us into epoch time and a formatted string
-    date_time = dateutil.parser.parse(time_str)
-    time_str = date_time.strftime("%A %B %d %I:%M%p")
-    unix_time = int(time.mktime(date_time.timetuple()) + date_time.microsecond/1000000.0)
-    return time_str, unix_time
-
-def guess_image_extension(image):
-    image_type = image.content_type
-    if image_type in img_formats:
-        return img_formats[image_type]
-    return None
 
 def generate_random_filename(extension):
-    file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
-    file_name += '.' + extension
-    return file_name
+    name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    return name + '.' + extension
+
 
 def create_file_paths(sub_root, file_name):
-    file_url = os.path.join(sub_root, file_name)
-    file_path = os.path.join(ROOT, file_url)
+    # The stored URL must always use forward slashes, even on Windows dev machines
+    file_url = posixpath.join(sub_root, file_name)
+    file_path = os.path.join(current_app.root_path, *file_url.split('/'))
     return file_url, file_path
 
-def file_from_request(request):
-    if 'file' not in request.files:
-        raise ValueError('No file attached')
-    request_file = request.files['file']
-    if request_file.filename == '':
-        raise ValueError('Filename is empty')
-    if not allowed_file(request_file.filename):
-        raise ValueError('Not a supported file format. Must be gif, png, jpg, pdf, doc, or docx')
-    return request_file
 
-def save_request_file(request, save_folder):
-    f = file_from_request(request)
-    filename = secure_filename(f.filename)
-    f_url, f_path = create_file_paths(save_folder, filename)
-    if guess_image_extension(f) is not None:
-        # replace image extension in filename with jpg
-        f_path = re.sub(r'\.[a-zA-Z]*$', '.jpg', f_path)
-        f_url = re.sub(r'\.[a-zA-Z]*$', '.jpg', f_url)
-        # compress and resize the image
-        img = Image.open(f)
-        img.thumbnail(IMAGE_MAXSIZE)
-        img.save(f_path, format='JPEG', quality=95, optimize=True, progressive=True)
-    else:
-        f.save(f_path)
-    return f_url
+def save_image(file_storage, save_folder):
+    """Resize an uploaded image, save it as a JPEG under save_folder, return its stored URL."""
+    if not allowed_file(file_storage.filename):
+        raise ValueError('Not a supported image format. Must be jpg, jpeg, png, or gif.')
+    file_url, file_path = create_file_paths(save_folder, generate_random_filename('jpg'))
+    img = Image.open(file_storage)
+    img.thumbnail(IMAGE_MAXSIZE)
+    if img.mode != 'RGB':
+        img = img.convert('RGB')
+    img.save(file_path, format='JPEG', quality=95, optimize=True, progressive=True)
+    return file_url
 
-def check_file_in_request(request):
-    return 'file' in request.files and request.files['file'].filename != ''
+
+def delete_image(image_url):
+    """Best-effort removal of an uploaded image file when its row is deleted or replaced."""
+    if not image_url or not image_url.startswith('static/images/'):
+        return
+    path = os.path.join(current_app.root_path, *image_url.split('/'))
+    try:
+        os.remove(path)
+    except OSError:
+        pass

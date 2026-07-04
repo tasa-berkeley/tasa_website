@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Admin — TASA @ Berkeley{% endblock %}
+
+{% block navbar %}
+<header class="sticky top-0 z-40 border-b border-neutral-800 bg-neutral-900 text-white">
+  <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <div class="flex items-center gap-1 overflow-x-auto">
+      {% set links = [
+        ('admin.dashboard', 'Dashboard'),
+        ('admin.officers', 'Officers'),
+        ('admin.families', 'Families'),
+        ('admin.testimonials', 'Testimonials'),
+      ] %}
+      {% for endpoint, label in links %}
+        <a href="{{ url_for(endpoint) }}"
+           class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium
+             {{ 'bg-neutral-700 text-white' if request.endpoint == endpoint else 'text-neutral-300 hover:bg-neutral-800 hover:text-white' }}">
+          {{ label }}
+        </a>
+      {% endfor %}
+    </div>
+    <div class="flex items-center gap-1">
+      <a href="{{ url_for('public.index') }}" class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 hover:text-white">View site</a>
+      <a href="{{ url_for('auth.logout') }}" class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 hover:text-white">Log out</a>
+    </div>
+  </nav>
+</header>
+{% endblock %}
+
+{% block footer %}{% endblock %}

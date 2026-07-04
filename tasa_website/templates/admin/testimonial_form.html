@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% from "_macros.html" import form_field, img_or_placeholder %}
+
+{% block content %}
+<div class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+  <h1 class="text-3xl font-semibold tracking-tight">{{ 'Edit testimonial' if testimonial else 'Add testimonial' }}</h1>
+
+  <form method="post" enctype="multipart/form-data" class="mt-8 space-y-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
+    {{ form.hidden_tag() }}
+    {{ form_field(form.name) }}
+    {{ form_field(form.position) }}
+    {{ form_field(form.question, rows=2) }}
+    {{ form_field(form.response, rows=5) }}
+    {% if testimonial and testimonial.image_url %}
+      <div class="flex items-center gap-4">
+        {{ img_or_placeholder(static_image(testimonial.image_url), testimonial.name, 'h-16 w-16 rounded-full object-cover', 'square') }}
+        <p class="text-sm text-neutral-500">Current photo &mdash; upload a new one below to replace it.</p>
+      </div>
+    {% endif %}
+    {{ form_field(form.image) }}
+    <div class="flex gap-3 pt-2">
+      <button type="submit" class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-700">
+        {{ 'Save changes' if testimonial else 'Add testimonial' }}
+      </button>
+      <a href="{{ url_for('admin.testimonials') }}" class="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

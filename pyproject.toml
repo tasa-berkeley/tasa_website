@@ -1,0 +1,23 @@
+[project]
+name = "tasa-website"
+version = "2.0.0"
+description = "UC Berkeley Taiwanese American Student Association website"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.0",
+    "flask-sqlalchemy>=3.1",
+    "flask-wtf>=1.2",
+    "python-dotenv>=1.0",
+    "pillow>=10.0",
+    "gunicorn>=21.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["tasa_website*"]

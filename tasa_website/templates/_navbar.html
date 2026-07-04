@@ -1,0 +1,45 @@
+<header class="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur" x-data="{ open: false }">
+  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <a href="{{ url_for('public.index') }}" class="flex items-center gap-3">
+      <img src="{{ url_for('static', filename='images/Transparent-TASA-logo150.png') }}" alt="TASA logo" class="h-10 w-10 object-contain">
+      <span class="text-lg font-semibold tracking-tight">TASA <span class="text-neutral-400 font-normal">@ Berkeley</span></span>
+    </a>
+
+    {% set links = [
+      ('public.index', 'Home'),
+      ('public.about', 'About'),
+      ('public.officers', 'Officers'),
+      ('public.families', 'Families'),
+      ('public.testimonials', 'Testimonials'),
+    ] %}
+
+    <div class="hidden items-center gap-1 md:flex">
+      {% for endpoint, label in links %}
+        <a href="{{ url_for(endpoint) }}"
+           class="rounded-lg px-3 py-2 text-sm font-medium transition-colors
+             {{ 'bg-accent-50 text-accent-700' if request.endpoint == endpoint else 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900' }}">
+          {{ label }}
+        </a>
+      {% endfor %}
+    </div>
+
+    <button class="md:hidden rounded-lg p-2 text-neutral-600 hover:bg-neutral-100" @click="open = !open" aria-label="Toggle menu">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        <path x-show="open" x-cloak stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="border-t border-neutral-200 md:hidden" x-show="open" x-cloak>
+    <div class="space-y-1 px-4 py-3">
+      {% for endpoint, label in links %}
+        <a href="{{ url_for(endpoint) }}"
+           class="block rounded-lg px-3 py-2 text-sm font-medium
+             {{ 'bg-accent-50 text-accent-700' if request.endpoint == endpoint else 'text-neutral-600 hover:bg-neutral-100' }}">
+          {{ label }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</header>

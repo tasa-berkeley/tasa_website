@@ -1,122 +1,153 @@
 {% extends "base.html" %}
+{% from "_macros.html" import img_or_placeholder, heading %}
+
 {% block content %}
-<div id="slide1" class="splash noselect" data-center="background-position: 47% 30%;opacity:1.5;"
-  data-top-bottom="opacity:0;" data-anchor-target="#slide1">
 
-  <div class="flex-wrapper">
-    <div class="main-title">
-      <div class="animate Slide_Up main_title">
-        <h1 style="font-size: 1.2em; font-weight: 600;">Taiwanese American Student Association</h1>
-      </div>
-      <div class="animate Slide_Up subtitle">
-        <h3 style="line-height: 0.5; font-family: raleway;"><br>TASA @ Berkeley</h3>
-      </div>
+<!-- Hero -->
+<section class="border-b border-neutral-200 bg-neutral-50">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent-600">Welcome to TASA @ Berkeley</p>
+    <h1 class="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-6xl">
+      TASA is more than a club &mdash; it&rsquo;s a family.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-neutral-600">
+      We are the Taiwanese American Student Association, a social and cultural student organization at
+      UC Berkeley celebrating everything Taiwanese American. Find us on Upper Sproul, Tuesday through
+      Thursday, 11am&ndash;2pm.
+    </p>
+  </div>
+</section>
 
+<!-- Photo gallery -->
+<section class="border-b border-neutral-200 py-16">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    {{ heading('Photo Gallery.') }}
+  </div>
+  <div class="mt-8 overflow-x-auto">
+    <div class="flex snap-x gap-4 px-4 sm:px-6">
+      {% for i in range(1, 7) %}
+        <div class="w-72 flex-none snap-start overflow-hidden rounded-2xl border border-neutral-200 sm:w-96">
+          {{ img_or_placeholder(site_image('gallery-' ~ i ~ '.jpg'), 'TASA members at an event', 'aspect-[4/3] w-full object-cover', 'wide') }}
+        </div>
+      {% endfor %}
     </div>
   </div>
-</div>
+</section>
 
-<!-- Main text body -->
-<div class="container-fluid welcome" style="padding-top: 5em; padding-bottom: 5em;">
-  <div class="row row-fluid">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md col-pad col-pad-top-3 first_text">
-      <div class="first_title">
-        <h3>Welcome to TASA @ Berkeley!</h3>
-        <br>
+<!-- Alternating highlights -->
+<section class="border-b border-neutral-200 py-16">
+  <div class="mx-auto max-w-6xl space-y-16 px-4 sm:px-6">
+
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div>
+        {{ heading('Yummy food') }}
+        <p class="mt-4 text-neutral-600">
+          From making traditional Taiwanese dishes together to boba runs and night-market-style snacks,
+          food is at the heart of almost everything we do. Come hungry.
+        </p>
       </div>
-      <div class="first_body">
-        <p>
-          We are the Taiwanese American Student Association, a social and cultural student organization at UC Berkeley celebrating everything Taiwanese American. 
-          We welcome people from all backgrounds, as long as you have a heart for Taiwanese and Taiwanese American culture! 
-          Check out our biweekly general events and our family events for yummy food, fun activities, and amazing people. 
-        </p>
-        <p>
-          To learn more about us, check out our upcoming events, meet our officers and TASA families, or browse through our photos and history. 
-          Stay updated by following our <a href="https://www.instagram.com/tasa.berkeley/" target="_blank">Instagram</a> and 
-          <a href="https://www.facebook.com/tasa.berkeley" target="_blank">Facebook</a>, 
-          or by subscribing to our <a href="https://berkeley.us6.list-manage.com/subscribe?u=9eec0da79b013380e34061d39&id=38d3c5d02c" target="_blank">Mailing List</a>!
-        </p>
-        <p>
-          For all of us in the organization, TASA is more than just a club—it is family. We hope that you will find your family here too!
-        </p>
-        <!--               <p class="text-justify">
-              Visit us on Upper Sproul every weekday from 11am - 3pm PST!</p> -->
-        <p>
-          Visit us on Upper Sproul every week on Tuesdays through Thursdays from 11am - 2pm PST!</p>
-
-          <!-- <p style="font-size:30px"> 
-            <a href="/join" style="color: black!important;">Apply to be an Intern! &raquo;</a>
-          </p>  -->
-           
-         
+      <div class="overflow-hidden rounded-2xl border border-neutral-200">
+        {{ img_or_placeholder(site_image('food.jpg'), 'Members sharing Taiwanese food', 'aspect-[4/3] w-full object-cover', 'wide') }}
       </div>
     </div>
-    <!--
-              
-              -->
-    <div class="col-md-3"></div>
+
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div class="overflow-hidden rounded-2xl border border-neutral-200 md:order-first">
+        {{ img_or_placeholder(site_image('activities.jpg'), 'Members at a TASA activity', 'aspect-[4/3] w-full object-cover', 'wide') }}
+      </div>
+      <div>
+        {{ heading('Fun activities') }}
+        <p class="mt-4 text-neutral-600">
+          Game nights, mahjong, picnics, water balloon fights, trips into San Francisco &mdash; we host
+          events almost every week of the semester, big and small.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div>
+        {{ heading('All are welcome!') }}
+        <p class="mt-4 text-neutral-600">
+          Our members come from vastly different backgrounds, and you don&rsquo;t have to be Taiwanese to
+          join &mdash; all you need is a heart for Taiwanese and Taiwanese American culture. We hope
+          you&rsquo;ll find your family here too.
+        </p>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-neutral-200">
+        {{ img_or_placeholder(site_image('welcome.jpg'), 'TASA group photo', 'aspect-[4/3] w-full object-cover', 'wide') }}
+      </div>
+    </div>
+
   </div>
-</div>
-<div id="slide2" class="secondSplash">
-  <h1 class="second-title noselect">
-    More than a club - we're family
-  </h1>
-</div>
+</section>
 
-<div class="container-fluid pink" style="padding-top:5em; padding-bottom: 5em;">
-  <div class="row row-fluid">
-    <div class="col-md-2">
+<!-- Events and activities -->
+<section class="border-b border-neutral-200 py-16">
+  <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-2">
+    <div>
+      {{ heading('Events and activities') }}
+      <p class="mt-4 text-neutral-600">
+        In line with our mission of fostering close friendships and greater appreciation for Taiwanese and
+        Taiwanese-American culture, we host a wide range of events almost every week in the semester, from
+        making traditional Taiwanese foods and playing mahjong to exploring the streets of San Francisco.
+        TASA also holds events in collaboration with other groups on and off campus, including the Taiwanese
+        Student Association, TAO at UC Davis, and the Global Leadership Organization. Be sure to join us at
+        our next one!
+      </p>
+      <a class="mt-6 inline-flex items-center gap-1 font-medium text-accent-600 hover:text-accent-700 hover:underline"
+         href="https://calendar.google.com/calendar/u/0/embed?src=d8004758c303258ac0daa86e7b3bdc2c01bcec7dec953f2281c93852d6ee530e@group.calendar.google.com&ctz=America%2FLos_Angeles"
+         target="_blank" rel="noopener">
+        View events <span aria-hidden="true">&raquo;</span>
+      </a>
     </div>
-    <div class="col-md-4 col-pad">
-      <img src="../static/images/assets/tasa_bear_with_stars.png" width="450" height="450" alt="" style="float:right;">
+    <div class="overflow-hidden rounded-2xl border border-neutral-200">
+      {{ img_or_placeholder(site_image('events.jpg'), 'A recent TASA event', 'aspect-[4/3] w-full object-cover', 'wide') }}
     </div>
-    <div class="col-md-4 col-pad">
-      <br><br>
-      <div class="Slide_Left second_title">
-        <h2>OUR HISTORY</h2>
-      </div>
-      <p class="text-justify Slide_Left second_body">
-        TASA was founded in 2003 to provide a way for Taiwanese-American students at Berkeley to connect with and understand their 
-        Taiwanese heritage and identity. Since then, TASA has grown to accommodate all students on campus interested in Taiwanese and Taiwanese-American culture. 
-        We've grown and changed much over the years, but our mission to promote community, awareness, and friendship among the student body has remained the same. 
-        We love hosting fun events for all of our members and look forward to making more TASA history this semester!</p>
-      <p class="text-right Slide_Left second_body">
-        <a href="/about" style="color: white!important;">Learn more &raquo;</a>
+  </div>
+</section>
+
+<!-- Our history -->
+<section class="border-b border-neutral-200 py-16">
+  <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-[2fr,1fr]">
+    <div>
+      {{ heading('Our history') }}
+      <p class="mt-4 text-neutral-600">
+        TASA was founded in 2003 to provide a way for Taiwanese-American students at Berkeley to connect
+        with and understand their Taiwanese heritage and identity. Since then, TASA has grown to accommodate
+        all students on campus interested in Taiwanese and Taiwanese-American culture. We&rsquo;ve grown and
+        changed much over the years, but our mission to promote community, awareness, and friendship among
+        the student body has remained the same. We love hosting fun events for all of our members and look
+        forward to making more TASA history this semester!
       </p>
     </div>
-    <div class="col-md-2"></div>
-  </div>
-</div>
-
-<div id="slide3" class="thirdSplash">
-  <h1 class="third-title noselect">Get to know us</h1>
-</div>
-
-<div class="container-fluid blue" style="padding-top:7em; padding-bottom:4em;">
-  <div class="row row-fluid">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-4 col-pad">
-      <div class="Slide_Right third_title">
-        <h2 style="text-align:right;">EVENTS AND ACTIVITIES</h2>
-      </div>
-      <p class="text-justify Slide_Right third_body">
-        In line with our mission of fostering close friendships and greater appreciation for Taiwanese and Taiwanese-American culture, 
-        we host a wide range of events almost every week in the semester, from making traditional Taiwanese foods 
-        and playing mahjong to exploring the streets of San Francisco. 
-        TASA also holds events in collaboration with other groups on and off campus, including the Taiwanese Student Association, 
-        TAO at UC Davis, and the Global Leadership Organization. 
-        Check out some of our past events, and be sure to join us at our next one!</p>
-      <p class="text-right Slide_Right third_body">
-        <a href="/events" style="color: white!important;">View Events &raquo;</a>
-      </p>
-    </div>
-    <div class="col-md-5 ml-5 col-pad col-pad-top-3 col-pad-bot-3" style="margin-left: 0!important;">
-      {% block show_latest_event %}{% endblock %}
+    <div class="mx-auto w-56 sm:w-64">
+      {{ img_or_placeholder(site_image('tasa-bear.png'), 'TASA bear mascot', 'w-full object-contain', 'square') }}
     </div>
   </div>
-</div>
+</section>
+
+<!-- Stay connected -->
+<section class="py-16">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    {{ heading('Stay connected') }}
+    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+      <a href="https://www.instagram.com/tasa.berkeley/" target="_blank" rel="noopener"
+         class="rounded-2xl border border-neutral-200 p-8 text-center transition hover:border-accent-300 hover:bg-accent-50">
+        <p class="text-lg font-semibold">Instagram</p>
+        <p class="mt-1 text-sm text-neutral-500">@tasa.berkeley</p>
+      </a>
+      <a href="https://www.facebook.com/tasa.berkeley" target="_blank" rel="noopener"
+         class="rounded-2xl border border-neutral-200 p-8 text-center transition hover:border-accent-300 hover:bg-accent-50">
+        <p class="text-lg font-semibold">Facebook</p>
+        <p class="mt-1 text-sm text-neutral-500">tasa.berkeley</p>
+      </a>
+      <a href="http://eepurl.com/vI0-D" target="_blank" rel="noopener"
+         class="rounded-2xl border border-neutral-200 p-8 text-center transition hover:border-accent-300 hover:bg-accent-50">
+        <p class="text-lg font-semibold">Mailing list</p>
+        <p class="mt-1 text-sm text-neutral-500">Get event updates by email</p>
+      </a>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
