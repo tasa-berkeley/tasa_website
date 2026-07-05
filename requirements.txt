@@ -23,7 +23,7 @@ httplib2==0.19.0
 idna==3.15
 oauthlib==3.1.0
 packaging==20.9
-protobuf==3.18.3
+protobuf==5.29.6
 pyasn1==0.6.3
 pyasn1-modules==0.2.8
 pyparsing==2.4.7
