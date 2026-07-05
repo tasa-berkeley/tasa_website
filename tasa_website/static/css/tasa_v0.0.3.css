@@ -82,14 +82,14 @@ html {
 
 .secondSplash {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/fa21v1home1.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/fa23v1home1.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.5)
 		),
-	url("../images/fa21v1home1.jpg");
+	url("../images/fa23v1home1.jpg");
 	font-family: 'Overlock', sans-serif;
 	background-position: 47% 0%;
 	display: block;
@@ -100,14 +100,14 @@ html {
 
 .thirdSplash {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("../images/fa21v1home2.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("../images/fa23v1home2.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa21v1home2.jpg");
+	url("../images/fa23v1home2.jpg");
 	font-family: 'Overlock', sans-serif;
 	-webkit-background-position: 47% 25%;
 	background-position: 47% -10%;
@@ -615,14 +615,14 @@ html {
 
 .about-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/fa21v1about.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1)), url("../images/fa23v1about.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.1)
 		),
-	url("../images/fa21v1about.jpg");
+	url("../images/fa23v1about.jpg");
 	height: 40em;
 	background-size: cover;
 	width: 100%;
@@ -634,14 +634,14 @@ html {
 
 .family-splash {
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/fa21v1families.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4)), url("../images/fa23v1ftjt.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.4)
 		),
-	url("../images/fa21v1families.jpg");
+	url("../images/fa23v1ftjt.jpg");
 	height: 40em;
 	background-size: cover;
 	width: 100%;
@@ -662,6 +662,7 @@ html {
 
 .sponsor {
 	background-position: 50% 50%;
+	background-repeat: no-repeat;
 	font-family: 'Roboto', sans-serif;
 	display: block;
 	background-size: contain;
@@ -680,7 +681,7 @@ html {
 }
 
 .eventSplash {
-	background-image: url("../images/fa21v1events.jpg");
+	background-image: url("../images/sp24v1events.jpg");
 	font-family: 'Overlock', sans-serif;
 	display: block;
 	background-position: 0% 30%;
@@ -692,14 +693,14 @@ html {
 
 .darken-event {
 	background-image:
-	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/fa21v1events.jpg");
+	-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("../images/sp24v1events.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0),
 		rgba(0, 0, 0, 0.3)
 		),
-	url("../images/fa21v1events.jpg");
+	url("../images/sp24v1events.jpg");
 }
 
 
@@ -788,14 +789,32 @@ h3.event-subheader {
 	height: 40em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa21v1officers.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/officers/FALL25CabShoot.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa21v1officers.jpg");
+	url("../images/officers/FALL25CabShoot.jpg");
+}
+
+.testimonials-splash {
+	font-family: 'Overlock', sans-serif;
+	display: block;
+	background-position: 0% 65%;
+	background-size: cover;
+	height: 40em;
+	width: 100%;
+	background-image:
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa22v1testimonials.jpg");
+	background-image:
+	linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.0),
+		rgba(0, 0, 0, 0.2)
+		),
+	url("../images/fa22v1testimonials.jpg");
 }
 
 .files-splash {
@@ -842,14 +861,14 @@ h3.event-subheader {
 	height: 40em;
 	width: 100%;
 	background-image:
-	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/fa21v1donate.jpg");
+	-webkit-linear-gradient(top, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../images/sp23donate.jpg");
 	background-image:
 	linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.0),
 		rgba(0, 0, 0, 0.2)
 		),
-	url("../images/fa21v1donate.jpg");
+	url("../images/sp23donate.jpg");
 }
 
 .officer-title {
@@ -1085,6 +1104,27 @@ h3.event-subheader {
     line-height: 1.2;
 }
 
+
+.test-picture {
+	height: 380px;
+	width: 380px;
+	margin-left: 80px;
+	margin-bottom: 10px;
+	object-fit: contain;
+	border-radius: 50%;
+	background-color: black;
+    padding: 7px;
+	text-align: center;
+}
+
+.bolder {
+	text-shadow: 0px 1px, 1px 0px, 1px 1px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
 .officer-member span {
     display: block;
 }
@@ -1210,4 +1250,72 @@ float: right;
 
 #tab-pane {
 	height:100vh;
+}
+
+.faq-accordion {
+	font-size: 11px;
+	background-color: rgb(255, 255, 255);
+	color: #444;
+	padding: 11px;
+	width: 100%;
+	height: 49px;
+	text-align: left;
+	border: none;
+	box-sizing: border-box;
+	outline: none;
+	cursor: pointer;
+	transition: 0.423s;
+  }
+  .faq-accordion:hover {
+	height: 49px;
+	background-color: rgb(212, 212, 212);
+  }
+  .after-click {
+	height: 49px;
+	background-color: rgb(255, 255, 255);
+  }
+  .new_panel {
+	padding: 0 11px;
+	background-color: rgb(255, 255, 255);
+	box-sizing: border-box;
+	display: none;
+	overflow: hidden;
+  }
+
+  /*   To eliminate overlap of Accordion text in mobile  */ 
+
+/* Draft 3 */
+@media (max-width: 520px) {
+
+	.faq-accordion {
+		font-size: 11px;
+		background-color: rgb(255, 255, 255);
+		color: #444;
+		padding: 11px;
+		width: 100%;
+		height: 74px;
+		text-align: left;
+		border: none;
+		box-sizing: border-box;
+		outline: none;
+		cursor: pointer;
+		transition: 0.423s;
+	  }
+	  .faq-accordion:hover {
+		height: 77px;
+		background-color: rgb(212, 212, 212);
+	  }
+	  .after-click {
+		height: 78px;
+		background-color: rgb(255, 255, 255);
+	  }
+	  .new_panel {
+		padding: 0 11px;
+		background-color: rgb(255, 255, 255);
+		box-sizing: border-box;
+		display: none;
+		overflow: hidden;
+	  }
+	
+
 }

@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>TASA @ Berkeley Admin Page</title>
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<link href='https://fonts.googleapis.com/css?family=Yantramanav:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-<link href="{{ url_for('static', filename='css/tasa_v0.0.1.css') }}" rel="stylesheet">
-<link rel="icon" type="image/ico" href="../static/images/assets/bk-logo.png"/>
+  <title>TASA @ Berkeley Admin Page</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Yantramanav:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+  <link href="{{ url_for('static', filename='css/tasa_v0.0.1.css') }}" rel="stylesheet">
+  <link rel="icon" type="image/ico" href="../static/images/assets/bk-logo.png" />
 </head>
+
 <body>
   <div class="modal fade" id="officerModal" tabindex="-1" role="dialog" aria-labelledby="officerModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="officerModalLabel">Update Officer</h4>
         </div>
         <form id="officer-modal-form" method="post" enctype=multipart/form-data>
-        <div class="modal-body">
+          <div class="modal-body">
             <div class="form-group">
               <label for="name" class="control-label">Name:</label>
               <input type="text" name="name" class="form-control" id="officer-modal-name"></input>
@@ -34,26 +38,29 @@
             <div class="form-group">
               <label for="position" class="control-label">Position:</label>
               <select class="form-control" name="position" id="officer-modal-position">
-                <option value=0>President</option>
-                <option value=1>Internal Vice President</option>
-                <option value=2>External Vice President</option>
-                <option value=3>Treasurer</option>
-                <option value=4>Webmaster</option>
-                <option value=5>Outreach</option>
-                <option value=6>Design</option>
-                <option value=7>Marketing</option>
-                <!-- <option value=6>Public Relations</option> -->
-                <option value=8>Family Head</option>
-                <option value=9>Historian</option>
-                <option value=10>Senior Advisor</option>
-                <option value=11>Treasurer Intern</option>
-                <option value=12>Webmaster Intern</option>
-                <!-- <option value=12>Public Relations Intern</option> -->
-                <option value=13>Outreach Intern</option>
-                <option value=14>Design Intern</option>
-                <option value=15>Marketing Intern</option>
-                <option value=16>Family Head Intern</option>
-                <option value=17>Historian Intern</option>
+                  <option value=0>President</option>
+                  <option value=1>Internal Vice President</option>
+                  <option value=2>External Vice President</option>
+                  <option value=3>Webmaster</option>
+                  <option value=4>Design</option>
+                  <option value=5>Social</option>
+                  <option value=6>Treasurer</option>
+                  <option value=7>Outreach</option>
+                  <option value=8>Marketing</option>
+                  <option value=9>Public Relations</option>
+                  <option value=10>Family Head</option>
+                  <option value=11>Historian</option>
+                  <option value=12>Webmaster Intern</option>
+                  <option value=13>Design Intern</option>
+                  <option value=14>Social Intern</option>
+                  <option value=15>Treasurer Intern</option>
+                  <option value=16>Outreach Intern</option>
+                  <option value=17>Marketing Intern</option>
+                  <option value=18>Public Relations Intern</option>
+                  <option value=19>Family Head Intern</option>
+                  <option value=20>Historian Intern</option>
+                  <option value=21>Senior Advisor</option>
+
               </select>
             </div>
             <div class="form-group">
@@ -65,14 +72,15 @@
               <textarea type="text" name="description" class="form-control" id="officer-modal-description"></textarea>
             </div>
             <div class="form-group">
-              <label for="file" class="control-label">Image (for best viewing, make sure it is 1:1 aspect ratio):</label>
+              <label for="file" class="control-label">Image (for best viewing, make sure it is 1:1 aspect
+                ratio):</label>
               <input type=file name=file class="form-control-file"></input>
             </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
+          </div>
         </form>
       </div>
     </div>
@@ -83,11 +91,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="familyModalLabel">Update family</h4>
         </div>
         <form id="family-modal-form" method="post" enctype=multipart/form-data>
-        <div class="modal-body">
+          <div class="modal-body">
             <div class="form-group">
               <label for="family_name" class="control-label">Family Name:</label>
               <input type="text" name="family_name" class="form-control" id="family-modal-name"></input>
@@ -105,14 +114,19 @@
               <textarea type="text" name="family_head2" class="form-control" id="family-modal-familyhead2"></textarea>
             </div>
             <div class="form-group">
+              <label for="family_head_intern" class="control-label">Family Head Intern:</label>
+              <textarea type="text" name="family_head_intern" class="form-control"
+                id="family-modal-familyheadintern"></textarea>
+            </div>
+            <div class="form-group">
               <label for="file" class="control-label">Image:</label>
               <input type=file name=file class="form-control-file"></input>
             </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
+          </div>
         </form>
       </div>
     </div>
@@ -123,11 +137,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="memberModalLabel">Update General Member</h4>
         </div>
         <form id="member-modal-form" method="post" enctype=multipart/form-data>
-        <div class="modal-body">
+          <div class="modal-body">
             <div class="form-group">
               <label for="name" class="control-label">Name (First and Last):</label>
               <input type="text" name="name" class="form-control" id="member-modal-name"></input>
@@ -149,19 +164,19 @@
             <div class="form-group">
               <label for="radio-buttons">Do you want to be searchable on the website?</label>
               <div class="radio-buttons">
-                  <label><input name=findable type="radio" id="yes" value="yes">Yes</label>&nbsp;
-                  <label><input name=findable type="radio" id="no" value="no">No</label>
+                <label><input name=findable type="radio" id="yes" value="yes">Yes</label>&nbsp;
+                <label><input name=findable type="radio" id="no" value="no">No</label>
               </div>
             </div>
             <div class="form-group">
               <label for="checkins" class="control-label">Number of check-ins:</label>
               <input type="integer" name="checkins" class="form-control" id="member-modal-checkins"></input>
             </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" name="submit" value="Submit" class="btn btn-primary">Save Changes</button>
+          </div>
         </form>
       </div>
     </div>
@@ -171,37 +186,38 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="checkinModalLabel">Check-in!</h4>
         </div>
         <div id="checkin-modal">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="eventName" class="control-label">Event</label>
-            <h6 name="eventName" id="checkin-modal-event"></h6>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="eventName" class="control-label">Event</label>
+              <h6 name="eventName" id="checkin-modal-event"></h6>
+            </div>
+            <div class="form-group">
+              <label for="name" class="control-label">Name</label>
+              <h6 name="name" id="checkin-modal-name"></h6>
+            </div>
+            <div class="form-group">
+              <label for="year" class="control-label">Year</label>
+              <h6 name="year" id="checkin-modal-year"></h6>
+            </div>
+            <div class="form-group">
+              <label for="email" class="control-label">Email</label>
+              <h6 name="email" id="checkin-modal-email"></h6>
+            </div>
+            <div class="form-group">
+              <label for="checkins" class="control-label">Total Check-ins</label>
+              <h6 name="checkins" id="checkin-modal-checkins"></h6>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="name" class="control-label">Name</label>
-            <h6 name="name" id="checkin-modal-name"></h6>
-          </div>
-          <div class="form-group">
-            <label for="year" class="control-label">Year</label>
-            <h6 name="year" id="checkin-modal-year"></h6>
-          </div>
-          <div class="form-group">
-            <label for="email" class="control-label">Email</label>
-            <h6 name="email" id="checkin-modal-email"></h6>
-          </div>
-          <div class="form-group">
-            <label for="checkins" class="control-label">Total Check-ins</label>
-            <h6 name="checkins" id="checkin-modal-checkins"></h6>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" id="checkin-modal-button" class="btn btn-primary">Confirm</button>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" id="checkin-modal-button" class="btn btn-primary">Confirm</button>
-        </div>
-      </div>
       </div>
     </div>
   </div>
@@ -211,7 +227,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="eventStatsModalLabel">Stats</h4>
         </div>
         <div class="modal-body">
@@ -236,662 +253,680 @@
   </div>
 
 
-{% if session.logged_in %}
+  {% if session.logged_in %}
   <div class="alert alert-info" id="alert" role="alert">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          System Message: {{ messages[0] }}
-        {% endif %}
-      {% endwith %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    System Message: {{ messages[0] }}
+    {% endif %}
+    {% endwith %}
 
   </div>
-      <div class="container-fluid">
+  <div class="container-fluid">
+    <div class="row welcome">
+      <div class="col"></div>
+      <div class="col text-center">
+        <h1>TASA @ Berkeley <br> Admin Page</h1>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <ul class="nav nav-pills justify-content-center welcome">
+      <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#addEvent">Add Event</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addOfficer">Add Officer</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFamily">Add Family</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewEvents">View Events</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewOfficers">View Officers</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFamilies">View Families</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFile">Add File</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a>
+      </li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewLateJars">View Late Jars</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#rollLateJar">Roll Late Jars</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addLateJar">Add Late Jars</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="addEvent" role="tabpanel">
         <div class="row welcome">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h1>TASA @ Berkeley <br> Admin Page</h1>
-            </div>
-            <div class="col"></div>
+          <div class="col"></div>
+          <div class="col">
+            <h2>Add or update an event</h2>
+            <p>Enter a Facebook event url, e.g. https://facebook.com/events/123456/</p>
+            <form action="{{ url_for('add_event') }}" method=post class=add-event>
+              <div class="form-group">
+                <label for="eventLink">Link</label>
+                <input name=link type="text" class="form-control" id="eventLink">
+              </div>
+              <button class="btn btn-primary" type=submit>Add / Update Event</button>
+            </form>
+          </div>
+          <div class="col"></div>
         </div>
       </div>
-      <div class="container-fluid">
-        <ul class="nav nav-pills justify-content-center welcome">
-          <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#addEvent">Add Event</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addOfficer">Add Officer</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFamily">Add Family</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewEvents">View Events</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewOfficers">View Officers</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFamilies">View Families</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addFile">Add File</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewFiles">View Files</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addGeneralMember">Add General Member</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewGeneralMembers">View General Members</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#checkinGeneralMembers">Check-In!</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#leaderboard">Leaderboard</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#viewLateJars">View Late Jars</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#rollLateJar">Roll Late Jars</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#addLateJar">Add Late Jars</a></li>
-        </ul>
 
-        <div class="tab-content">
-          <div class="tab-pane active" id="addEvent" role="tabpanel">
-            <div class="row welcome">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Add or update an event</h2>
-                <p>Enter a Facebook event url, e.g. https://facebook.com/events/123456/</p>
-                <form action="{{ url_for('add_event') }}" method=post class=add-event>
-                  <div class="form-group">
-                    <label for="eventLink">Link</label>
-                    <input name=link type="text" class="form-control" id="eventLink">
+      <div class="tab-pane" id="addOfficer" role="tabpanel">
+        <div class="row welcome">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Add an officer</h2>
+            <form action="{{ url_for('add_officer') }}" method=post enctype=multipart/form-data>
+              <div class="form-group">
+                <label for="officerName">Name</label>
+                <input name=name type="text" class="form-control" id="officerName">
+              </div>
+              <div class="form-group">
+                <label for="officerYear">Year</label>
+                <input name=year type="text" class="form-control" id="officerYear">
+              </div>
+              <div class="form-group">
+                <label for="officerMajor">Major</label>
+                <input name=major type="text" class="form-control" id="officerMajor">
+              </div>
+              <div class="form-group">
+                <label for="officerPosition">Position</label>
+                <select name=position class="form-control" id="officerPosition">
+                  <option value=0>President</option>
+                  <option value=1>Internal Vice President</option>
+                  <option value=2>External Vice President</option>
+                  <option value=3>Webmaster</option>
+                  <option value=4>Design</option>
+                  <option value=5>Social</option>
+                  <option value=6>Treasurer</option>
+                  <option value=7>Outreach</option>
+                  <option value=8>Marketing</option>
+                  <option value=9>Public Relations</option>
+                  <option value=10>Family Head</option>
+                  <option value=11>Historian</option>
+                  <option value=12>Webmaster Intern</option>
+                  <option value=13>Design Intern</option>
+                  <option value=14>Social Intern</option>
+                  <option value=15>Treasurer Intern</option>
+                  <option value=16>Outreach Intern</option>
+                  <option value=17>Marketing Intern</option>
+                  <option value=18>Public Relations Intern</option>
+                  <option value=19>Family Head Intern</option>
+                  <option value=20>Historian Intern</option>
+                  <option value=21>Senior Advisor</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="officerQuote">Quote</label>
+                <input name=quote type="text" class="form-control" id="officerQuote">
+              </div>
+              <div class="form-group">
+                <label for="officerDescription">Description</label>
+                <textarea name=description rows=4 type="text" class="form-control" id="officerDescription"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="officerImage">Image (for best viewing, make sure it is 1:1 aspect ratio)</label>
+                <input class="form-control-file" type=file name=file id="officerImage">
+              </div>
+              <button class="btn btn-primary" type=submit>Add Officer</button>
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="addFamily" role="tabpanel">
+        <div class="row welcome">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Add family</h2>
+            <form action="{{ url_for('add_family') }}" method=post enctype=multipart/form-data>
+              <div class="form-group">
+                <label for="familyName">Family Name</label>
+                <input name=family_name type="text" class="form-control" id="familyName">
+              </div>
+              <div class="form-group">
+                <label for="familyHead1">Family Head 1</label>
+                <input name=family_head1 type="text" class="form-control" id="familyHead1">
+              </div>
+              <div class="form-group">
+                <label for="familyHead2">Family Head 2</label>
+                <input name=family_head2 type="text" class="form-control" id="familyHead2">
+              </div>
+              <div class="form-group">
+                <label for="familyHeadIntern">Family Head Intern</label>
+                <input name=family_head_intern type="text" class="form-control" id="familyHeadIntern">
+              </div>
+              <div class="form-group">
+                <label for="familyDescription">Description</label>
+                <textarea name=description rows=4 type="text" class="form-control" id="familyDescription"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="familyImage">Image</label>
+                <input class="form-control-file" type=file name=file id="familyImage">
+              </div>
+              <button class="btn btn-primary" type=submit>Add Family</button>
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="viewEvents" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>All Events in DB:</h2>
+            <ul>
+              {% for event in events %}
+              <li>
+                {{ event.title }} &nbsp;
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#eventStatsModal"
+                  data-attendance='{{ event.attendance }}' data-new_attendance='{{ event.new_attendance }}'
+                  data-returning_attendance='{{ event.returning_attendance }}'>Stats</a>&nbsp;
+                <a href="javascript:void(0);"
+                  onclick="deleteItem({{event.id}} '{{event.title}}', '/events/')">Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="viewOfficers" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>All Officers in DB:</h2>
+            <ul>
+              {% for officer in officers %}
+              <li>
+                {{ officer.name }}
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#officerModal"
+                  data-name="{{officer.name}}" data-id="{{officer.id}}" data-year="{{officer.year}}"
+                  data-major="{{officer.major}}" data-position={{officer.position}} data-quote="{{officer.quote}}"
+                  data-description="{{officer.description}}">Update</a>&nbsp;
+                <a href="javascript:void(0);"
+                  onclick="deleteItem({{officer.id}}, '{{officer.name}}', '/officers/')">Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="viewFamilies" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>All Families in DB:</h2>
+            <ul>
+              {% for family in families %}
+              <li>
+                {{ family.family_name }}
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#familyModal"
+                  data-name="{{family.family_name}}" data-id="{{family.id}}" data-familyhead1="{{family.family_head1}}"
+                  data-familyhead2="{{family.family_head2}}" data-familyheadintern="{{family.family_head_intern}}"
+                  data-description="{{family.description}}">Update</a>
+                <a href="javascript:void(0);"
+                  onclick="deleteItem({{family.id}}, '{{family.family_name}}', '/families/')">Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="addFile" role="tabpanel">
+        <div class="row welcome">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Add a File</h2>
+            <form action="{{ url_for('add_file') }}" method=post>
+              <div class="form-group">
+                <label for="fileName">File Name</label>
+                <input name=name type="text" class="form-control" id="fileName">
+              </div>
+              <div class="form-group">
+                <label for="file">Link to file</label>
+                <input name="file_url" type="text" class="form-control" id="file">
+              </div>
+              <button class="btn btn-primary" type=submit>Add File</button>
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="viewFiles" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>All Files in DB:</h2>
+            <ul>
+              {% for file in files %}
+              <li>
+                {{ file.name }} &nbsp;
+                <a href="javascript:void(0);" onclick="deleteItem({{file.id}}, '{{file.name}}', '/files/')">Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="addGeneralMember" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Add a general member</h2>
+            <form action="{{ url_for('add_general_member') }}" method=post enctype=multipart/form-data
+              onsubmit="disableButton(this);">
+              <div class="form-group">
+                <label for="memberName">Name (First and Last)</label>
+                <input name=name type="text" class="form-control" id="memberName" required>
+              </div>
+              <div class="form-group">
+                <label for="memberYear">Year</label>
+                <select name=year class="form-control" id="memberYear" required>
+                  <option value="Freshman" selected>Freshman</option>
+                  <option value="Sophomore">Sophomore</option>
+                  <option value="Junior">Junior</option>
+                  <option value="Senior">Senior</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="memberEmail">Email</label>
+                <input name=email type="text" class="form-control" id="memberEmail" required>
+              </div>
+              <div class="form-group">
+                <label for="radio-buttons">Do you want to be searchable on the website?</label>
+                <div class="radio-buttons">
+                  <div>
+                    <label for="yes">Yes</label>
+                    <input name=findable type="radio" id="yes" value="yes" checked>
                   </div>
-                  <button class="btn btn-primary" type=submit>Add / Update Event</button>
-                </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="addOfficer" role="tabpanel">
-            <div class="row welcome">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Add an officer</h2>
-                <form action="{{ url_for('add_officer') }}" method=post enctype=multipart/form-data>
-                    <div class="form-group">
-                      <label for="officerName">Name</label>
-                      <input name=name type="text" class="form-control" id="officerName">
-                    </div>
-                    <div class="form-group">
-                      <label for="officerYear">Year</label>
-                      <input name=year type="text" class="form-control" id="officerYear">
-                    </div>
-                    <div class="form-group">
-                      <label for="officerMajor">Major</label>
-                      <input name=major type="text" class="form-control" id="officerMajor">
-                    </div>
-                    <div class="form-group">
-                      <label for="officerPosition">Position</label>
-                      <select name=position class="form-control" id="officerPosition">
-                        <option value=0>President</option>
-                        <option value=1>Internal Vice President</option>
-                        <option value=2>External Vice President</option>
-                        <option value=3>Treasurer</option>
-                        <option value=4>Webmaster</option>
-                        <option value=5>Outreach</option>
-                        <option value=6>Design</option>
-                        <option value=7>Marketing</option>
-                        <!-- <option value=6>Public Relations</option> -->
-                        <option value=8>Family Head</option>
-                        <option value=9>Historian</option>
-                        <option value=10>Senior Advisor</option>
-                        <option value=11>Treasurer Intern</option>
-                        <option value=12>Webmaster Intern</option>
-                        <!-- <option value=12>Public Relations Intern</option> -->
-                        <option value=13>Outreach Intern</option>
-                        <option value=14>Design Intern</option>
-                        <option value=15>Marketing Intern</option>
-                        <option value=16>Family Head Intern</option>
-                        <option value=17>Historian Intern</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="officerQuote">Quote</label>
-                      <input name=quote type="text" class="form-control" id="officerQuote">
-                    </div>
-                    <div class="form-group">
-                      <label for="officerDescription">Description</label>
-                      <textarea name=description rows=4 type="text" class="form-control" id="officerDescription"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="officerImage">Image (for best viewing, make sure it is 1:1 aspect ratio)</label>
-                      <input class="form-control-file" type=file name=file id="officerImage">
-                    </div>
-                    <button class="btn btn-primary" type=submit>Add Officer</button>
-                </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="addFamily" role="tabpanel">
-            <div class="row welcome">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Add family</h2>
-                  <form action="{{ url_for('add_family') }}" method=post enctype=multipart/form-data>
-                    <div class="form-group">
-                      <label for="familyName">Family Name</label>
-                      <input name=family_name type="text" class="form-control" id="familyName">
-                    </div>
-                    <div class="form-group">
-                      <label for="familyHead1">Family Head 1</label>
-                      <input name=family_head1 type="text" class="form-control" id="familyHead1">
-                    </div>
-                    <div class="form-group">
-                      <label for="familyHead2">Family Head 2</label>
-                      <input name=family_head2 type="text" class="form-control" id="familyHead2">
-                    </div>
-                    <div class="form-group">
-                      <label for="familyDescription">Description</label>
-                      <textarea name=description rows=4 type="text" class="form-control" id="familyDescription"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="familyImage">Image</label>
-                      <input class="form-control-file" type=file name=file id="familyImage">
-                    </div>
-                    <button class="btn btn-primary" type=submit>Add Family</button>
-                  </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="viewEvents" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>All Events in DB:</h2>
-                  <ul>
-                  {% for event in events %}
-                    <li>
-                      {{ event.title }} &nbsp;
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="#eventStatsModal"
-                          data-attendance='{{ event.attendance }}' data-new_attendance='{{ event.new_attendance }}'
-                          data-returning_attendance='{{ event.returning_attendance }}'>Stats</a>&nbsp;
-                      <a href="javascript:void(0);" onclick="deleteItem({{event.id}}, '{{event.title}}', '/events/')">Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="viewOfficers" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>All Officers in DB:</h2>
-                  <ul>
-                  {% for officer in officers %}
-                    <li>
-                      {{ officer.name }}
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="#officerModal"
-                          data-name="{{officer.name}}" data-id="{{officer.id}}" data-year="{{officer.year}}"
-                          data-major="{{officer.major}}" data-position={{officer.position}} data-quote="{{officer.quote}}"
-                          data-description="{{officer.description}}">Update</a>&nbsp;
-                      <a href="javascript:void(0);" onclick="deleteItem({{officer.id}}, '{{officer.name}}', '/officers/')">Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="viewFamilies" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>All Families in DB:</h2>
-                  <ul>
-                  {% for family in families %}
-                    <li>
-                      {{ family.family_name }}
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="#familyModal"
-                          data-name="{{family.family_name}}" data-id="{{family.id}}" data-familyhead1="{{family.family_head1}}"
-                          data-familyhead2="{{family.family_head2}}" data-description="{{family.description}}">Update</a>
-                      <a href="javascript:void(0);" onclick="deleteItem({{family.id}}, '{{family.family_name}}', '/families/')">Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="addFile" role="tabpanel">
-            <div class="row welcome">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Add a File</h2>
-                <form action="{{ url_for('add_file') }}" method=post>
-                    <div class="form-group">
-                      <label for="fileName">File Name</label>
-                      <input name=name type="text" class="form-control" id="fileName">
-                    </div>
-                    <div class="form-group">
-                      <label for="file">Link to file</label>
-                      <input name="file_url" type="text" class="form-control" id="file">
-                    </div>
-                    <button class="btn btn-primary" type=submit>Add File</button>
-                </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="viewFiles" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>All Files in DB:</h2>
-                  <ul>
-                  {% for file in files %}
-                    <li>
-                      {{ file.name }} &nbsp;
-                      <a href="javascript:void(0);" onclick="deleteItem({{file.id}}, '{{file.name}}', '/files/')">Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="addGeneralMember" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Add a general member</h2>
-                <form action="{{ url_for('add_general_member') }}" method=post enctype=multipart/form-data onsubmit="disableButton(this);">
-                    <div class="form-group">
-                      <label for="memberName">Name (First and Last)</label>
-                      <input name=name type="text" class="form-control" id="memberName" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="memberYear">Year</label>
-                      <select name=year class="form-control" id="memberYear" required>
-                        <option value="Freshman" selected>Freshman</option>
-                        <option value="Sophomore">Sophomore</option>
-                        <option value="Junior">Junior</option>
-                        <option value="Senior">Senior</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="memberEmail">Email</label>
-                      <input name=email type="text" class="form-control" id="memberEmail" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="radio-buttons">Do you want to be searchable on the website?</label>
-                      <div class="radio-buttons">
-                        <div>
-                          <label for="yes">Yes</label>
-                          <input name=findable type="radio" id="yes" value="yes" checked>
-                        </div>
-                        <div>
-                          <label for="no">No</label>
-                          <input name=findable type="radio" id="no" value="no">
-                        </div>
-                      </div>
-                    </div>
-                    <button class="btn btn-primary" type=submit name=submitButton>Add General Member</button>
-                </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="viewGeneralMembers" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>All General Members in DB:</h2>
-                <label for='#searchbarView'>Search:</label>
-                <input id='searchbarView' type='text' oninput='updateNames()'></input>
-                  <ul id='memberListView'>
-                  {% for member in members %}
-                    <li>
-                      <label>{{ member.name }}</label>
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="#memberModal"
-                          data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
-                          data-email="{{member.email}}" data-findable={{member.findable}} data-checkins="{{member.checkins}}"
-                          >Update</a>
-                      <a href="javascript:void(0);" onclick="deleteItem({{member.id}}, '{{member.name}}', '/members/')">Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-                  <button class="btn btn-primary" href="javascript:void(0);" onclick="deleteAll('/members/delete_all')">Reset general members</button>
-                  <a href="/members/download" target="_blank">
-                    <button class="btn btn-primary">Download Checkin Info</button>
-                  </a>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="viewLateJars" role = "tabpanel">
-            <div class = "row" >
-              <div class = "col"></div>
-              <div class = "col">
-                <h2>All Late Jars in DB:</h2>
-              </div>
-              <div class = "col"></div>
-            </div>
-            <div class ="row" >
-              <div class="col">
-                <ul id='memberListView'>
-                  {% for jar in lateJars if jar.difficulty == 'Easy' %}
-                    <li>
-                      <label>{{ jar.difficulty }}</label>  <a> - </a>
-                      <label>{{ jar.jar }}</label>
-                      <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-              </div>
-              <div class="col">
-                <ul id='memberListView'>
-                  {% for jar in lateJars if jar.difficulty == 'Hard' %}
-                    <li>
-                      <label>{{ jar.difficulty }}</label>  <a> - </a>
-                      <label>{{ jar.jar }}</label>
-                      <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
-                    </li>
-                  {% endfor %}
-                  </ul>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane" id="addLateJar" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Add a Late Jar</h2>
-                <form action="{{ url_for('add_late_jars') }}" method=post>
-                  <div class="form-group">
-                    <label for="newLateJar">New Late Jar</label>
-                    <input name=newLateJar type="text" class="form-control" id="newLateJar">
+                  <div>
+                    <label for="no">No</label>
+                    <input name=findable type="radio" id="no" value="no">
                   </div>
-                  <div class="form-group">
-                    <label for="difficulty">Difficulty</label>
-                    <select name=difficulty class="form-control" id="difficulty" required>
-                      <option value="Easy" selected>Easy</option>
-                      <option value="Hard">Hard</option>
-                    </select>
-                  </div>
-                <button class="btn btn-primary" type=submit name=submitButton>Add</button>
-              </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-          <div class="tab-pane" id="rollLateJar" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Roll a Late Jar</h2>
-                <form action="{{ url_for('roll') }}" method=post>
-                  <div class="form-group">
-                    <label for="radio-buttons"><b>Type of late jar</b></label>
-                    <div class="radio-buttons">
-                      <div>
-                        <label for="easy">Easy</label>
-                        <input name=level type="radio" id="easy" value="Easy" checked>
-                      </div>
-                      <div>
-                        <label for="hard">Hard</label>
-                        <input name=level type="radio" id="hard" value="Hard">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="numLateJars">Number of jars</label>
-                    <select id="numLateJars" class="form-control" name ="quantity">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                    </select>
-                  </div>
-                <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar</button>
-              </form>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Check-in!</h2>
-                <div id="accordion">
-                  {% for event in events %}
-                  <div class="card">
-                    <div class="card-heading">
-                      <h5 class="card-title">
-                        <a data-toggle="collapse" href="#collapse{{ event.id }}" aria-expanded="false" aria-controls="collapse{{ event.id }}">
-                          {{ event.title }}
-                        </a>
-                      </h5>
-                    </div>
-                    <div id="collapse{{ event.id }}" data-parent="#accordion" class="collapse" aria-labelledby="card-heading">
-                      <div class="card-body">
-                        <label for='#searchbar{{ event.id }}'>Search:</label>
-                        <input id='searchbar{{ event.id }}' type='text' oninput='updateNames({{ event.id }})'></input>
-                        <ul id="memberList{{ event.id }}">
-                          {% for member in members %}
-                            <li>
-                              <label for="#list-buttons">{{ member.name }}</label>
-                              {% if check_valid_checkin(event.id, member.id) %}
-                                <button id="list-buttons" href="javascript:void(0);" data-toggle="modal" data-target="#checkinModal"
-                                    data-name="{{member.name}}" data-id="{{member.id}}" data-year="{{member.year}}"
-                                    data-email="{{member.email}}" data-checkins="{{member.checkins}}" data-eventname="{{event.title}}"
-                                    data-eventid="{{event.id}}"
-                                    >Check-in</button>
-                              {% else %}
-                                <button disabled
-                                    >Check-in</button>
-                              {% endif %}
-                            </li>
-                          {% endfor %}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  {% endfor %}
                 </div>
               </div>
-              <div class="col"></div>
-            </div>
+              <button class="btn btn-primary" type=submit name=submitButton>Add General Member</button>
+            </form>
           </div>
-
-          <div class="tab-pane" id="leaderboard" role="tabpanel">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col">
-                <h2>Leaderboard:</h2>
-                  <ol>
-                  {% for leader in leaderboard %}
-                    <li>
-                      <h6>{{ leader.name }}</h6>
-                      <p>{{ leader.checkins }} checkins</p>
-                    </li>
-                  {% endfor %}
-                </ol>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-
+          <div class="col"></div>
         </div>
       </div>
-{% endif %}
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<script type="text/javascript">
-function deleteItem(id, name, endpoint) {
-  if (confirm('Are you sure you want to delete ' + name + '?')) {
-    $.ajax({
-      url: endpoint + id,
-      type: 'DELETE',
-    });
-    console.log("hi")
-    location.reload();
-  }
-}
 
-function deleteScrapbookImg(imageName, semFolder, endpoint) {
-  if (confirm('Are you sure you want to delete ' + imageName + '?')) {
-    $.ajax({
-      url: endpoint + semFolder + '/' + imageName + '/',
-      data: { semFolder: semFolder, imageName: imageName  },
-      type: 'POST',
-    });
-    location.reload();
-  }
-}
-function deleteAll(endpoint) {
-  if (confirm('Are you sure you want to do this?')) {
-    if (confirm('Are you really sure?')) {
-      if (confirm('There\'s no turning back. Are you 100% sure?')) {
+      <div class="tab-pane" id="viewGeneralMembers" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>All General Members in DB:</h2>
+            <label for='#searchbarView'>Search:</label>
+            <input id='searchbarView' type='text' oninput='updateNames()'></input>
+            <ul id='memberListView'>
+              {% for member in members %}
+              <li>
+                <label>{{ member.name }}</label>
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#memberModal" data-name="{{member.name}}"
+                  data-id="{{member.id}}" data-year="{{member.year}}" data-email="{{member.email}}"
+                  data-findable={{member.findable}} data-checkins="{{member.checkins}}">Update</a>
+                <a href="javascript:void(0);"
+                  onclick="deleteItem({{member.id}}, '{{member.name}}', '/members/')">Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+            <button class="btn btn-primary" href="javascript:void(0);" onclick="deleteAll('/members/delete_all')">Reset
+              general members</button>
+            <a href="/members/download" target="_blank">
+              <button class="btn btn-primary">Download Checkin Info</button>
+            </a>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="viewLateJars" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>All Late Jars in DB:</h2>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <ul id='memberListView'>
+              {% for jar in lateJars if jar.difficulty == 'Easy' %}
+              <li>
+                <label>{{ jar.difficulty }}</label> <a> - </a>
+                <label>{{ jar.jar }}</label>
+                <a href="javascript:void(0);" onclick='deleteItem({{jar.id}},"{{jar.jar}}", "/lateJars/")'>Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col">
+            <ul id='memberListView'>
+              {% for jar in lateJars if jar.difficulty == 'Hard' %}
+              <li>
+                <label>{{ jar.difficulty }}</label> <a> - </a>
+                <label>{{ jar.jar }}</label>
+                <a href="javascript:void(0);" onclick='deleteItem({{jar.id}}, "{{jar.jar}}", "/lateJars/")'>Delete</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="addLateJar" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Add a Late Jar</h2>
+            <form action="{{ url_for('add_late_jars') }}" method=post>
+              <div class="form-group">
+                <label for="newLateJar">New Late Jar</label>
+                <input name=newLateJar type="text" class="form-control" id="newLateJar">
+              </div>
+              <div class="form-group">
+                <label for="difficulty">Difficulty</label>
+                <select name=difficulty class="form-control" id="difficulty" required>
+                  <option value="Easy" selected>Easy</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" type=submit name=submitButton>Add</button>
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+      <div class="tab-pane" id="rollLateJar" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Roll a Late Jar</h2>
+            <form action="{{ url_for('roll') }}" method=post>
+              <div class="form-group">
+                <label for="radio-buttons"><b>Type of late jar</b></label>
+                <div class="radio-buttons">
+                  <div>
+                    <label for="easy">Easy</label>
+                    <input name=level type="radio" id="easy" value="Easy" checked>
+                  </div>
+                  <div>
+                    <label for="hard">Hard</label>
+                    <input name=level type="radio" id="hard" value="Hard">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="numLateJars">Number of jars</label>
+                <select id="numLateJars" class="form-control" name="quantity">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" type=submit name=submitButton>Roll Late Jar</button>
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="checkinGeneralMembers" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Check-in!</h2>
+            <div id="accordion">
+              {% for event in events %}
+              <div class="card">
+                <div class="card-heading">
+                  <h5 class="card-title">
+                    <a data-toggle="collapse" href="#collapse{{ event.id }}" aria-expanded="false"
+                      aria-controls="collapse{{ event.id }}">
+                      {{ event.title }}
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapse{{ event.id }}" data-parent="#accordion" class="collapse"
+                  aria-labelledby="card-heading">
+                  <div class="card-body">
+                    <label for='#searchbar{{ event.id }}'>Search:</label>
+                    <input id='searchbar{{ event.id }}' type='text' oninput='updateNames({{ event.id }})'></input>
+                    <ul id="memberList{{ event.id }}">
+                      {% for member in members %}
+                      <li>
+                        <label for="#list-buttons">{{ member.name }}</label>
+                        {% if check_valid_checkin(event.id, member.id) %}
+                        <button id="list-buttons" href="javascript:void(0);" data-toggle="modal"
+                          data-target="#checkinModal" data-name="{{member.name}}" data-id="{{member.id}}"
+                          data-year="{{member.year}}" data-email="{{member.email}}" data-checkins="{{member.checkins}}"
+                          data-eventname="{{event.title}}" data-eventid="{{event.id}}">Check-in</button>
+                        {% else %}
+                        <button disabled>Check-in</button>
+                        {% endif %}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="leaderboard" role="tabpanel">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <h2>Leaderboard:</h2>
+            <ol>
+              {% for leader in leaderboard %}
+              <li>
+                <h6>{{ leader.name }}</h6>
+                <p>{{ leader.checkins }} checkins</p>
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  {% endif %}
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    function deleteItem(id, name, endpoint) {
+      if (confirm('Are you sure you want to delete ' + name + '?')) {
         $.ajax({
-          url: endpoint,
+          url: endpoint + id,
           type: 'DELETE',
         });
-        window.location.href = '/members/download'
+        console.log("hi")
+        location.reload();
       }
     }
-  }
-}
-function checkin(id, name, checkins, eventName, eventID) {
-  $.ajax({
-    url: '/checkin/' + id,
-    type: 'POST',
-    data: { name: name, checkins: checkins, eventName: eventName, eventID: eventID },
-  });
-  checkins = parseInt(checkins) + 1;
-  alert(name + ", you have checked in " + checkins + " times!");
-  location.reload();
-}
-function updateNames(eventID) {
-  jQuery.expr[':'].icontains = function(a, i, m) {
-    return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
-  };
-  if (eventID) {
-    searchText = $('#searchbar' + eventID).val();
-    $('#memberList' + eventID + ' li').css('display', 'none');
-    $('#memberList' + eventID + ' label:icontains(' + searchText + ')').parent().css('display','');
-  } else {
-    searchText = $('#searchbarView').val();
-    $('#memberListView li').css('display', 'none');
-    $('#memberListView label:icontains(' + searchText + ')').parent().css('display','');
-  }
-}
 
-//Button needs to be named "submitButton"
-function disableButton(form) {
-  form.submitButton.disabled = true;
-  form.submitButton.value = "Please wait...";
-}
+    function deleteScrapbookImg(imageName, semFolder, endpoint) {
+      if (confirm('Are you sure you want to delete ' + imageName + '?')) {
+        $.ajax({
+          url: endpoint + semFolder + '/' + imageName + '/',
+          data: { semFolder: semFolder, imageName: imageName },
+          type: 'POST',
+        });
+        location.reload();
+      }
+    }
+    function deleteAll(endpoint) {
+      if (confirm('Are you sure you want to do this?')) {
+        if (confirm('Are you really sure?')) {
+          if (confirm('There\'s no turning back. Are you 100% sure?')) {
+            $.ajax({
+              url: endpoint,
+              type: 'DELETE',
+            });
+            window.location.href = '/members/download'
+          }
+        }
+      }
+    }
+    function checkin(id, name, checkins, eventName, eventID) {
+      $.ajax({
+        url: '/checkin/' + id,
+        type: 'POST',
+        data: { name: name, checkins: checkins, eventName: eventName, eventID: eventID },
+      });
+      checkins = parseInt(checkins) + 1;
+      alert(name + ", you have checked in " + checkins + " times!");
+      location.reload();
+    }
+    function updateNames(eventID) {
+      jQuery.expr[':'].icontains = function (a, i, m) {
+        return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+      };
+      if (eventID) {
+        searchText = $('#searchbar' + eventID).val();
+        $('#memberList' + eventID + ' li').css('display', 'none');
+        $('#memberList' + eventID + ' label:icontains(' + searchText + ')').parent().css('display', '');
+      } else {
+        searchText = $('#searchbarView').val();
+        $('#memberListView li').css('display', 'none');
+        $('#memberListView label:icontains(' + searchText + ')').parent().css('display', '');
+      }
+    }
 
-$('#officerModal').on('show.bs.modal', function(e) {
-  const link = $(e.relatedTarget);
-  const name = link.data('name');
-  const year = link.data('year');
-  const id = link.data('id');
-  const major = link.data('major');
-  const quote = link.data('quote');
-  const description = link.data('description');
-  const position = link.data('position');
-  const modal = $(this);
-  modal.find('.modal-title').text('Updating ' + name);
-  modal.find('#officer-modal-name').val(name);
-  modal.find('#officer-modal-year').val(year);
-  modal.find('#officer-modal-major').val(major);
-  modal.find('#officer-modal-quote').val(quote);
-  modal.find('#officer-modal-description').val(description);
-  modal.find('#officer-modal-position').val(position);
+    //Button needs to be named "submitButton"
+    function disableButton(form) {
+      form.submitButton.disabled = true;
+      form.submitButton.value = "Please wait...";
+    }
 
-  const updateUrl = '/officers/' + id;
-  modal.find('#officer-modal-form').attr('action', updateUrl);
-});
+    $('#officerModal').on('show.bs.modal', function (e) {
+      const link = $(e.relatedTarget);
+      const name = link.data('name');
+      const year = link.data('year');
+      const id = link.data('id');
+      const major = link.data('major');
+      const quote = link.data('quote');
+      const description = link.data('description');
+      const position = link.data('position');
+      const modal = $(this);
+      modal.find('.modal-title').text('Updating ' + name);
+      modal.find('#officer-modal-name').val(name);
+      modal.find('#officer-modal-year').val(year);
+      modal.find('#officer-modal-major').val(major);
+      modal.find('#officer-modal-quote').val(quote);
+      modal.find('#officer-modal-description').val(description);
+      modal.find('#officer-modal-position').val(position);
 
-$('#familyModal').on('show.bs.modal', function(e) {
-  const link = $(e.relatedTarget);
-  const name = link.data('name');
-  const id = link.data('id');
-  const description = link.data('description');
-  const familyhead1 = link.data('familyhead1');
-  const familyhead2 = link.data('familyhead2');
-  const modal = $(this);
-  modal.find('.modal-title').text('Updating ' + name);
-  modal.find('#family-modal-name').val(name);
-  modal.find('#family-modal-description').val(description);
-  modal.find('#family-modal-familyhead1').val(familyhead1);
-  modal.find('#family-modal-familyhead2').val(familyhead2);
+      const updateUrl = '/officers/' + id;
+      modal.find('#officer-modal-form').attr('action', updateUrl);
+    });
 
-  const updateUrl = '/families/' + id;
-  modal.find('#family-modal-form').attr('action', updateUrl);
-});
+    $('#familyModal').on('show.bs.modal', function (e) {
+      const link = $(e.relatedTarget);
+      const name = link.data('name');
+      const id = link.data('id');
+      const description = link.data('description');
+      const familyhead1 = link.data('familyhead1');
+      const familyhead2 = link.data('familyhead2');
+      const familyheadintern = link.data('familyheadintern');
+      const modal = $(this);
+      modal.find('.modal-title').text('Updating ' + name);
+      modal.find('#family-modal-name').val(name);
+      modal.find('#family-modal-description').val(description);
+      modal.find('#family-modal-familyhead1').val(familyhead1);
+      modal.find('#family-modal-familyhead2').val(familyhead2);
+      modal.find('#family-modal-familyheadintern').val(familyheadintern);
 
-$('#memberModal').on('show.bs.modal', function(e) {
-  const link = $(e.relatedTarget);
-  const name = link.data('name');
-  const id = link.data('id');
-  const year = link.data('year');
-  const email = link.data('email');
-  //hacky way of setting the radio button to whatever setting they signed up for
-  const findable = "input[name=\"findable\"][value=\"" + link.data('findable') + "\"]";
+      const updateUrl = '/families/' + id;
+      modal.find('#family-modal-form').attr('action', updateUrl);
+    });
 
-  const checkins = link.data('checkins');
-  const modal = $(this);
-  modal.find('.modal-title').text('Updating ' + name);
-  modal.find('#member-modal-name').val(name);
-  modal.find('#member-modal-year').val(year);
-  modal.find('#member-modal-email').val(email);
-  //see above hacky way
-  modal.find(findable).attr("checked", true)
-  modal.find('#member-modal-checkins').val(checkins);
+    $('#memberModal').on('show.bs.modal', function (e) {
+      const link = $(e.relatedTarget);
+      const name = link.data('name');
+      const id = link.data('id');
+      const year = link.data('year');
+      const email = link.data('email');
+      //hacky way of setting the radio button to whatever setting they signed up for
+      const findable = "input[name=\"findable\"][value=\"" + link.data('findable') + "\"]";
 
-  const updateUrl = '/members/' + id;
-  modal.find('#member-modal-form').attr('action', updateUrl);
-});
+      const checkins = link.data('checkins');
+      const modal = $(this);
+      modal.find('.modal-title').text('Updating ' + name);
+      modal.find('#member-modal-name').val(name);
+      modal.find('#member-modal-year').val(year);
+      modal.find('#member-modal-email').val(email);
+      //see above hacky way
+      modal.find(findable).attr("checked", true)
+      modal.find('#member-modal-checkins').val(checkins);
 
-$('#checkinModal').on('show.bs.modal', function(e) {
-  const link = $(e.relatedTarget);
-  const eventName = link.data('eventname')
-  const eventID = link.data('eventid')
-  const name = link.data('name');
-  const id = link.data('id');
-  const year = link.data('year');
-  const email = link.data('email');
-  const checkins = link.data('checkins');
-  const modal = $(this);
+      const updateUrl = '/members/' + id;
+      modal.find('#member-modal-form').attr('action', updateUrl);
+    });
 
-  modal.find('.modal-title').text('Checking in ' + name);
-  modal.find('#checkin-modal-event').text(eventName);
-  modal.find('#checkin-modal-name').text(name);
-  modal.find('#checkin-modal-year').text(year);
-  modal.find('#checkin-modal-email').text(email);
-  modal.find('#checkin-modal-checkins').text(checkins);
-  modal.find('#checkin-modal-button').attr('onClick', "checkin(\'" + id + "\',\'" + name + "\',\'" + checkins + "\',\'" + eventName + "\',\'" + eventID + "\')" );
-});
+    $('#checkinModal').on('show.bs.modal', function (e) {
+      const link = $(e.relatedTarget);
+      const eventName = link.data('eventname')
+      const eventID = link.data('eventid')
+      const name = link.data('name');
+      const id = link.data('id');
+      const year = link.data('year');
+      const email = link.data('email');
+      const checkins = link.data('checkins');
+      const modal = $(this);
 
-$('#eventStatsModal').on('show.bs.modal', function(e) {
-  const link = $(e.relatedTarget);
-  const eventAttendance = link.data('attendance')
-  const eventNewAttendance = link.data('new_attendance')
-  const eventReturningAttendance = link.data('returning_attendance')
-  const modal = $(this);
+      modal.find('.modal-title').text('Checking in ' + name);
+      modal.find('#checkin-modal-event').text(eventName);
+      modal.find('#checkin-modal-name').text(name);
+      modal.find('#checkin-modal-year').text(year);
+      modal.find('#checkin-modal-email').text(email);
+      modal.find('#checkin-modal-checkins').text(checkins);
+      modal.find('#checkin-modal-button').attr('onClick', "checkin(\'" + id + "\',\'" + name + "\',\'" + checkins + "\',\'" + eventName + "\',\'" + eventID + "\')");
+    });
 
-  percentNewAttendance = parseFloat(eventAttendance && (eventNewAttendance / eventAttendance * 100)).toFixed(2)
-  percentReturningAttendance = parseFloat(eventAttendance && (eventReturningAttendance / eventAttendance * 100)).toFixed(2)
+    $('#eventStatsModal').on('show.bs.modal', function (e) {
+      const link = $(e.relatedTarget);
+      const eventAttendance = link.data('attendance')
+      const eventNewAttendance = link.data('new_attendance')
+      const eventReturningAttendance = link.data('returning_attendance')
+      const modal = $(this);
 
-  modal.find('.modal-title').text('Stats');
-  modal.find('#event-stats-modal-attendance').text(eventAttendance + " person(s)");
-  modal.find('#event-stats-modal-new-attendance').text(percentNewAttendance + "%");
-  modal.find('#event-stats-modal-returning-attendance').text(percentReturningAttendance + "%");
-});
+      percentNewAttendance = parseFloat(eventAttendance && (eventNewAttendance / eventAttendance * 100)).toFixed(2)
+      percentReturningAttendance = parseFloat(eventAttendance && (eventReturningAttendance / eventAttendance * 100)).toFixed(2)
 
-</script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+      modal.find('.modal-title').text('Stats');
+      modal.find('#event-stats-modal-attendance').text(eventAttendance + " person(s)");
+      modal.find('#event-stats-modal-new-attendance').text(percentNewAttendance + "%");
+      modal.find('#event-stats-modal-returning-attendance').text(percentReturningAttendance + "%");
+    });
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+    integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+    integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
