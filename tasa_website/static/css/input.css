@@ -41,4 +41,41 @@
   [x-cloak] {
     display: none !important;
   }
+
+  /* Faint tasa-bear watermark behind the whole site. A fixed pseudo-element so
+     opacity applies to the pattern only; z-index:-1 keeps it above the body's
+     white background but below all page content, so text stays legible.
+     Tunables: opacity (faintness) and background-size (tile scale). */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("../images/tasa-bear-pattern.svg");
+    background-repeat: repeat;
+    background-position: center top;
+    background-size: 180px auto;
+    opacity: 0.05;
+  }
+}
+
+@layer components {
+  /* Shared page-width container: fluid ~90% of the viewport, capped so text
+     lines stay readable on very wide monitors. Single knob for site width. */
+  .site-container {
+    margin-inline: auto;
+    width: 90%;
+    max-width: 1700px;
+  }
+
+  /* Soft glow for hero text over the photo (very subtle). Tunables: blur + alpha. */
+  .text-glow {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+  }
+
+  /* Soft halo behind the hero TASA logo (drop-shadow follows the circle's alpha). */
+  .logo-glow {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+  }
 }

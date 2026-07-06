@@ -1,50 +1,63 @@
 {% extends "base.html" %}
-{% from "_macros.html" import img_or_placeholder %}
+{% from "_macros.html" import img_or_placeholder, page_banner %}
 
 {% block title %}Families — TASA @ Berkeley{% endblock %}
 
 {% block content %}
-<div class="mx-auto max-w-6xl px-4 py-16 sm:px-6" x-data="{ selected: null }">
-  <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">Our Families</h1>
-  <p class="mt-4 max-w-2xl text-neutral-600">
-    Families are smaller groups within TASA that hang out year-round. Click a family to learn more about it.
+{{ page_banner('Families', url_for('static', filename='images/site/families_bkg.JPG')) }}
+<div class="site-container px-4 py-16 sm:px-6"
+     x-data="{ selected: null }"
+     @keydown.escape.window="selected = null"
+     x-effect="document.body.style.overflow = selected ? 'hidden' : ''">
+  <p class="text-neutral-600">
+    Families provide an opportunity to get to know other members on a more personal level in smaller and more frequent get-togethers. 
+    There are no rules about sticking only to one family, so feel free to attend any or 
+    all of our family events! Click a family to learn more about them.
   </p>
 
   {% if not families %}
     <p class="mt-12 text-neutral-500">Family profiles are coming soon &mdash; check back shortly!</p>
   {% endif %}
 
-  <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {% for family in families %}
-      <button type="button"
-              @click="selected = (selected === {{ family.id }} ? null : {{ family.id }})"
-              class="rounded-2xl border text-left transition"
-              :class="selected === {{ family.id }} ? 'border-accent-400 ring-2 ring-accent-200' : 'border-neutral-200 hover:border-accent-300'">
+      <button type="button" @click="selected = {{ family.id }}"
+              class="group rounded-2xl text-left transition duration-200 hover:-translate-y-1 hover:shadow-xl">
         <div class="overflow-hidden rounded-t-2xl">
-          {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'aspect-[4/3] w-full object-cover', 'wide') }}
+          {{ img_or_placeholder(photo_url('families', family.photo), family.name ~ ' family photo', 'aspect-[4/3] w-full object-cover', 'wide') }}
         </div>
         <div class="p-4">
-          <p class="font-semibold text-neutral-900">{{ family.family_name }}</p>
-          <p class="mt-1 text-sm text-neutral-500">{{ family.heads() }}</p>
+          <p class="font-semibold text-neutral-900">{{ family.name }}</p>
+          <p class="mt-1 text-sm text-neutral-500">{{ family.heads }}</p>
         </div>
       </button>
     {% endfor %}
   </div>
 
-  {% for family in families %}
-    <section x-show="selected === {{ family.id }}" x-cloak
-             class="mt-10 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-10">
-      <div class="overflow-hidden rounded-2xl border border-neutral-200">
-        {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'max-h-[32rem] w-full object-cover', 'wide') }}
+  {# ----- Expanded family overlay ----- #}
+  <div x-show="selected !== null" x-cloak
+       class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" @click="selected = null"
+         x-show="selected !== null" x-transition.opacity></div>
+
+    {% for family in families %}
+      <div x-show="selected === {{ family.id }}" x-cloak
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 scale-95"
+           x-transition:enter-end="opacity-100 scale-100"
+           class="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl sm:p-8">
+        <button type="button" @click="selected = null" aria-label="Close"
+                class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-2xl leading-none text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900">
+          &times;
+        </button>
+        <div class="overflow-hidden rounded-2xl">
+          {{ img_or_placeholder(photo_url('families', family.photo), family.name ~ ' family photo', 'max-h-[60vh] w-full object-cover', 'wide') }}
+        </div>
+        <h2 class="mt-6 text-3xl font-semibold tracking-tight">{{ family.name }}</h2>
+        <p class="mt-1 text-lg font-medium text-accent-700">{{ family.heads }}</p>
+        <p class="mt-4 leading-relaxed text-neutral-700">{{ family.description }}</p>
       </div>
-      <h2 class="mt-8 text-3xl font-semibold tracking-tight">{{ family.family_name }}</h2>
-      <p class="mt-1 text-lg font-medium text-accent-700">{{ family.heads() }}</p>
-      <p class="mt-4 leading-relaxed text-neutral-700">{{ family.description }}</p>
-      <button type="button" @click="selected = null"
-              class="mt-6 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100">
-        Close
-      </button>
-    </section>
-  {% endfor %}
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

@@ -1,49 +1,64 @@
 # TASA Website — project notes
 
-Rebuilt July 2026: Flask 3 app factory + blueprints, SQLAlchemy 2 (SQLite), Flask-WTF/CSRF,
-Tailwind v4 (standalone CLI, compiled `app.css` committed), Alpine.js vendored. Hosted on OCF
-(gunicorn + static files only — no Node on the server). Design: black & white with light-blue
-`accent-*` tokens, DM Sans (self-hosted), per wireframes in `documents/`.
+Flask 3 app factory, Tailwind v4 (standalone CLI, compiled `app.css` committed), Alpine.js vendored.
+Hosted on OCF (gunicorn + static files only — no Node on the server). Design: black & white with
+light-blue `accent-*` tokens, DM Sans (self-hosted), per wireframes in `documents/`.
+
+**Content is code, not a database.** All officer/family/testimonial content lives in
+`tasa_website/content.yaml`. A webmaster updates the site by editing that file (and dropping photos
+in `static/images/`) — there is no database, no admin panel, and no login.
 
 ## Layout
 
-- `tasa_website/__init__.py` — `create_app()`; context processor exposes `position_title`,
-  `static_image`, `site_image`, `current_year` to all templates.
-- `views/public.py` — the ONLY public pages: `/`, `/about`, `/officers`, `/families`, `/testimonials`.
-- `views/admin.py` — `/admin` CRUD for officers, families, testimonials (form pages, no JS).
-- `views/auth.py` — `/login`, `/logout`, `login_required` (302 → login, not 401).
-- `models.py` — `Officer` (position = int index into `helpers.POSITIONS`), `Family`, `Testimonial`.
-- `helpers.py` — `POSITIONS` (order is load-bearing, never reorder; append only),
-  `officer_sections()` (Exec = indices 0–2 only; Senior Advisors; `*Intern` → Interns; rest →
-  Officers), image pipeline (`save_image` resizes to 1024px JPEG, stores forward-slash URLs).
-- `cli.py` — `flask init-db | import-legacy <old.db> | hash-password`.
-- Config via `.env` (see `.env.example`); DB defaults to `instance/tasa_website.db`.
-- Templates: `base.html` (+ `_navbar`, `_footer`, `_macros`), page templates, `admin/*`, `auth/login.html`.
-- CSS: edit `static/css/input.css` → compile with the standalone Tailwind CLI → commit `app.css`
-  (see README). Never hand-edit `app.css`.
+- `tasa_website/content.yaml` — the single source of truth for site content. `officers` is grouped
+  into `executives` / `officers` / `interns` / `senior_advisors` (order within each list is the
+  display order); `families` and `testimonials` are flat lists. Photo fields are **filenames** inside
+  `static/images/<officers|families|testimonials>/`.
+- `tasa_website/content.py` — loads/caches `content.yaml` (re-reads on file change); exposes
+  `officer_sections()` (adds a page-unique `id` per officer; the `Interns` section always renders so
+  the page can show a recruitment placeholder), `families()`, `testimonials()`, `photo_url()`,
+  `site_image()`.
+- `tasa_website/__init__.py` — `create_app()`; context processor exposes `photo_url`, `site_image`,
+  `current_year` to all templates.
+- `views/public.py` — the ONLY blueprint: `/`, `/about`, `/officers`, `/families`, `/testimonials`.
+- `config.py` — minimal (`SECRET_KEY` only, unused unless flashing/sessions are added).
+- Templates: `base.html` (+ `_navbar`, `_footer`, `_macros`), and the five page templates. The
+  officers/families pages use Alpine.js for hover-lift cards that open an overlay modal (bio/photo).
+- CSS: edit `static/css/input.css` → recompile `app.css` → commit it. Never hand-edit `app.css`.
 
 ## Commands (Windows dev)
 
 - Run: `venv\Scripts\python run.py` (port 5001)
 - Tests: `venv\Scripts\python -m pytest tests/ -q`
-- CSS watch: `.\tailwindcss.exe -i tasa_website/static/css/input.css -o tasa_website/static/css/app.css --watch`
+- Rebuild CSS (after editing templates or `input.css`): the standalone `tailwindcss` CLI, or
+  `npx @tailwindcss/cli -i tasa_website/static/css/input.css -o tasa_website/static/css/app.css --minify`
+  (needs `tailwindcss` + `@tailwindcss/cli` in a local `node_modules`; both are gitignored).
 
-## Removed in the 2026 rebuild (do not resurrect)
+## Editing content (for webmasters)
 
-Events page + Facebook importer, Join/FAQ + files, Donate, Scrapbook (Google Drive), Contact page
-(contact info lives in `_footer.html`), the entire check-in/attendance/leaderboard system, jQuery,
-Bootstrap, skrollr.
+- Add/edit/remove a person → edit `tasa_website/content.yaml`. To add someone, copy an existing entry
+  and change the fields; put them under the right section (their position in the list = order on the
+  page). Add their photo to `static/images/officers/` and set `photo:` to the filename.
+- No photo yet → a gray placeholder renders automatically.
+- Families/testimonials work the same way in their lists.
+
+## Removed / not present (do not resurrect)
+
+Database + SQLAlchemy, the `/admin` panel, `/login` auth, WTForms, the image-upload pipeline, the
+`flask` CLI (init-db/import-legacy/hash-password). Also long gone from the old site: Events + Facebook
+importer, Donate, Scrapbook, Contact page (contact info lives in `_footer.html`),
+the check-in/attendance/leaderboard system, jQuery, Bootstrap, skrollr.
+
+(The `/join` page — a static FAQ accordion + useful links, no `files` DB — was re-added; it mirrors
+the old join page's copy minus the membership-prices question.)
 
 ## Open items
 
-- Real photos needed in `static/images/site/` (names listed in README) — placeholders render meanwhile.
-- Production data migration from OCF (`flask import-legacy`, README runbook) not yet run.
+- Some `static/images/site/` photos (home/about) are still gray placeholders — names listed in README.
 - Footer president/webmaster emails carried over from the old site — confirm each semester.
 - Home "View events »" links to the public Google Calendar; swap to Instagram if preferred (index.html).
-- Animations/polish deliberately deferred — keep the framework clean.
 
 ## Conventions
 
-- `git add -u` + explicit new paths; never `git add .`/`-A`. Never track secrets or uploads.
-- Don't edit on the live server; don't drop tables in the production DB.
+- `git add -u` + explicit new paths; never `git add .`/`-A`. Never track secrets.
 - Keep LICENSE untouched.

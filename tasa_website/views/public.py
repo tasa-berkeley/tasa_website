@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template
 
-from ..extensions import db
-from ..helpers import officer_sections
-from ..models import Family, Officer, Testimonial
+from .. import content
 
 bp = Blueprint('public', __name__)
 
@@ -19,17 +17,19 @@ def about():
 
 @bp.route('/officers')
 def officers():
-    all_officers = db.session.scalars(db.select(Officer)).all()
-    return render_template('officers.html', sections=officer_sections(all_officers))
+    return render_template('officers.html', sections=content.officer_sections())
 
 
 @bp.route('/families')
 def families():
-    all_families = db.session.scalars(db.select(Family).order_by(Family.family_name)).all()
-    return render_template('families.html', families=all_families)
+    return render_template('families.html', families=content.families())
 
 
 @bp.route('/testimonials')
 def testimonials():
-    all_testimonials = db.session.scalars(db.select(Testimonial)).all()
-    return render_template('testimonials.html', testimonials=all_testimonials)
+    return render_template('testimonials.html', testimonials=content.testimonials())
+
+
+@bp.route('/join')
+def join():
+    return render_template('join.html')

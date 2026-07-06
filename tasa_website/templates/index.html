@@ -4,72 +4,124 @@
 {% block content %}
 
 <!-- Hero -->
-<section class="border-b border-neutral-200 bg-neutral-50">
-  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-    <p class="text-sm font-semibold uppercase tracking-widest text-accent-600">Welcome to TASA @ Berkeley</p>
-    <h1 class="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-6xl">
-      TASA is more than a club &mdash; it&rsquo;s a family.
+<section class="relative flex min-h-[65vh] items-center overflow-hidden border-b border-neutral-200 lg:min-h-[80vh]">
+  <img src="{{ url_for('static', filename='images/site/home_bkg.png') }}" alt=""
+       class="absolute inset-0 h-full w-full object-cover" style="object-position: center 35%">
+  <div class="absolute inset-0 bg-black/50"></div>
+  <div class="site-container relative px-4 py-24 text-glow sm:px-6 sm:py-32">
+    <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl">
+      Welcome to <img src="{{ url_for('static', filename='images/tasa_logo_variations/tasa_inverted_512.png') }}"
+           alt="TASA" class="logo-glow mx-1 inline-block h-[1.5em] w-auto select-none align-middle"> at Berkeley!
     </h1>
-    <p class="mt-6 max-w-2xl text-lg text-neutral-600">
-      We are the Taiwanese American Student Association, a social and cultural student organization at
-      UC Berkeley celebrating everything Taiwanese American. Find us on Upper Sproul, Tuesday through
-      Thursday, 11am&ndash;2pm.
+    <p class="mt-6 max-w-2xl text-lg text-white/90 drop-shadow lg:text-xl">
+      We are the <strong> Taiwanese American Student Association </strong>, a social and cultural student organization at
+      UC Berkeley celebrating everything Taiwanese.
     </p>
   </div>
 </section>
 
-<!-- Photo gallery -->
-<section class="border-b border-neutral-200 py-16">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    {{ heading('Photo Gallery.') }}
-  </div>
-  <div class="mt-8 overflow-x-auto">
-    <div class="flex snap-x gap-4 px-4 sm:px-6">
-      {% for i in range(1, 7) %}
-        <div class="w-72 flex-none snap-start overflow-hidden rounded-2xl border border-neutral-200 sm:w-96">
-          {{ img_or_placeholder(site_image('gallery-' ~ i ~ '.jpg'), 'TASA members at an event', 'aspect-[4/3] w-full object-cover', 'wide') }}
-        </div>
+<!-- Photo gallery (drag to pan, click to expand) -->
+{% set gallery = [
+  photo_url('homepage', '0.5_gen.JPG'),
+  photo_url('homepage', '2nd_gen_fa24.JPG'),
+  photo_url('homepage', 'dating_show.jpg'),
+  site_image('gallery-1.jpg'),
+  site_image('gallery-2.jpg'),
+] %}
+<section class="py-16"
+         x-data="gallery" @keydown.escape.window="lightbox = null"
+         @pointermove.window="move($event)" @pointerup.window="up()" @pointercancel.window="up()">
+  <div class="overflow-hidden">
+    <div x-ref="track"
+         class="no-scrollbar flex cursor-grab select-none gap-4 overflow-x-auto px-2 active:cursor-grabbing"
+         @pointerdown="down($event)">
+      {% for pass in range(2) %}
+        {% for src in gallery %}
+          <button type="button" @click="open({{ loop.index0 }})"
+                  class="w-72 flex-none overflow-hidden transition duration-200 hover:shadow-xl sm:w-96">
+            {{ img_or_placeholder(src, 'TASA members at an event', 'pointer-events-none aspect-[4/3] w-full object-cover', 'wide') }}
+          </button>
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
+
+  {# ----- Lightbox ----- #}
+  <div x-show="lightbox !== null" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70" @click="lightbox = null"></div>
+    {% for src in gallery %}
+      <div x-show="lightbox === {{ loop.index0 }}" x-cloak
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 scale-95"
+           x-transition:enter-end="opacity-100 scale-100"
+           class="relative z-10">
+        <button type="button" @click="lightbox = null" aria-label="Close"
+                class="absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white text-2xl leading-none text-neutral-700 shadow-lg hover:bg-neutral-100">
+          &times;
+        </button>
+        {{ img_or_placeholder(src, 'TASA members at an event', 'max-h-[85vh] w-auto max-w-full rounded-2xl object-contain', 'wide') }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <style>
+    .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+  </style>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('gallery', () => ({
+        dragging: false, dragged: false, startX: 0, startScroll: 0, lightbox: null, pos: 0,
+        init() {
+          const t = this.$refs.track;
+          this.pos = t.scrollLeft;
+          // Auto-pan via rAF with a float accumulator so sub-pixel steps never get
+          // lost to browser rounding of scrollLeft. Pauses only while dragging.
+          const step = () => {
+            if (!this.dragging) {
+              const half = t.scrollWidth / 2;   // second copy of the strip starts here
+              this.pos += 0.5;
+              if (half > 0 && this.pos >= half) this.pos -= half;   // seamless infinite loop
+              t.scrollLeft = this.pos;
+            }
+            this._raf = requestAnimationFrame(step);
+          };
+          this._raf = requestAnimationFrame(step);
+        },
+        down(e) {
+          this.dragging = true; this.dragged = false;
+          this.startX = e.clientX; this.startScroll = this.$refs.track.scrollLeft;
+        },
+        move(e) {
+          if (!this.dragging) return;
+          e.preventDefault();
+          const dx = e.clientX - this.startX;
+          if (Math.abs(dx) > 4) this.dragged = true;
+          const t = this.$refs.track;
+          t.scrollLeft = this.startScroll - dx;
+          this.pos = t.scrollLeft;   // keep the auto-pan accumulator in sync
+        },
+        up() {
+          if (!this.dragging) return;
+          this.dragging = false;
+          this.pos = this.$refs.track.scrollLeft;
+        },
+        open(i) { if (this.dragged) return; this.lightbox = i; },
+      }));
+    });
+  </script>
 </section>
 
 <!-- Alternating highlights -->
 <section class="border-b border-neutral-200 py-16">
-  <div class="mx-auto max-w-6xl space-y-16 px-4 sm:px-6">
+  <div class="site-container space-y-16 px-4 sm:px-6">
 
     <div class="grid items-center gap-8 md:grid-cols-2">
       <div>
-        {{ heading('Yummy food') }}
-        <p class="mt-4 text-neutral-600">
-          From making traditional Taiwanese dishes together to boba runs and night-market-style snacks,
-          food is at the heart of almost everything we do. Come hungry.
-        </p>
-      </div>
-      <div class="overflow-hidden rounded-2xl border border-neutral-200">
-        {{ img_or_placeholder(site_image('food.jpg'), 'Members sharing Taiwanese food', 'aspect-[4/3] w-full object-cover', 'wide') }}
-      </div>
-    </div>
-
-    <div class="grid items-center gap-8 md:grid-cols-2">
-      <div class="overflow-hidden rounded-2xl border border-neutral-200 md:order-first">
-        {{ img_or_placeholder(site_image('activities.jpg'), 'Members at a TASA activity', 'aspect-[4/3] w-full object-cover', 'wide') }}
-      </div>
-      <div>
-        {{ heading('Fun activities') }}
-        <p class="mt-4 text-neutral-600">
-          Game nights, mahjong, picnics, water balloon fights, trips into San Francisco &mdash; we host
-          events almost every week of the semester, big and small.
-        </p>
-      </div>
-    </div>
-
-    <div class="grid items-center gap-8 md:grid-cols-2">
-      <div>
-        {{ heading('All are welcome!') }}
+        {{ heading('All are Welcome!') }}
         <p class="mt-4 text-neutral-600">
           Our members come from vastly different backgrounds, and you don&rsquo;t have to be Taiwanese to
-          join &mdash; all you need is a heart for Taiwanese and Taiwanese American culture. We hope
+          join! all you need is a heart for Taiwanese and Taiwanese American culture. We hope
           you&rsquo;ll find your family here too.
         </p>
       </div>
@@ -78,37 +130,47 @@
       </div>
     </div>
 
-  </div>
-</section>
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div class="overflow-hidden rounded-2xl border border-neutral-200 md:order-first">
+        {{ img_or_placeholder(photo_url('homepage', 'mahjong.JPG'), 'Members playing mahjong', 'aspect-[4/3] w-full object-cover', 'wide') }}
+      </div>
+      <div>
+        {{ heading('Fun Events and Activities') }}
+        <p class="mt-4 text-neutral-600">
+          From Game nights and picnics to trips into San Francisco, we host a
+          wide range of events almost every week of the semester! In line with our mission of
+          fostering close friendships and greater appreciation for Taiwanese and Taiwanese-American culture,
+          we also collaborate with other groups on and off campus, including the Taiwanese Student
+          Association, TAO at UC Davis, and the Global Leadership Organization. Be sure to join us at our
+          next one!
+        </p>
+        <a class="mt-6 inline-flex items-center gap-1 font-medium text-accent-600 hover:text-accent-700 hover:underline"
+           href="https://calendar.google.com/calendar/u/0/embed?src=d8004758c303258ac0daa86e7b3bdc2c01bcec7dec953f2281c93852d6ee530e@group.calendar.google.com&ctz=America%2FLos_Angeles"
+           target="_blank" rel="noopener">
+          View events <span aria-hidden="true">&raquo;</span>
+        </a>
+      </div>
+    </div>
 
-<!-- Events and activities -->
-<section class="border-b border-neutral-200 py-16">
-  <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-2">
-    <div>
-      {{ heading('Events and activities') }}
-      <p class="mt-4 text-neutral-600">
-        In line with our mission of fostering close friendships and greater appreciation for Taiwanese and
-        Taiwanese-American culture, we host a wide range of events almost every week in the semester, from
-        making traditional Taiwanese foods and playing mahjong to exploring the streets of San Francisco.
-        TASA also holds events in collaboration with other groups on and off campus, including the Taiwanese
-        Student Association, TAO at UC Davis, and the Global Leadership Organization. Be sure to join us at
-        our next one!
-      </p>
-      <a class="mt-6 inline-flex items-center gap-1 font-medium text-accent-600 hover:text-accent-700 hover:underline"
-         href="https://calendar.google.com/calendar/u/0/embed?src=d8004758c303258ac0daa86e7b3bdc2c01bcec7dec953f2281c93852d6ee530e@group.calendar.google.com&ctz=America%2FLos_Angeles"
-         target="_blank" rel="noopener">
-        View events <span aria-hidden="true">&raquo;</span>
-      </a>
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div>
+        {{ heading('Yummy food') }}
+        <p class="mt-4 text-neutral-600">
+          From making traditional Taiwanese dishes together to boba runs and night-market-style snacks,
+          food is at the heart of almost everything we do.
+        </p>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-neutral-200">
+        {{ img_or_placeholder(photo_url('homepage', 'sip_n_skew.JPG'), 'Members sharing Taiwanese food', 'aspect-[4/3] w-full object-cover', 'wide') }}
+      </div>
     </div>
-    <div class="overflow-hidden rounded-2xl border border-neutral-200">
-      {{ img_or_placeholder(site_image('events.jpg'), 'A recent TASA event', 'aspect-[4/3] w-full object-cover', 'wide') }}
-    </div>
+
   </div>
 </section>
 
 <!-- Our history -->
 <section class="border-b border-neutral-200 py-16">
-  <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-[2fr,1fr]">
+  <div class="site-container grid items-center gap-8 px-4 sm:px-6 md:grid-cols-[2fr,1fr]">
     <div>
       {{ heading('Our history') }}
       <p class="mt-4 text-neutral-600">
@@ -128,21 +190,24 @@
 
 <!-- Stay connected -->
 <section class="py-16">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+  <div class="site-container px-4 sm:px-6">
     {{ heading('Stay connected') }}
     <div class="mt-8 grid gap-4 sm:grid-cols-3">
       <a href="https://www.instagram.com/tasa.berkeley/" target="_blank" rel="noopener"
-         class="rounded-2xl border border-neutral-200 p-8 text-center transition hover:border-accent-300 hover:bg-accent-50">
+         class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+        <img src="{{ url_for('static', filename='images/assets/instagram-11-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
         <p class="text-lg font-semibold">Instagram</p>
         <p class="mt-1 text-sm text-neutral-500">@tasa.berkeley</p>
       </a>
       <a href="https://www.facebook.com/tasa.berkeley" target="_blank" rel="noopener"
-         class="rounded-2xl border border-neutral-200 p-8 text-center transition hover:border-accent-300 hover:bg-accent-50">
+         class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+        <img src="{{ url_for('static', filename='images/assets/facebook-1-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
         <p class="text-lg font-semibold">Facebook</p>
         <p class="mt-1 text-sm text-neutral-500">tasa.berkeley</p>
       </a>
       <a href="http://eepurl.com/vI0-D" target="_blank" rel="noopener"
-         class="rounded-2xl border border-neutral-200 p-8 text-center transition hover:border-accent-300 hover:bg-accent-50">
+         class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+        <img src="{{ url_for('static', filename='images/assets/email-2-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
         <p class="text-lg font-semibold">Mailing list</p>
         <p class="mt-1 text-sm text-neutral-500">Get event updates by email</p>
       </a>

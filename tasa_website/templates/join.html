@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% from "_macros.html" import page_banner, heading %}
+
+{% block title %}Join — TASA @ Berkeley{% endblock %}
+
+{% block content %}
+{{ page_banner('Join us!', url_for('static', filename='images/site/join-us.jpg'), position='center 55%') }}
+
+<div class="site-container px-4 py-16 sm:px-6">
+
+  {# ----- Useful links & resources ----- #}
+  {{ heading('Useful Links & Resources') }}
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <a href="https://www.instagram.com/tasa.berkeley/" target="_blank" rel="noopener"
+       class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <img src="{{ url_for('static', filename='images/assets/instagram-11-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
+      <p class="text-lg font-semibold">Instagram</p>
+      <p class="mt-1 text-sm text-neutral-500">@tasa.berkeley</p>
+    </a>
+    <a href="https://www.facebook.com/tasa.berkeley" target="_blank" rel="noopener"
+       class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <img src="{{ url_for('static', filename='images/assets/facebook-1-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
+      <p class="text-lg font-semibold">Facebook</p>
+      <p class="mt-1 text-sm text-neutral-500">tasa.berkeley</p>
+    </a>
+    <a href="https://discord.gg/XYRacvEGTx" target="_blank" rel="noopener"
+       class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <img src="{{ url_for('static', filename='images/assets/discord-1-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
+      <p class="text-lg font-semibold">Discord</p>
+      <p class="mt-1 text-sm text-neutral-500">Join the community</p>
+    </a>
+    <a href="http://eepurl.com/vI0-D" target="_blank" rel="noopener"
+       class="rounded-2xl p-4 text-center transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <img src="{{ url_for('static', filename='images/assets/email-2-240.png') }}" alt="" class="mx-auto mb-3 h-10 w-10 object-contain">
+      <p class="text-lg font-semibold">Mailing list</p>
+      <p class="mt-1 text-sm text-neutral-500">Get event updates by email</p>
+    </a>
+  </div>
+  <p class="mt-6 text-neutral-600">
+    Intern and officer applications are released at the start of each semester!
+    You can join a family anytime using the preference form we share on Instagram.
+    In the meantime, come say hi at
+    our table on Upper Sproul (Tuesday&ndash;Thursday, 11am&ndash;2pm)!
+  </p>
+
+  {# ----- Frequently asked questions ----- #}
+  <div class="mt-16" x-data="{ open: null }">
+    {{ heading('Frequently Asked Questions') }}
+    <div class="mt-6 border-t border-neutral-200">
+      {% set faqs = [
+        {
+          'q': 'Do I need to be Taiwanese to join TASA?',
+          'a': 'No! We encourage all students from all backgrounds to join TASA! We have many diverse students in our organization, and each one of them helps make TASA the incredible community it is. TASA provides a welcoming environment for members from diverse backgrounds to come together and celebrate their unique experiences while connecting over their shared passion for Taiwanese American heritage and culture. We welcome everyone to come and enjoy the incredible things that TASA offers as long as you have an interest in anything Taiwanese!'
+        },
+        {
+          'q': 'Where are the general meetings at TASA?',
+          'a': 'We typically hold our general events in the Social Sciences Building! We always specify the room numbers or the location in our Instagram posts and announcements! Make sure to stay updated with our socials!'
+        },
+        {
+          'q': 'What are general events like?',
+          'a': 'Each semester we always have a 0.5/1st/2nd General Event! Our 0.5 GEN event allows people interested in TASA to meet the officers and mingle with the TASA community! Our 1st GEN event formally introduces the incredible semester-specific activities, events, and families in a themed event for general members. And our 2nd GEN event is organized by our interns to wrap up the semester! We also have bi-weekly events that promote Taiwanese culture and heritage ranging from mid-autumn festivals to Taiwanese night-market-themed events! These general events are super fun and also provide more information about Taiwanese culture. It is also a great way to meet new people and connect with other Taiwanese-American students on campus!'
+        },
+        {
+          'q': 'What is the best way to stay updated on everything TASA?',
+          'a': 'We primarily announce our events on Instagram and Facebook! We also have a general event calendar at the bottom of the TASA website home page that includes general, family, and collaborative event information! All of our socials can always be found on our website&rsquo;s about page or at our table at Upper Sproul from 11am to 2pm every weekday! Here&rsquo;s our <a class="font-medium text-accent-600 hover:underline" href="https://www.instagram.com/tasa.berkeley/" target="_blank" rel="noopener">Instagram</a>, <a class="font-medium text-accent-600 hover:underline" href="https://www.facebook.com/tasa.berkeley" target="_blank" rel="noopener">Facebook</a>, and <a class="font-medium text-accent-600 hover:underline" href="http://eepurl.com/vI0-D" target="_blank" rel="noopener">mailing list</a> for a quick reference!'
+        },
+        {
+          'q': 'How can I be more involved with TASA?',
+          'a': 'TASA is an incredible community that creates unforgettable memories for those who want to have fun and enjoy Taiwanese culture and heritage! Our general events and family events are great ways to become involved in the community and get to know our wonderful members! We also offer intern positions each semester where people can get a behind-the-scenes look at how we organize events and get closer to our cabinet members!'
+        },
+        {
+          'q': 'What is the difference between TSA and TASA?',
+          'a': 'TASA generally caters to Taiwanese-American students or students with an interest in Taiwanese heritage and focuses on spreading awareness about Taiwanese-American culture at Berkeley. The Taiwanese Student Association (TSA) is an organization that focuses more on providing a community for Taiwanese students here at Berkeley and hosts several amazing events throughout the semester! Both of our organizations celebrate Taiwanese heritage and culture and collaborate often with each other to bring you the best of Taiwan! Feel free to come to any of our events!'
+        },
+        {
+          'q': 'What are families and how does the system work?',
+          'a': 'Families are smaller communities in TASA that are set up by our wonderful family heads! Families are typically themed and participate in different activities and events together throughout the semester. Joining a TASA family is an amazing way to get closer to people in TASA! You can sign up anytime during the semester using the preference form linked on our socials, and we will pair you up with one of the families!'
+        },
+        {
+          'q': 'What is the commitment for TASA like?',
+          'a': 'There is no consistent commitment for TASA (feel free to come to whichever events you are able to attend!), but we would love to see people come to events so we can get to know more of you! Especially for the events our incredible families work to put together for family members, we encourage everyone to come out and join the community throughout the semester!'
+        },
+        {
+          'q': 'What are interns and why should I apply to be one?',
+          'a': 'Interns are cabinet members who have the opportunity to shadow a specific TASA officer for a semester to learn behind-the-scenes responsibilities, see how TASA operates, and get closer with our cabinet family. As a part of an intern class each semester, you&rsquo;ll have the chance to get closer to other interns, enjoy cabinet events, and help contribute to TASA. We encourage anyone who wants to get closer with TASA to apply! Take a look at our testimonials page for some experiences from past interns, and apply to be an intern if interested! We will release the application at the beginning of each semester, so stay tuned!'
+        }
+      ] %}
+      {% for faq in faqs %}
+        <div class="border-b border-neutral-200">
+          <button type="button"
+                  @click="open === {{ loop.index }} ? open = null : open = {{ loop.index }}"
+                  :aria-expanded="open === {{ loop.index }}"
+                  class="flex w-full items-center justify-between gap-4 py-5 text-left">
+            <span class="text-lg font-semibold text-neutral-900">{{ faq.q }}</span>
+            <svg class="h-5 w-5 flex-none text-accent-600 transition-transform duration-200"
+                 :class="open === {{ loop.index }} && 'rotate-180'"
+                 fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div x-show="open === {{ loop.index }}" x-cloak
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0 -translate-y-1"
+               x-transition:enter-end="opacity-100 translate-y-0">
+            <p class="pb-5 leading-relaxed text-neutral-700">{{ faq.a | safe }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

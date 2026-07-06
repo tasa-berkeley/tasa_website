@@ -5,10 +5,7 @@ description = "UC Berkeley Taiwanese American Student Association website"
 requires-python = ">=3.12"
 dependencies = [
     "flask>=3.0",
-    "flask-sqlalchemy>=3.1",
-    "flask-wtf>=1.2",
-    "python-dotenv>=1.0",
-    "pillow>=10.0",
+    "pyyaml>=6.0",
     "gunicorn>=21.0",
 ]
 

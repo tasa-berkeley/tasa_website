@@ -1,9 +1,9 @@
 import pytest
 
-PUBLIC_ROUTES = ['/', '/about', '/officers', '/families', '/testimonials']
+PUBLIC_ROUTES = ['/', '/about', '/officers', '/families', '/testimonials', '/join']
 
 REMOVED_ROUTES = [
-    '/events', '/join', '/donate', '/contact', '/scrapbook/fa19',
+    '/events', '/donate', '/contact', '/scrapbook/fa19',
     '/checkin', '/checkin_successful', '/rolling', '/members/download', '/files',
 ]
 
