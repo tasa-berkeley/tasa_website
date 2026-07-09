@@ -5,10 +5,9 @@ It is currently hosted by the Open Computing Facility (OCF).
 
 ## Conventions
 
-- Don't do `git add .` or `git add -A` — just `git add -u` to only add changes for tracked files.
+- Don't do `git add .` or `git add -A`, just `git add -u` to only add changes for tracked files.
 - Don't track files that contain sensitive information such as secret keys or passwords. Those go in
   `.env`, which is gitignored.
-- Keep things as simple as possible, no need to have too many fancy features.
 - Try not to edit on the live server, because that is bad.
 - Don't drop a bunch of tables in the SQLite database.
 
@@ -30,9 +29,15 @@ Here is how to set up a local version of the website on your own machine.
 
 It's pretty easy to do regular updates with the site.
 
-Log in at `<site_url>/login` and you will get to the admin panel. From there you can add, update, or
-delete officers, families, and testimonials — each with a photo upload. Changes show up on the live site
-immediately, no redeploy needed.
+Log in at `<site_url>/login` and you will get to the admin panel:
+
+![Admin panel — officers list](tasa_website/static/images/readme_1.png)
+
+Each pane does exactly what you'd think. For officers, families, and testimonials you can add, update,
+or delete entries — changes show up on the live site immediately, no redeploy needed. Clicking **Edit**
+opens a handy form like this:
+
+![Edit officer form](tasa_website/static/images/readme_2.png)
 
 Home and About page photos are hand-placed files in `tasa_website/static/images/site/` — drop in a
 correctly named image and it appears (a gray placeholder shows until then).
