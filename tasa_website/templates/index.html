@@ -7,7 +7,7 @@
 <section class="relative flex min-h-[65vh] items-center overflow-hidden border-b border-neutral-200 lg:min-h-[80vh]"
          x-data="{ x: 0, y: 0, move(e) { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; this.x = ((e.clientX / window.innerWidth) - 0.5) * 10; this.y = ((e.clientY / window.innerHeight) - 0.5) * 8; } }"
          @mousemove="move($event)" @mouseleave="x = 0; y = 0">
-  <img src="{{ url_for('static', filename='images/site/home_bkg.png') }}" alt=""
+  <img src="{{ url_for('static', filename='images/site/home_bkg.jpg') }}" alt=""
        class="absolute inset-0 h-full w-full object-cover" style="object-position: center 35%">
   <div class="absolute inset-0 bg-black/50"></div>
   <div class="hero-inner site-container relative px-4 py-24 text-glow sm:px-6 sm:py-32"
