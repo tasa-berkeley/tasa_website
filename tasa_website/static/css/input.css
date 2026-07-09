@@ -42,6 +42,17 @@
     display: none !important;
   }
 
+  /* Visible keyboard-focus ring for links/buttons (mouse users unaffected).
+     Form inputs keep their own focus:ring-* styles. */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+
   /* Faint tasa-bear watermark behind the whole site. A fixed pseudo-element so
      opacity applies to the pattern only; z-index:-1 keeps it above the body's
      white background but below all page content, so text stays legible.

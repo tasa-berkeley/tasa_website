@@ -5,7 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}TASA @ Berkeley{% endblock %}</title>
   <meta name="description" content="The Taiwanese American Student Association at UC Berkeley — more than a club, we're a family.">
-  <link rel="icon" href="{{ url_for('static', filename='images/Transparent-TASA-logo48.png') }}">
+
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" sizes="any">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/tasa_logo_variations/tasa_grayscale_256.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+
+  {# Social share cards (links posted to Instagram/Facebook/Discord) #}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TASA @ Berkeley">
+  <meta property="og:title" content="TASA @ Berkeley — UC Berkeley Taiwanese American Student Association">
+  <meta property="og:description" content="The Taiwanese American Student Association at UC Berkeley — more than a club, we're a family.">
+  <meta property="og:image" content="{{ url_for('static', filename='images/site/og-image.jpg', _external=True) }}">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TASA @ Berkeley — UC Berkeley Taiwanese American Student Association">
+  <meta name="twitter:description" content="The Taiwanese American Student Association at UC Berkeley — more than a club, we're a family.">
+  <meta name="twitter:image" content="{{ url_for('static', filename='images/site/og-image.jpg', _external=True) }}">
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
   <script defer src="{{ url_for('static', filename='js/alpine.min.js') }}"></script>
 </head>

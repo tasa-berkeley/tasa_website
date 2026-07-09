@@ -1,7 +1,7 @@
 import os
 from datetime import date
 
-from flask import Flask
+from flask import Flask, render_template
 
 from .config import Config
 from .extensions import csrf, db
@@ -40,5 +40,13 @@ def create_app(test_config=None):
             'site_image': content.site_image,
             'current_year': date.today().year,
         }
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return render_template('404.html'), 404
+
+    @app.errorhandler(500)
+    def server_error(error):
+        return render_template('500.html'), 500
 
     return app

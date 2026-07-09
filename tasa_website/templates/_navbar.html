@@ -36,6 +36,7 @@
 
       <div class="relative" x-data="{ scrapOpen: false }" @click.outside="scrapOpen = false">
         <button type="button" @click="scrapOpen = !scrapOpen"
+                aria-haspopup="true" :aria-expanded="scrapOpen"
                 class="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                 :class="scrolled || open
                   ? 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900'
@@ -58,7 +59,8 @@
 
     <button class="rounded-lg p-2 transition-colors md:hidden"
             :class="scrolled || open ? 'text-neutral-600 hover:bg-neutral-100' : 'text-white hover:bg-white/10'"
-            @click="open = !open" aria-label="Toggle menu">
+            @click="open = !open" aria-label="Toggle menu"
+            aria-controls="mobile-menu" :aria-expanded="open">
       <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         <path x-show="open" x-cloak stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/>
@@ -66,7 +68,7 @@
     </button>
   </nav>
 
-  <div class="border-t border-neutral-200 bg-white md:hidden" x-show="open" x-cloak>
+  <div id="mobile-menu" class="border-t border-neutral-200 bg-white md:hidden" x-show="open" x-cloak>
     <div class="space-y-1 px-4 py-3">
       {% for endpoint, label in links %}
         <a href="{{ url_for(endpoint) }}"

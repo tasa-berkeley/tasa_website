@@ -51,7 +51,7 @@
   {# ----- Sponsors ----- #}
   <div class="mt-16">
     {{ heading('A huge thank you to all of our sponsors below!') }}
-    <div class="mt-8 grid grid-cols-3 gap-8">
+    <div class="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
       {% set sponsors = [
         'boba_guys_logo.png',
         'panda_express_logo.png',
@@ -63,7 +63,8 @@
       {% for logo in sponsors %}
         <div class="flex items-center justify-center">
           <img src="{{ url_for('static', filename='images/sponsors/' ~ logo) }}"
-               alt="" class="max-h-40 w-full object-contain mix-blend-multiply sm:max-h-48">
+               alt="{{ logo.split('_logo')[0].replace('_', ' ')|title }} logo"
+               class="max-h-40 w-full object-contain mix-blend-multiply sm:max-h-48">
         </div>
       {% endfor %}
     </div>
