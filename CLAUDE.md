@@ -20,7 +20,7 @@ in `static/images/`) — there is no database, no admin panel, and no login.
   `site_image()`.
 - `tasa_website/__init__.py` — `create_app()`; context processor exposes `photo_url`, `site_image`,
   `current_year` to all templates.
-- `views/public.py` — the ONLY blueprint: `/`, `/about`, `/officers`, `/families`, `/testimonials`.
+- `views/public.py` — the ONLY blueprint: `/`, `/about`, `/officers`, `/families`, `/testimonials`, `/join`, `/donate`.
 - `config.py` — minimal (`SECRET_KEY` only, unused unless flashing/sessions are added).
 - Templates: `base.html` (+ `_navbar`, `_footer`, `_macros`), and the five page templates. The
   officers/families pages use Alpine.js for hover-lift cards that open an overlay modal (bio/photo).
@@ -46,11 +46,16 @@ in `static/images/`) — there is no database, no admin panel, and no login.
 
 Database + SQLAlchemy, the `/admin` panel, `/login` auth, WTForms, the image-upload pipeline, the
 `flask` CLI (init-db/import-legacy/hash-password). Also long gone from the old site: Events + Facebook
-importer, Donate, Scrapbook, Contact page (contact info lives in `_footer.html`),
+importer, Contact page (contact info lives in `_footer.html`),
 the check-in/attendance/leaderboard system, jQuery, Bootstrap, skrollr.
 
 (The `/join` page — a static FAQ accordion + useful links, no `files` DB — was re-added; it mirrors
 the old join page's copy minus the membership-prices question.)
+
+(The `/donate` page was re-added — static page modeled on the old site (intro + Venmo `@TASA-Berkeley`,
+mailing-address / in-person sections, sponsor logos from `static/images/sponsors/`), minus the
+Membership tiers. Scrapbook is a nav dropdown placeholder that shows "Coming soon!" — no route/page
+yet; add one when the content is ready.)
 
 ## Open items
 

@@ -11,6 +11,16 @@
       <div class="mt-4 text-sm">
         <p><a class="font-medium text-accent-700 hover:underline" href="mailto:tasa.berkeley@gmail.com">Contact TASA</a></p>
       </div>
+      <div class="mt-4 space-y-1 text-sm">
+        {# "Old site" = the site this redesign replaces, archived at ~tasa/old_site2/ on OCF.
+           "Older site" = the earlier archive at ~tasa/old_site/. #}
+        <p><a class="text-accent-700 hover:underline"
+              href="https://www.ocf.berkeley.edu/~tasa/old_site2/"
+              target="_blank" rel="noopener">Old site</a></p>
+        <p><a class="text-accent-700 hover:underline"
+              href="https://www.ocf.berkeley.edu/~tasa/old_site/"
+              target="_blank" rel="noopener">Older site</a></p>
+      </div>
     </div>
 
     <div>
@@ -38,7 +48,7 @@
       </div>
 
       <a href="https://www.ocf.berkeley.edu" target="_blank" rel="noopener" class="mt-6 inline-block">
-        <img src="https://www.ocf.berkeley.edu/hosting-logos/ocf-hosted-penguin.png" alt="Hosted by the OCF" width="128" height="36" loading="lazy">
+        <img src="{{ url_for('static', filename='images/site/ocf-hosted-penguin.svg') }}" alt="Hosted by the OCF" width="120" height="48" loading="lazy">
       </a>
     </div>
   </div>

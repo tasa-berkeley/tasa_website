@@ -1,0 +1,75 @@
+{% extends "admin/base.html" %}
+{% from "_macros.html" import thumb, back_link, sort_header, img_or_placeholder %}
+
+{% block content %}
+<div class="mx-auto max-w-6xl px-4 py-12 sm:px-6"
+     x-data="{ preview: null }"
+     @keydown.escape.window="preview = null"
+     x-effect="document.body.style.overflow = preview ? 'hidden' : ''">
+  {{ back_link('admin.dashboard', 'Back to dashboard') }}
+  <div class="mt-4 flex items-center justify-between">
+    <h1 class="text-3xl font-semibold tracking-tight">Families</h1>
+    <a href="{{ url_for('admin.new_family') }}"
+       class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-700">Add family</a>
+  </div>
+
+  <div class="mt-8 overflow-visible rounded-2xl border border-neutral-200">
+    <table class="w-full text-left text-sm">
+      <thead class="border-b border-neutral-200 bg-neutral-50 text-neutral-500">
+        <tr>
+          <th class="px-4 py-3 font-medium">Photo</th>
+          <th class="px-4 py-3 font-medium">{{ sort_header('Name', 'family_name', current_sort, current_dir, request.endpoint) }}</th>
+          <th class="px-4 py-3 font-medium">Heads</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-100">
+        {% for family in families %}
+          <tr>
+            <td class="px-4 py-2">{{ thumb(static_image(family.image_url), family.family_name, 'wide') }}</td>
+            <td class="px-4 py-2 font-medium">{{ family.family_name }}</td>
+            <td class="px-4 py-2">{{ family.heads() }}</td>
+            <td class="px-4 py-2 text-right whitespace-nowrap">
+              <button type="button" class="font-medium text-neutral-700 hover:underline" @click="preview = {{ family.id }}">Preview</button>
+              <a class="ml-3 font-medium text-accent-700 hover:underline" href="{{ url_for('admin.edit_family', family_id=family.id) }}">Edit</a>
+              <form class="ml-3 inline" method="post" action="{{ url_for('admin.delete_family', family_id=family.id) }}"
+                    onsubmit="return confirm('Delete family {{ family.family_name }}?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="font-medium text-red-600 hover:underline">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="4" class="px-4 py-8 text-center text-neutral-500">No families yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# ----- Card preview overlay ----- #}
+  <div x-show="preview !== null" x-cloak
+       class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" @click="preview = null"
+         x-show="preview !== null" x-transition.opacity></div>
+
+    {% for family in families %}
+      <div x-show="preview === {{ family.id }}" x-cloak
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 scale-95"
+           x-transition:enter-end="opacity-100 scale-100"
+           class="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl sm:p-8">
+        <button type="button" @click="preview = null" aria-label="Close"
+                class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-2xl leading-none text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900">
+          &times;
+        </button>
+        <div class="overflow-hidden rounded-2xl">
+          {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'max-h-[60vh] w-full object-cover', 'wide') }}
+        </div>
+        <h2 class="mt-6 text-3xl font-semibold tracking-tight">{{ family.family_name }}</h2>
+        <p class="mt-1 text-lg font-medium text-accent-700">{{ family.heads() }}</p>
+        <p class="mt-4 leading-relaxed text-neutral-700">{{ family.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

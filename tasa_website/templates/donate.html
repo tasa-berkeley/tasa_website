@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% from "_macros.html" import page_banner, heading %}
+
+{% block title %}Donate — TASA @ Berkeley{% endblock %}
+
+{% block content %}
+{{ page_banner('Donate', url_for('static', filename='images/site/donate_bkg.JPG')) }}
+
+<div class="site-container px-4 py-16 sm:px-6">
+
+  {# ----- Thank you ----- #}
+  {{ heading('Thank you!') }}
+  <p class="mt-6 leading-relaxed text-neutral-700">
+    TASA is always looking to bring the best experience to its members and to the local Berkeley
+    community. As a student-run organization, we rely on the generosity of our members, alumni,
+    and supporters to fund the events, families, and traditions that make TASA a home away from
+    home. Every contribution &mdash; big or small &mdash; helps us keep doing what we love.
+  </p>
+  <p class="mt-4 leading-relaxed text-neutral-700">
+    The easiest way to give is through Venmo at
+    <a class="font-medium text-accent-600 hover:underline"
+       href="https://venmo.com/TASA-Berkeley" target="_blank" rel="noopener">@TASA-Berkeley</a>.
+    Thank you for supporting our community!
+  </p>
+
+  {# ----- How to donate ----- #}
+  <div class="mt-16">
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <h3 class="text-base font-semibold text-neutral-900">Donating By Mail</h3>
+        <p class="mt-2 text-neutral-700">
+          Make checks payable to the Taiwanese American Student Association and mail them to:
+        </p>
+        <address class="mt-4 not-italic leading-relaxed text-neutral-700">
+          Taiwanese American Student Association<br>
+          University of California<br>
+          112 Hearst Gym, MC 4520<br>
+          Berkeley, CA 94720-4520
+        </address>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-neutral-900">Donating In Person</h3>
+        <p class="mt-2 text-neutral-700">
+          Come drop by our table on Upper Sproul Plaza! We table on weekdays from
+          11am&ndash;2pm and are always happy to say hi.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {# ----- Sponsors ----- #}
+  <div class="mt-16">
+    {{ heading('A huge thank you to all of our sponsors below!') }}
+    <div class="mt-8 grid grid-cols-3 gap-8">
+      {% set sponsors = [
+        'boba_guys_logo.png',
+        'panda_express_logo.png',
+        'formosa_logo.png',
+        'fresh_and_simple_logo.webp',
+        'bereal_logo.png',
+        'ministry_of_education_logo.png',
+      ] %}
+      {% for logo in sponsors %}
+        <div class="flex items-center justify-center">
+          <img src="{{ url_for('static', filename='images/sponsors/' ~ logo) }}"
+               alt="" class="max-h-40 w-full object-contain mix-blend-multiply sm:max-h-48">
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

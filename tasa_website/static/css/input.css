@@ -78,4 +78,30 @@
   .logo-glow {
     filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
   }
+
+  /* ---- Home hero intro animations ---- */
+  /* Title starts at ~1/5 of the screen and eases leftward into its home position
+     (positive offset keeps it on-screen — it never enters from the left edge). */
+  @keyframes heroTitleIn {
+    from { opacity: 0; transform: translateX(15vw); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  /* Each subtitle line fades up into place. */
+  @keyframes heroLineIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* All hero animations wait 1.5s after load, then ease in slowly with a long
+     decelerating tail (cubic-bezier(0.16,1,0.3,1) ~= easeOutExpo). */
+  .hero-title { animation: heroTitleIn 2.4s 1.0s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  /* per-line animation-delay is set inline in the template for the stagger */
+  .hero-line  { animation: heroLineIn 1.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  /* Smooths the very subtle mouse-parallax on the hero text block. */
+  .hero-inner { transition: transform 0.25s ease-out; will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title, .hero-line { animation: none; opacity: 1; transform: none; }
+    .hero-inner { transition: none; }
+  }
 }

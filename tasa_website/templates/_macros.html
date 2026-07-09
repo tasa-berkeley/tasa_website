@@ -26,6 +26,32 @@
 </section>
 {% endmacro %}
 
+{# A small "← Back" link (admin pages) #}
+{% macro back_link(endpoint, label='Back') %}
+  <a href="{{ url_for(endpoint) }}"
+     class="inline-flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-neutral-900">
+    <span aria-hidden="true">&larr;</span> {{ label }}
+  </a>
+{% endmacro %}
+
+{# Small static admin list thumbnail. shape: 'square' | 'wide' | 'round' #}
+{% macro thumb(url, alt, shape='square') %}
+  {%- set sizes = {'square': 'h-8 w-8 rounded', 'wide': 'h-8 w-12 rounded', 'round': 'h-8 w-8 rounded-full'} -%}
+  {%- set kind = 'wide' if shape == 'wide' else 'square' -%}
+  {{ img_or_placeholder(url, alt, sizes[shape] ~ ' object-cover', kind) }}
+{% endmacro %}
+
+{# Sortable admin table column header — links to the same page toggling sort direction #}
+{% macro sort_header(label, key, current_sort, current_dir, endpoint) %}
+  {%- set is_active = current_sort == key -%}
+  {%- set next_dir = 'desc' if (is_active and current_dir == 'asc') else 'asc' -%}
+  <a href="{{ url_for(endpoint, sort=key, dir=next_dir) }}"
+     class="inline-flex items-center gap-1 hover:text-neutral-900 {{ 'text-neutral-900' if is_active else '' }}">
+    {{ label }}
+    <span class="text-[10px] leading-none">{{ '▲' if is_active and current_dir == 'asc' else ('▼' if is_active else '↕') }}</span>
+  </a>
+{% endmacro %}
+
 {# A labeled form field with validation errors (admin + login forms) #}
 {% macro form_field(f, rows=0) %}
   <div>

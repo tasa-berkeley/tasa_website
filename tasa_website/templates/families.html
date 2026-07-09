@@ -19,16 +19,16 @@
     <p class="mt-12 text-neutral-500">Family profiles are coming soon &mdash; check back shortly!</p>
   {% endif %}
 
-  <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
     {% for family in families %}
       <button type="button" @click="selected = {{ family.id }}"
-              class="group rounded-2xl text-left transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+              class="group relative rounded-2xl text-left transition duration-200 hover:z-10 hover:-translate-y-1 hover:scale-[1.08] hover:shadow-xl">
         <div class="overflow-hidden rounded-t-2xl">
-          {{ img_or_placeholder(photo_url('families', family.photo), family.name ~ ' family photo', 'aspect-[4/3] w-full object-cover', 'wide') }}
+          {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'aspect-[4/3] w-full object-cover', 'wide') }}
         </div>
         <div class="p-4">
-          <p class="font-semibold text-neutral-900">{{ family.name }}</p>
-          <p class="mt-1 text-sm text-neutral-500">{{ family.heads }}</p>
+          <p class="font-semibold text-neutral-900">{{ family.family_name }}</p>
+          <p class="mt-1 text-sm text-neutral-500">{{ family.heads() }}</p>
         </div>
       </button>
     {% endfor %}
@@ -51,10 +51,10 @@
           &times;
         </button>
         <div class="overflow-hidden rounded-2xl">
-          {{ img_or_placeholder(photo_url('families', family.photo), family.name ~ ' family photo', 'max-h-[60vh] w-full object-cover', 'wide') }}
+          {{ img_or_placeholder(static_image(family.image_url), family.family_name ~ ' family photo', 'max-h-[60vh] w-full object-cover', 'wide') }}
         </div>
-        <h2 class="mt-6 text-3xl font-semibold tracking-tight">{{ family.name }}</h2>
-        <p class="mt-1 text-lg font-medium text-accent-700">{{ family.heads }}</p>
+        <h2 class="mt-6 text-3xl font-semibold tracking-tight">{{ family.family_name }}</h2>
+        <p class="mt-1 text-lg font-medium text-accent-700">{{ family.heads() }}</p>
         <p class="mt-4 leading-relaxed text-neutral-700">{{ family.description }}</p>
       </div>
     {% endfor %}

@@ -4,18 +4,22 @@
 {% block content %}
 
 <!-- Hero -->
-<section class="relative flex min-h-[65vh] items-center overflow-hidden border-b border-neutral-200 lg:min-h-[80vh]">
+<section class="relative flex min-h-[65vh] items-center overflow-hidden border-b border-neutral-200 lg:min-h-[80vh]"
+         x-data="{ x: 0, y: 0, move(e) { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; this.x = ((e.clientX / window.innerWidth) - 0.5) * 10; this.y = ((e.clientY / window.innerHeight) - 0.5) * 8; } }"
+         @mousemove="move($event)" @mouseleave="x = 0; y = 0">
   <img src="{{ url_for('static', filename='images/site/home_bkg.png') }}" alt=""
        class="absolute inset-0 h-full w-full object-cover" style="object-position: center 35%">
   <div class="absolute inset-0 bg-black/50"></div>
-  <div class="site-container relative px-4 py-24 text-glow sm:px-6 sm:py-32">
-    <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl">
+  <div class="hero-inner site-container relative px-4 py-24 text-glow sm:px-6 sm:py-32"
+       :style="'transform: translate(' + x + 'px, ' + y + 'px)'">
+    <h1 class="hero-title max-w-4xl text-4xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl">
       Welcome to <img src="{{ url_for('static', filename='images/tasa_logo_variations/tasa_inverted_512.png') }}"
            alt="TASA" class="logo-glow mx-1 inline-block h-[1.5em] w-auto select-none align-middle"> at Berkeley!
     </h1>
-    <p class="mt-6 max-w-2xl text-lg text-white/90 drop-shadow lg:text-xl">
-      We are the <strong> Taiwanese American Student Association </strong>, a social and cultural student organization at
-      UC Berkeley celebrating everything Taiwanese.
+    <p class="hero-copy mt-6 max-w-2xl text-lg text-white/90 drop-shadow lg:text-xl">
+      <span class="hero-line block" style="animation-delay: 2.3s">We are the <strong>Taiwanese American Student Association,</strong></span>
+      <span class="hero-line block" style="animation-delay: 2.9s">a social and cultural student organization at UC Berkeley</span>
+      <span class="hero-line block" style="animation-delay: 3.5s">celebrating everything Taiwanese.</span>
     </p>
   </div>
 </section>
