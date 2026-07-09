@@ -16,9 +16,9 @@ def test_officer_crud_round_trip(app, logged_in):
     assert officer.image_url.startswith('static/images/officers/')
     assert '\\' not in officer.image_url  # posix-style URL even on Windows
 
-    # appears on the public page grouped under Executive Board
+    # appears on the public page grouped under Executives
     page = logged_in.get('/officers')
-    assert b'Test Officer' in page.data and b'Executive Board' in page.data
+    assert b'Test Officer' in page.data and b'Executives' in page.data
 
     # edit without replacing the image
     response = logged_in.post(f'/admin/officers/{officer.id}/edit', data={

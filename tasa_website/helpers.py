@@ -36,7 +36,7 @@ POSITIONS = [
     'Social',
 ]
 
-SECTION_ORDER = ['Executive Board', 'Officers', 'Interns', 'Senior Advisors']
+SECTION_ORDER = ['Executives', 'Officers', 'Interns', 'Senior Advisors']
 
 IMAGE_MAXSIZE = (1024, 1024)
 
@@ -52,7 +52,7 @@ def position_section(index):
     if not 0 <= index < len(POSITIONS):
         return 'Officers'
     if index <= 2:  # President, Internal VP, External VP
-        return 'Executive Board'
+        return 'Executives'
     title = POSITIONS[index]
     if title == 'Senior Advisor':
         return 'Senior Advisors'
