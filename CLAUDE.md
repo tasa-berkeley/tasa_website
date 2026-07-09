@@ -1,69 +1,64 @@
 # TASA Website — project notes
 
 Flask 3 app factory, Tailwind v4 (standalone CLI, compiled `app.css` committed), Alpine.js vendored.
-Hosted on OCF (gunicorn + static files only — no Node on the server). Design: black & white with
-light-blue `accent-*` tokens, DM Sans (self-hosted), per wireframes in `documents/`.
+SQLite + SQLAlchemy database, an admin panel, and a single-admin login. Hosted on OCF (gunicorn +
+static files only — no Node on the server). Design: black & white with light-blue `accent-*` tokens,
+DM Sans (self-hosted), per wireframes in `documents/`.
 
-**Content is code, not a database.** All officer/family/testimonial content lives in
-`tasa_website/content.yaml`. A webmaster updates the site by editing that file (and dropping photos
-in `static/images/`) — there is no database, no admin panel, and no login.
+See **README.md** for the overview and **MAINTAINING.md** for setup / content-editing / deploy.
+
+## How content works
+
+- **Officers / Families / Testimonials** are stored in the **database** (`models.py`) and edited via the
+  **admin panel** at `/admin` (login required). These pages read the DB — not `content.yaml`.
+- **Home / About** are static templates; their photos are hand-placed files in
+  `static/images/site/`, resolved by `content.site_image()`.
+- **Join / Donate** are static informational pages.
+- `content.yaml` is a **seed/sync file**, not the live source: `cli.py` uses it for `seed-testimonials`
+  and `sync-officers`. It is not read at request time.
 
 ## Layout
 
-- `tasa_website/content.yaml` — the single source of truth for site content. `officers` is grouped
-  into `executives` / `officers` / `interns` / `senior_advisors` (order within each list is the
-  display order); `families` and `testimonials` are flat lists. Photo fields are **filenames** inside
-  `static/images/<officers|families|testimonials>/`.
-- `tasa_website/content.py` — loads/caches `content.yaml` (re-reads on file change); exposes
-  `officer_sections()` (adds a page-unique `id` per officer; the `Interns` section always renders so
-  the page can show a recruitment placeholder), `families()`, `testimonials()`, `photo_url()`,
-  `site_image()`.
-- `tasa_website/__init__.py` — `create_app()`; context processor exposes `photo_url`, `site_image`,
-  `current_year` to all templates.
-- `views/public.py` — the ONLY blueprint: `/`, `/about`, `/officers`, `/families`, `/testimonials`, `/join`, `/donate`.
-- `config.py` — minimal (`SECRET_KEY` only, unused unless flashing/sessions are added).
-- Templates: `base.html` (+ `_navbar`, `_footer`, `_macros`), and the five page templates. The
-  officers/families pages use Alpine.js for hover-lift cards that open an overlay modal (bio/photo).
+- `tasa_website/__init__.py` — `create_app()`; registers the `public`, `auth`, and `admin` blueprints;
+  context processor exposes `position_title`, `static_image`, `photo_url`, `site_image`, `current_year`.
+- `tasa_website/models.py` — SQLAlchemy models `Officer`, `Family`, `Testimonial`. `extensions.py` holds
+  the shared `db` and `csrf` objects.
+- `tasa_website/views/` — `public.py` (`/`, `/about`, `/officers`, `/families`, `/testimonials`, `/join`,
+  `/donate`), `auth.py` (`/login`, `/logout`), `admin.py` (`/admin` CRUD; every route `login_required`).
+- `tasa_website/forms.py` — WTForms; `helpers.py` — image save/delete pipeline (Pillow re-encode, random
+  filename), officer grouping (`officer_sections`), position titles.
+- `tasa_website/cli.py` — Flask CLI: `init-db`, `import-legacy`, `seed-testimonials`, `sync-officers`,
+  `hash-password`.
+- `tasa_website/content.py` — loads `content.yaml`; provides `testimonials()` (CLI), `site_image()` /
+  `photo_url()` (home/about).
+- `config.py` — `SECRET_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, upload folders, `database_uri()`
+  (all from env / `.env`).
+- Templates: `base.html` (+ `_navbar`, `_footer`, `_macros`), the public pages, `admin/*`, and
+  `auth/login.html`. Officers/families use Alpine.js hover-lift cards that open an overlay modal.
 - CSS: edit `static/css/input.css` → recompile `app.css` → commit it. Never hand-edit `app.css`.
 
 ## Commands (Windows dev)
 
 - Run: `venv\Scripts\python run.py` (port 5001)
 - Tests: `venv\Scripts\python -m pytest tests/ -q`
-- Rebuild CSS (after editing templates or `input.css`): the standalone `tailwindcss` CLI, or
+- Create DB: `venv\Scripts\flask init-db`
+- Rebuild CSS: the standalone `tailwindcss` CLI, or
   `npx @tailwindcss/cli -i tasa_website/static/css/input.css -o tasa_website/static/css/app.css --minify`
-  (needs `tailwindcss` + `@tailwindcss/cli` in a local `node_modules`; both are gitignored).
+  (needs `tailwindcss` + `@tailwindcss/cli` in a local `node_modules`; both gitignored).
 
-## Editing content (for webmasters)
+## Editing content
 
-- Add/edit/remove a person → edit `tasa_website/content.yaml`. To add someone, copy an existing entry
-  and change the fields; put them under the right section (their position in the list = order on the
-  page). Add their photo to `static/images/officers/` and set `photo:` to the filename.
-- No photo yet → a gray placeholder renders automatically.
-- Families/testimonials work the same way in their lists.
-
-## Removed / not present (do not resurrect)
-
-Database + SQLAlchemy, the `/admin` panel, `/login` auth, WTForms, the image-upload pipeline, the
-`flask` CLI (init-db/import-legacy/hash-password). Also long gone from the old site: Events + Facebook
-importer, Contact page (contact info lives in `_footer.html`),
-the check-in/attendance/leaderboard system, jQuery, Bootstrap, skrollr.
-
-(The `/join` page — a static FAQ accordion + useful links, no `files` DB — was re-added; it mirrors
-the old join page's copy minus the membership-prices question.)
-
-(The `/donate` page was re-added — static page modeled on the old site (intro + Venmo `@TASA-Berkeley`,
-mailing-address / in-person sections, sponsor logos from `static/images/sponsors/`), minus the
-Membership tiers. Scrapbook is a nav dropdown placeholder that shows "Coming soon!" — no route/page
-yet; add one when the content is ready.)
+Officers/families/testimonials → `/admin` (not `content.yaml`). Home/about photos → drop correctly named
+files in `static/images/site/`. Full webmaster + deploy steps live in **MAINTAINING.md**.
 
 ## Open items
 
-- Some `static/images/site/` photos (home/about) are still gray placeholders — names listed in README.
-- Footer president/webmaster emails carried over from the old site — confirm each semester.
+- Some `static/images/site/` photos (home/about) may still be gray placeholders.
+- Footer club/officer emails carried over from the old site — confirm each semester.
+- `Scrapbook` is a nav dropdown placeholder ("Coming soon!") with no route yet.
 - Home "View events »" links to the public Google Calendar; swap to Instagram if preferred (index.html).
 
 ## Conventions
 
-- `git add -u` + explicit new paths; never `git add .`/`-A`. Never track secrets.
+- `git add -u` + explicit new paths; never `git add .`/`-A`. Never track secrets, the DB, or uploaded photos.
 - Keep LICENSE untouched.

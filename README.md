@@ -1,95 +1,60 @@
 # TASA Website
 
-Source code for the UC Berkeley [Taiwanese American Student Association](https://tasa.berkeley.edu)
-website, hosted by the [Open Computing Facility](https://ocf.io).
+Source code for the UC Berkeley Taiwanese American Student Association (TASA) website,
+hosted on the Open Computing Facility (OCF).
 
-**Stack:** Python 3.12+ / Flask 3 (app factory), Tailwind CSS v4 (compiled locally, committed),
-Alpine.js (vendored). Content lives in a YAML file — **no database, no admin panel, no login.** No
-Node and no CSS build step on the server — OCF only runs gunicorn and serves static files.
+**Stack:** Python 3.12+ / Flask 3 (app factory) · SQLite + SQLAlchemy · Flask-WTF · Alpine.js
+(vendored) · Tailwind CSS v4 (compiled locally, `app.css` committed). Runs under gunicorn on OCF.
 
-## Pages
+## How the site works
 
-Home `/`, About `/about`, Officers `/officers`, Families `/families`, Testimonials `/testimonials`.
+- **Home** (`/`) and **About** (`/about`) are static templates. Their photos are hand-placed files in
+  `tasa_website/static/images/site/` — drop in a correctly named image and it appears (a gray
+  placeholder shows until then).
+- **Officers** (`/officers`), **Families** (`/families`), and **Testimonials** (`/testimonials`) live in
+  a **database** and are edited through the **admin panel** at `/admin` (login required). No code edits
+  or redeploys are needed to change this content.
+- **Join** (`/join`) and **Donate** (`/donate`) are static informational pages.
+- `content.yaml` is a **seed file**, not the live source. The Flask CLI uses it to first populate the
+  testimonials table and to bulk-refresh officer titles/majors/years. Day-to-day content edits happen in
+  `/admin`, not in this file.
 
-## Updating site content
+## Admin panel
 
-All officers, families, and testimonials live in **`tasa_website/content.yaml`** — edit that file to
-change the site. No database or login involved.
+`/admin` (behind `/login`) lets a webmaster add / edit / delete officers, families, and testimonials,
+including photo uploads. Credentials come from `ADMIN_USERNAME` and `ADMIN_PASSWORD_HASH` in a local
+`.env` file — see **[MAINTAINING.md](MAINTAINING.md)**.
 
-- **Officers** are grouped into `executives`, `officers`, `interns`, and `senior_advisors`. The order
-  you list people in is the order they appear on the page. To add someone, copy an existing entry and
-  change the fields; to remove someone, delete their entry.
-- **Photos** are just filenames. Put the image in `static/images/officers/`
-  (or `/families/`, `/testimonials/`) and set `photo:` to the filename. If a photo is missing, a gray
-  placeholder shows automatically.
-- **Families** and **testimonials** are simple lists at the bottom of the file — same idea.
+## Project layout
 
-Example officer entry:
+- `tasa_website/__init__.py` — `create_app()`; registers the `public`, `auth`, and `admin` blueprints.
+- `tasa_website/models.py` — SQLAlchemy models: `Officer`, `Family`, `Testimonial`.
+- `tasa_website/views/` — `public.py` (site pages), `auth.py` (login/logout), `admin.py` (CRUD dashboard).
+- `tasa_website/forms.py` — WTForms (login + officer/family/testimonial forms with photo upload).
+- `tasa_website/helpers.py` — image save/delete pipeline, officer grouping, position titles.
+- `tasa_website/cli.py` — Flask CLI: `init-db`, `import-legacy`, `seed-testimonials`, `sync-officers`,
+  `hash-password`.
+- `tasa_website/content.py` — loads `content.yaml`; provides the home/about `site_image()` helper.
+- `tasa_website/templates/` — `base.html` (+ `_navbar`/`_footer`/`_macros`), the public pages,
+  `admin/*`, and `auth/login.html`.
+- `tasa_website/static/css/` — edit `input.css` → recompile `app.css` (committed) → never hand-edit
+  `app.css`.
 
-```yaml
-officers:
-  executives:
-    - name: Jackson Lu
-      position: President
-      major: Economics
-      year: Sophomore
-      photo: jackson.jpg      # -> static/images/officers/jackson.jpg
-      quote: "your shot quote"
-      bio: A sentence or two about them.
-```
+## Quick start (developers)
 
-Changes are picked up on the next page load (locally, just refresh).
+    py -m venv venv
+    venv\Scripts\pip install -e ".[dev]"      # Linux/macOS: make venv
+    # create .env (see MAINTAINING.md), then:
+    venv\Scripts\flask init-db                # create the database tables
+    venv\Scripts\python run.py                # http://127.0.0.1:5001
 
-## Developer setup
+Tests: `venv\Scripts\python -m pytest tests/ -q`
 
-1. Clone the repo and create a virtualenv:
-   - **Windows:** `py -m venv venv` then `venv\Scripts\pip install -e ".[dev]"`
-   - **Linux/macOS:** `make venv`
-2. Run the site: `python run.py` (Windows) or `make run` — serves at <http://127.0.0.1:5001>.
-
-### CSS (Tailwind)
-
-`tasa_website/static/css/app.css` is compiled from `input.css` and **committed**, so you only need
-this when changing templates or styles:
-
-1. Get the Tailwind v4 CLI, either the standalone binary from
-   <https://github.com/tailwindlabs/tailwindcss/releases/latest> (`tailwindcss.exe` in the repo root,
-   gitignored), or `npm install tailwindcss @tailwindcss/cli` (creates a gitignored `node_modules`).
-2. Build: `.\tailwindcss.exe -i tasa_website/static/css/input.css -o tasa_website/static/css/app.css --minify`
-   or `npx @tailwindcss/cli -i tasa_website/static/css/input.css -o tasa_website/static/css/app.css --minify`
-   (add `--watch` while developing).
-3. Commit the updated `app.css` together with your template changes.
-
-Design tokens (DM Sans, the light-blue `accent` palette) live in `input.css` under `@theme`.
-
-### Tests
-
-`venv\Scripts\python -m pytest tests/ -q` (or `make test`).
-
-## Site photos
-
-Hand-picked photos for the home and about pages go in `tasa_website/static/images/site/` with these
-names (gray placeholders render until a file exists):
-
-- Home gallery: `gallery-1.jpg` … `gallery-6.jpg`
-- Home sections: `food.jpg`, `activities.jpg`, `welcome.jpg`, `events.jpg`, `tasa-bear.png`
-- About: `about-why-1.jpg`/`-2.jpg`, `about-mission-1.jpg`/`-2.jpg`, `about-families-1.jpg`/`-2.jpg`,
-  `about-cabinet-1.jpg`/`-2.jpg`
-
-Officer/family/testimonial photos live in `static/images/<officers|families|testimonials>/` and are
-**not** tracked in git (they're large and change often); `content.yaml` references them by filename.
-
-## Deploying on OCF
-
-```
-git pull
-make venv          # first time or when dependencies change
-# restart gunicorn (e.g. systemctl --user restart tasa or OCF's usual mechanism), serving wsgi:app
-```
+Full setup, how to update site content, and OCF deployment live in **[MAINTAINING.md](MAINTAINING.md)**.
 
 ## Conventions
 
-1. Prefer `git add -u` plus explicit paths for new files over `git add .` / `-A`.
-2. Never track secrets or uploaded member photos.
-3. Keep it simple — this site is maintained by a rotating cast of webmasters.
-4. Don't edit on the live server.
+- Tailwind: edit `input.css`, recompile `app.css`, commit the compiled file. No Node on the server.
+- `git add -u` + explicit new paths; never `git add .` / `-A`. Never commit `.env`, the database, or
+  uploaded photos.
+- Keep LICENSE untouched.
