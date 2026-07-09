@@ -1,6 +1,8 @@
-# TASA website content. Edit this file to update the site — no database needed.
+# TASA seed content for the Flask CLI — NOT the live site.
+# Officers/families/testimonials are edited in the /admin panel (database-backed).
+# This file only feeds `flask seed-testimonials` and `flask sync-officers`.
 # Officers are grouped by section; order within each list is the display order.
-# Photos are filenames inside static/images/<officers|families|testimonials>/.
+# Photos are filenames inside static/images/<officers|testimonials>/.
 
 officers:
   executives:
@@ -326,22 +328,6 @@ officers:
     photo: brandon2.jpg
     quote: "55 BURGERS 55 FRIES 55 TACOS 55 PIES 55 COKES 100 TATER TOTS 100 PIZZAS 100 TENDERS 100 MEATBALLS 100 COFFEES 55 WINGS 55 SHAKES 55 PANCAKES 55 PASTAS AND 155 TATERS"
     bio: Hi, I'm Brandon, a 3rd yr from the bay studying Microbial Biology and CS. If I'm not studying on campus, I love hiking on all the trails around Berkeley! I like finding new cafes and restaurants to try,  pspsps-ing at the neighorhood cats in northside, and going to raves/concerts.
-
-families:
-- name: 'Hainan Ji '
-  heads: Shanna Wu - Aaron Tsai - Josh Tsang
-  photo: HAINAN_JI_EDITED_1.jpg
-  description: What's revvin, six seven? Welcome to TTTouseA, with a triple-t cuz we that touse. We are the Hainanjiji fam, Shanna aka ShannaBanana, Aaron Tsai aka TsaiDaGuy, and Josh aka Hong Kong Lebron James. Go-on and come to our events, where we call JP at 3am (scary event), drink and have a rih-dih-cu-lous amounts of fun. Peeyew and get the chins chopping and we will all get to friggin crack it yo!
-
-- name: L&L
-  heads: Katie Lin - Caroline Zhou
-  photo: LL_EDITED_1.jpg
-  description: Hi this Amanda and Caroline and we are the L&L fam! We love to eat! Join us for a chill time with yummy food and friends.
-
-- name: Meowlatang
-  heads: Karina Li - Katie Lin - Julie Liu
-  photo: MEOWLATANG_EDITED_1.jpg
-  description: MEOW! Hey everynyan it’s your officers Katie, Karina, and Julie! Join MEOWLATANG for HOT and SPICY fun!! MeOWW! Come for crafts, fun, and ESPECIALLY. MALATANG. Meowlatang is full of warmth and joy and whether you like the spice or not… get ready to MEOW out loud either way! So join Meowlatang fam! A little meow and a LOT of spice!!!!
 
 testimonials:
 - name: Katherine Chen

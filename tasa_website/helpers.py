@@ -84,14 +84,6 @@ def static_image(image_url):
     return url_for('static', filename=image_url.removeprefix('static/'))
 
 
-def site_image(filename):
-    """URL for a hand-placed photo in static/images/site/, or None until one is added."""
-    rel = 'images/site/' + filename
-    if os.path.exists(os.path.join(current_app.static_folder, *rel.split('/'))):
-        return url_for('static', filename=rel)
-    return None
-
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 

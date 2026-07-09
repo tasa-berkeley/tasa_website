@@ -1,21 +1,14 @@
-"""Load site content from content.yaml — the single source of truth for the site.
+"""Load seed content from content.yaml.
 
-Webmasters edit content.yaml (no database). This module parses it (re-reading only when
-the file changes) and exposes the data to the views and templates.
+content.yaml is a seed/sync source consumed by the Flask CLI (`seed-testimonials`,
+`sync-officers`) — it is NOT the live site. Officers/families/testimonials pages read the
+database. This module also provides the home/about image helpers (`site_image`/`photo_url`)
+used by those static templates.
 """
 import os
 
 import yaml
 from flask import current_app, url_for
-
-# Officer sections render in this fixed order; 'Interns' always shows (for the
-# "apply to be an intern" placeholder) even when its list is empty.
-SECTION_ORDER = [
-    ('Executives', 'executives'),
-    ('Officers', 'officers'),
-    ('Interns', 'interns'),
-    ('Senior Advisors', 'senior_advisors'),
-]
 
 _cache = {'mtime': None, 'data': None}
 
@@ -35,37 +28,9 @@ def _load():
     return _cache['data']
 
 
-def _with_ids(entries):
-    """Attach a stable per-list id so the template's expand/modal can key on it."""
-    out = []
-    for i, entry in enumerate(entries or []):
-        item = dict(entry)
-        item['id'] = i
-        out.append(item)
-    return out
-
-
-def officer_sections():
-    """Return [(section label, [officers])]; empty sections dropped except Interns."""
-    officers = _load().get('officers') or {}
-    result = []
-    for label, key in SECTION_ORDER:
-        people = _with_ids(officers.get(key))
-        # ids must be unique across the whole page, so offset by what's already emitted
-        offset = sum(len(sec) for _, sec in result)
-        for person in people:
-            person['id'] += offset
-        if people or key == 'interns':
-            result.append((label, people))
-    return result
-
-
-def families():
-    return _with_ids(_load().get('families'))
-
-
 def testimonials():
-    return _with_ids(_load().get('testimonials'))
+    """Testimonial entries from content.yaml (used by the `seed-testimonials` CLI)."""
+    return _load().get('testimonials') or []
 
 
 def photo_url(subfolder, filename):
