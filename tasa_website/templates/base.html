@@ -22,6 +22,26 @@
   <meta name="twitter:description" content="The Taiwanese American Student Association at UC Berkeley — more than a club, we're a family.">
   <meta name="twitter:image" content="{{ url_for('static', filename='images/site/og-image.jpg', _external=True) }}">
 
+  <script>
+    // Officer/family photo grids can burst OCF's nginx rate limiter on cold load, so a
+    // couple of images come back 429. Retry failed image loads with exponential backoff +
+    // jitter; the transient limit clears within a second. Capture phase + placed in <head>
+    // so the handler is installed before any <img> below can error.
+    (function () {
+      var MAX_RETRIES = 4;
+      window.addEventListener('error', function (e) {
+        var img = e.target;
+        if (!img || img.tagName !== 'IMG') return;
+        var n = +(img.dataset.retryCount || 0);
+        if (n >= MAX_RETRIES) return;
+        img.dataset.retryCount = n + 1;
+        var url = img.src.split('?')[0];             // canonical url, minus any prior marker
+        var delay = 500 * Math.pow(2, n) + Math.random() * 500;  // ~0.5s, 1s, 2s, 4s + jitter
+        setTimeout(function () { img.src = url + '?retry=' + (n + 1); }, delay);
+      }, true);
+    })();
+  </script>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
   <script defer src="{{ url_for('static', filename='js/alpine.min.js') }}"></script>
 </head>
