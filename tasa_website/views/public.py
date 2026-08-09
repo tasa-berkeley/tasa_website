@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template
 
 from ..extensions import db
-from ..helpers import officer_sections
-from ..models import Family, Officer, Testimonial
+from ..helpers import cabinet_member_dict, officer_sections
+from ..models import CabinetMember, Family, Officer, Testimonial
 
 bp = Blueprint('public', __name__)
 
@@ -33,6 +33,15 @@ def families():
 def testimonials():
     all_testimonials = db.session.scalars(db.select(Testimonial).order_by(Testimonial.name)).all()
     return render_template('testimonials.html', testimonials=all_testimonials)
+
+
+@bp.route('/alumni')
+def alumni():
+    all_members = db.session.scalars(db.select(CabinetMember).order_by(CabinetMember.name)).all()
+    members = [cabinet_member_dict(m) for m in all_members]
+    # Distinct graduation years, newest first, for the filter dropdown.
+    grad_years = sorted({m.grad_year for m in all_members if m.grad_year is not None}, reverse=True)
+    return render_template('alumni.html', members=members, grad_years=grad_years)
 
 
 @bp.route('/join')

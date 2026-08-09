@@ -15,7 +15,8 @@ def create_app(test_config=None):
     if test_config:
         app.config.update(test_config)
 
-    for key in ('OFFICER_IMAGE_FOLDER', 'FAMILY_IMAGE_FOLDER', 'TESTIMONIAL_IMAGE_FOLDER'):
+    for key in ('OFFICER_IMAGE_FOLDER', 'FAMILY_IMAGE_FOLDER', 'TESTIMONIAL_IMAGE_FOLDER',
+                'CABINET_IMAGE_FOLDER'):
         os.makedirs(os.path.join(app.root_path, *app.config[key].split('/')), exist_ok=True)
 
     db.init_app(app)
@@ -48,7 +49,8 @@ def create_app(test_config=None):
     # excluded and keep Flask's default (revalidate).
     _uploaded_image_dirs = tuple(
         '/' + app.config[key].strip('/') + '/'
-        for key in ('OFFICER_IMAGE_FOLDER', 'FAMILY_IMAGE_FOLDER', 'TESTIMONIAL_IMAGE_FOLDER')
+        for key in ('OFFICER_IMAGE_FOLDER', 'FAMILY_IMAGE_FOLDER', 'TESTIMONIAL_IMAGE_FOLDER',
+                    'CABINET_IMAGE_FOLDER')
     )
 
     @app.after_request

@@ -66,5 +66,8 @@
   </main>
 
   {% block footer %}{% include "_footer.html" %}{% endblock %}
+
+  {# Page-specific scripts (loaded before deferred Alpine so components can register on alpine:init) #}
+  {% block scripts %}{% endblock %}
 </body>
 </html>

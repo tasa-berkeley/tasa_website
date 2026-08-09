@@ -19,6 +19,8 @@ tasa_website/static/images/families/*
 !tasa_website/static/images/families/.placeholder
 tasa_website/static/images/testimonials/*
 !tasa_website/static/images/testimonials/.placeholder
+tasa_website/static/images/cabinet/*
+!tasa_website/static/images/cabinet/.placeholder
 
 # Tailwind standalone binary (downloaded per machine, see README)
 tailwindcss

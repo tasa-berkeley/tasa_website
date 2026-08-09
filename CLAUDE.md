@@ -9,8 +9,22 @@ See **README.md** for the overview and **MAINTAINING.md** for setup / content-ed
 
 ## How content works
 
-- **Officers / Families / Testimonials** are stored in the **database** (`models.py`) and edited via the
-  **admin panel** at `/admin` (login required). These pages read the DB — not `content.yaml`.
+- **Officers / Families / Testimonials / Alumni** are stored in the **database** (`models.py`) and edited
+  via the **admin panel** at `/admin` (login required). These pages read the DB — not `content.yaml`.
+- **Alumni** (`CabinetMember` + `CabinetTerm`) is the cabinet lineage map — current, alumni, and future
+  cabinet members. `CabinetMember` has a self-referential `big_id` (big/little), an intern class
+  (`intern_season`/`intern_year` = the semester they joined), and a canonical `major`; `CabinetTerm`
+  holds the positions a member held, one row per (position, semester). The public `/alumni` page is a
+  **feature-driven engine**: `cabinet_member_dict` serializes each member into a generic feature shape
+  (`relations`/`attributes`/`sequences`), and `static/js/cabinet_tree.js` holds a `DIMENSIONS` registry +
+  two builders (relation, sequence) so an **"Organize by"** selector rebuilds the graph by Big/Little,
+  Position, Intern class, Major, Major field, or Class year. The layout is **dagre, top-to-bottom**
+  (bigs/oldest on top → littles/newest below; edges are directed older→newer). Positions fold interns
+  into their base role via `helpers.base_role` (Webmaster + Webmaster Intern = one "Webmaster" lineage).
+  Majors come from `majors.py` (canonical Berkeley catalog grouped by field/category). Adding a lineage =
+  one `DIMENSIONS` entry + matching data in `cabinet_member_dict`. Vendored graph libs:
+  `static/js/cytoscape.min.js`, `dagre.min.js`, `cytoscape-dagre.js`, `cabinet_tree.js`. Distinct from
+  the `officers` roster; seed current officers with `flask seed-cabinet-from-officers`.
 - **Home / About** are static templates; their photos are hand-placed files in
   `static/images/site/`, resolved by `content.site_image()`.
 - **Join / Donate** are static informational pages.
@@ -21,10 +35,12 @@ See **README.md** for the overview and **MAINTAINING.md** for setup / content-ed
 
 - `tasa_website/__init__.py` — `create_app()`; registers the `public`, `auth`, and `admin` blueprints;
   context processor exposes `position_title`, `static_image`, `photo_url`, `site_image`, `current_year`.
-- `tasa_website/models.py` — SQLAlchemy models `Officer`, `Family`, `Testimonial`. `extensions.py` holds
-  the shared `db` and `csrf` objects.
-- `tasa_website/views/` — `public.py` (`/`, `/about`, `/officers`, `/families`, `/testimonials`, `/join`,
-  `/donate`), `auth.py` (`/login`, `/logout`), `admin.py` (`/admin` CRUD; every route `login_required`).
+- `tasa_website/models.py` — SQLAlchemy models `Officer`, `Family`, `Testimonial`, `CabinetMember`
+  (self-referential big/little) + `CabinetTerm` (positions by semester). `extensions.py` holds the
+  shared `db` and `csrf` objects.
+- `tasa_website/views/` — `public.py` (`/`, `/about`, `/officers`, `/families`, `/testimonials`,
+  `/alumni`, `/join`, `/donate`), `auth.py` (`/login`, `/logout`), `admin.py` (`/admin` CRUD incl.
+  `/admin/alumni`; every route `login_required`).
 - `tasa_website/forms.py` — WTForms; `helpers.py` — image save/delete pipeline (Pillow re-encode, random
   filename), officer grouping (`officer_sections`), position titles.
 - `tasa_website/cli.py` — Flask CLI: `init-db`, `import-legacy`, `seed-testimonials`, `sync-officers`,
@@ -56,6 +72,7 @@ files in `static/images/site/`. Full webmaster + deploy steps live in **MAINTAIN
 - Some `static/images/site/` photos (home/about) may still be gray placeholders.
 - Footer club/officer emails carried over from the old site — confirm each semester.
 - `Scrapbook` is a nav dropdown placeholder ("Coming soon!") with no route yet.
+- `/alumni` uses a plain heading (no hero `page_banner` image yet) — add one if a banner is wanted.
 - Home "View events »" links to the public Google Calendar; swap to Instagram if preferred (index.html).
 
 ## Conventions

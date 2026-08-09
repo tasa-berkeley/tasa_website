@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% from "_macros.html" import heading %}
+
+{% block title %}Alumni — TASA @ Berkeley{% endblock %}
+
+{% block content %}
+<div class="site-container px-4 py-16 sm:px-6">
+
+  <div class="max-w-3xl">
+    {{ heading('Alumni') }}
+    <p class="mt-4 text-neutral-600">
+      Our cabinet big/little lineage &mdash; the members who've kept TASA running over the years. Hover a
+      node to trace its family line, drag to rearrange, scroll to zoom, and click anyone to see their info
+      and reach out. Filter by name or graduation year to find someone fast.
+    </p>
+  </div>
+
+  {% if not members %}
+    <p class="mt-12 text-neutral-500">The alumni directory is coming soon &mdash; check back shortly!</p>
+  {% else %}
+  <div x-data="cabinetTree(window.CABINET_DATA)"
+       @keydown.escape.window="selected = null"
+       x-effect="document.body.style.overflow = selected ? 'hidden' : ''">
+
+  {# ----- Controls ----- #}
+  <div class="mt-8 flex flex-col gap-3 rounded-2xl border border-neutral-200 bg-white/70 p-4 sm:flex-row sm:items-end sm:gap-4">
+    <label class="sm:w-56">
+      <span class="mb-1 block text-sm font-medium text-neutral-700">Organize by</span>
+      <select x-model="dimension" @change="setDimension(dimension)"
+              class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-200">
+        <template x-for="d in dimensions" :key="d.key"><option :value="d.key" x-text="d.label"></option></template>
+      </select>
+    </label>
+    <label class="flex-1">
+      <span class="mb-1 block text-sm font-medium text-neutral-700">Name</span>
+      <input type="text" x-model="filters.name" @input="applyFilter()" placeholder="Search by name…"
+             class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-200">
+    </label>
+    <label class="sm:w-48">
+      <span class="mb-1 block text-sm font-medium text-neutral-700">Graduation year</span>
+      <select x-model="filters.gradYear" @change="applyFilter()"
+              class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-200">
+        <option value="">All years</option>
+        {% for y in grad_years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
+      </select>
+    </label>
+    <button type="button" @click="resetFilters()"
+            class="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100">
+      Reset
+    </button>
+  </div>
+  <p class="mt-2 text-sm text-neutral-500">
+    Showing <span class="font-medium text-neutral-700" x-text="count"></span>
+    of <span x-text="total"></span> members<span x-show="filtered" x-cloak> matching your filters</span>.
+  </p>
+
+  {# ----- Legend (one color per chain, for position/major/… views) ----- #}
+  <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1" x-show="legend.length" x-cloak>
+    <span class="text-xs font-medium text-neutral-500">Lineages:</span>
+    <template x-for="item in legend" :key="item.label">
+      <span class="inline-flex items-center gap-1.5 text-xs text-neutral-700">
+        <span class="inline-block h-2.5 w-2.5 rounded-full" :style="'background:' + item.color"></span>
+        <span x-text="item.label"></span>
+      </span>
+    </template>
+  </div>
+
+  {# ----- Graph ----- #}
+  <div class="relative mt-4">
+    <div id="cabinet-cy" x-ref="graph" class="cabinet-graph"></div>
+
+    {# Zoom / fit controls #}
+    <div class="absolute right-3 top-3 flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
+      <button type="button" @click="zoomIn()" aria-label="Zoom in"
+              class="flex h-9 w-9 items-center justify-center text-lg text-neutral-600 hover:bg-neutral-100">+</button>
+      <button type="button" @click="zoomOut()" aria-label="Zoom out"
+              class="flex h-9 w-9 items-center justify-center border-t border-neutral-200 text-lg text-neutral-600 hover:bg-neutral-100">&minus;</button>
+      <button type="button" @click="fitAll()" aria-label="Fit to screen"
+              class="flex h-9 w-9 items-center justify-center border-t border-neutral-200 text-xs font-medium text-neutral-600 hover:bg-neutral-100">Fit</button>
+    </div>
+    <p class="pointer-events-none absolute bottom-3 left-3 rounded-md bg-white/80 px-2 py-1 text-xs text-neutral-500">
+      Hover to trace a lineage · drag a node to rearrange · scroll to zoom · click for info
+    </p>
+    <noscript>
+      <p class="mt-3 text-sm text-neutral-500">The interactive lineage map needs JavaScript enabled.</p>
+    </noscript>
+  </div>
+
+  {# ----- Member info modal ----- #}
+  <div x-show="selected" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" @click="selected = null" x-show="selected" x-transition.opacity></div>
+    <div x-show="selected" x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         class="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl sm:p-8">
+      <button type="button" @click="selected = null" aria-label="Close"
+              class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-2xl leading-none text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900">
+        &times;
+      </button>
+      <template x-if="selected">
+        <div>
+          <div class="flex items-center gap-4">
+            <template x-if="selected.image">
+              <img :src="selected.image" :alt="selected.name" class="h-20 w-20 rounded-full object-cover">
+            </template>
+            <template x-if="!selected.image">
+              <div class="flex h-20 w-20 items-center justify-center rounded-full bg-accent-100 text-2xl font-semibold text-accent-700" x-text="selected.initials"></div>
+            </template>
+            <div>
+              <h2 class="text-2xl font-semibold tracking-tight" x-text="selected.name"></h2>
+              <p class="mt-1 text-sm text-neutral-500" x-text="subtitle(selected)"></p>
+            </div>
+          </div>
+
+          <p class="mt-4 leading-relaxed text-neutral-700" x-show="selected.bio" x-text="selected.bio"></p>
+
+          {# Contact row — each icon shows only if the member has that link #}
+          <div class="mt-5 flex items-center gap-2" x-show="selected.instagram || selected.email || selected.linkedin">
+            <template x-if="selected.instagram">
+              <a :href="selected.instagram_url" target="_blank" rel="noopener" :aria-label="'Instagram: @' + selected.instagram" title="Instagram"
+                 class="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-accent-300 hover:bg-accent-50 hover:text-accent-700">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                  <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+            </template>
+            <template x-if="selected.email">
+              <a :href="'mailto:' + selected.email" :aria-label="'Email ' + selected.name" title="Email"
+                 class="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-accent-300 hover:bg-accent-50 hover:text-accent-700">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                  <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+                </svg>
+              </a>
+            </template>
+            <template x-if="selected.linkedin">
+              <a :href="selected.linkedin" target="_blank" rel="noopener" :aria-label="'LinkedIn: ' + selected.name" title="LinkedIn"
+                 class="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-accent-300 hover:bg-accent-50 hover:text-accent-700">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                  <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95s-2.07 1.4-2.07 2.85V21H9z"/>
+                </svg>
+              </a>
+            </template>
+          </div>
+
+          {# Big / littles — clickable to jump around the lineage #}
+          <dl class="mt-5 space-y-2 border-t border-neutral-100 pt-4 text-sm">
+            <div x-show="bigName(selected)" class="flex gap-2">
+              <dt class="font-medium text-neutral-500">Big</dt>
+              <dd><button type="button" class="text-accent-700 hover:underline" @click="select(selected.big_id)" x-text="bigName(selected)"></button></dd>
+            </div>
+            <div x-show="littlesOf(selected).length" class="flex gap-2">
+              <dt class="font-medium text-neutral-500">Littles</dt>
+              <dd class="flex flex-wrap gap-x-2">
+                <template x-for="little in littlesOf(selected)" :key="little.id">
+                  <button type="button" class="text-accent-700 hover:underline" @click="select(little.id)" x-text="little.name"></button>
+                </template>
+              </dd>
+            </div>
+            <div x-show="positionsOf(selected).length" class="flex gap-2">
+              <dt class="font-medium text-neutral-500">Positions</dt>
+              <dd class="flex flex-col gap-0.5">
+                <template x-for="p in positionsOf(selected)" :key="p.label + p.semester">
+                  <span class="text-neutral-700"><span x-text="p.label"></span><span class="text-neutral-400" x-text="' · ' + p.semester"></span></span>
+                </template>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  </div>{# /x-data cabinetTree #}
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {% if members %}
+  <script>window.CABINET_DATA = {{ members|tojson }};</script>
+  {# Non-deferred so Cytoscape + the dagre layout + the component register before Alpine (deferred) inits.
+     Load order matters: dagre → cytoscape-dagre → cytoscape → component. #}
+  <script src="{{ url_for('static', filename='js/dagre.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cytoscape-dagre.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cytoscape.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cabinet_tree.js') }}"></script>
+  {% endif %}
+{% endblock %}

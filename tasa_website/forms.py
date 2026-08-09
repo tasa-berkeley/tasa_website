@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
-from wtforms import PasswordField, SelectField, StringField, TextAreaField
-from wtforms.validators import DataRequired, Length, Optional
+from wtforms import IntegerField, PasswordField, SelectField, StringField, TextAreaField
+from wtforms.validators import DataRequired, Length, NumberRange, Optional
 
-from .helpers import POSITIONS, SECTION_ORDER, position_section
+from .helpers import POSITIONS, SEASONS, SECTION_ORDER, position_section
 
 _image_field = lambda label: FileField(
     label,
@@ -48,4 +48,23 @@ class TestimonialForm(FlaskForm):
     position = StringField('Position(s)', validators=[DataRequired(), Length(max=200)])
     question = TextAreaField('Question', validators=[DataRequired()])
     response = TextAreaField('Response', validators=[DataRequired()])
+    image = _image_field('Photo (optional)')
+
+
+class CabinetForm(FlaskForm):
+    # `big_id` choices are populated per-request in the admin view (0 == "no big"); Instagram
+    # and LinkedIn are normalized in the view before saving.
+    name = StringField('Name', validators=[DataRequired(), Length(max=100)])
+    grad_year = IntegerField('Graduation year (optional)',
+                             validators=[Optional(), NumberRange(min=1950, max=2100)])
+    role = StringField('Role / position(s) (optional)', validators=[Optional(), Length(max=200)])
+    major = StringField('Major (optional)', validators=[Optional(), Length(max=120)])
+    intern_season = SelectField('Intern class — season', choices=[('', '—')] + [(s, s) for s in SEASONS],
+                                default='', validators=[Optional()])
+    intern_year = IntegerField('Intern class — year', validators=[Optional(), NumberRange(min=1950, max=2100)])
+    instagram = StringField('Instagram handle or URL (optional)', validators=[Optional(), Length(max=200)])
+    email = StringField('Email (optional)', validators=[Optional(), Length(max=255)])
+    linkedin = StringField('LinkedIn URL or handle (optional)', validators=[Optional(), Length(max=255)])
+    bio = TextAreaField('Bio (optional)', validators=[Optional()])
+    big_id = SelectField('Big (optional)', coerce=int, default=0)
     image = _image_field('Photo (optional)')

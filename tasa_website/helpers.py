@@ -7,6 +7,8 @@ import string
 from flask import current_app, url_for
 from PIL import Image
 
+from .majors import major_category
+
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'gif', 'png'}
 
 # The officers table stores position as an index into this list, so the list
@@ -45,6 +47,15 @@ def position_title(index):
     if 0 <= index < len(POSITIONS):
         return POSITIONS[index]
     return 'Officer'
+
+
+def base_role(index):
+    """The role *family* for a position index — interns fold into their base role.
+
+    'Webmaster Intern' and 'Webmaster' both map to 'Webmaster', so the /alumni Position lineage
+    treats them as one succession. Non-intern titles map to themselves.
+    """
+    return position_title(index).removesuffix(' Intern')
 
 
 def position_section(index):
@@ -122,3 +133,142 @@ def delete_image(image_url):
         os.remove(path)
     except OSError:
         pass
+
+
+# --- Cabinet alumni (lineage features) ----------------------------------
+
+# Seasons in chronological order within a calendar year, so Fall 2023 precedes Spring 2024.
+SEASONS = ['Spring', 'Summer', 'Fall']
+SEASON_RANK = {s: i for i, s in enumerate(SEASONS)}
+
+
+def semester_sort_key(season, year):
+    """A chronological (year, season) sort key: Spring < Summer < Fall within a year."""
+    return (int(year or 0), SEASON_RANK.get(season, 0))
+
+
+def semester_ordinal(season, year):
+    """A single sortable integer for a semester (for the client), e.g. Fall 2023 -> 20232."""
+    return int(year or 0) * 10 + SEASON_RANK.get(season, 0)
+
+
+def semester_label(season, year):
+    """Human label for a semester, e.g. 'Fall 2023'."""
+    return f'{season} {year}'.strip() if (season or year) else ''
+
+
+def normalize_instagram(raw):
+    """Reduce free-form Instagram input to a bare handle (no '@', no URL), or None."""
+    if not raw or not raw.strip():
+        return None
+    handle = raw.strip()
+    if '://' in handle:
+        handle = handle.split('://', 1)[1]
+    handle = handle.removeprefix('www.')
+    if handle.lower().startswith('instagram.com/'):
+        handle = handle[len('instagram.com/'):]
+    handle = handle.lstrip('@').strip('/').split('/')[0].split('?')[0]
+    return handle or None
+
+
+def instagram_url(handle):
+    """Public Instagram URL for a stored handle."""
+    return f'https://www.instagram.com/{handle}' if handle else None
+
+
+def normalize_linkedin(raw):
+    """Reduce free-form LinkedIn input to a canonical profile URL, or None.
+
+    Accepts a full URL, a 'linkedin.com/...' string, an 'in/<slug>' path, or a bare vanity
+    slug. Bare slugs become 'https://www.linkedin.com/in/<slug>'; an explicit linkedin.com
+    URL/path is preserved (so company/school pages keep working).
+    """
+    if not raw or not raw.strip():
+        return None
+    val = raw.strip()
+    low = val.lower()
+    if low.startswith('http://') or low.startswith('https://'):
+        return 'https://' + val.split('://', 1)[1]
+    if low.startswith('www.linkedin.com/') or low.startswith('linkedin.com/'):
+        return 'https://' + val.removeprefix('www.')
+    slug = val.strip('/')
+    if slug.lower().startswith('in/'):
+        slug = slug[3:].strip('/')
+    return f'https://www.linkedin.com/in/{slug}' if slug else None
+
+
+def cabinet_descendant_ids(member):
+    """All ids in `member`'s subtree (its littles, recursively). Used to block big/little cycles."""
+    seen = set()
+    stack = list(member.littles)
+    while stack:
+        child = stack.pop()
+        if child.id in seen:
+            continue
+        seen.add(child.id)
+        stack.extend(child.littles)
+    return seen
+
+
+def cabinet_initials(name):
+    """Up to two initials for a name, for photo-less graph nodes."""
+    parts = [p for p in (name or '').split() if p]
+    if not parts:
+        return '?'
+    if len(parts) == 1:
+        return parts[0][0].upper()
+    return (parts[0][0] + parts[-1][0]).upper()
+
+
+def cabinet_member_terms(m):
+    """A member's position terms as sortable dicts, ordered chronologically by semester.
+
+    `value` is the role *family* (interns folded in) so the Position lineage chains e.g. every
+    Webmaster together; `label` keeps the specific title held (e.g. 'Webmaster Intern') for the modal.
+    """
+    terms = sorted(m.terms, key=lambda t: semester_sort_key(t.season, t.year))
+    return [
+        {
+            'value': base_role(t.position),                # group key = role family (interns folded)
+            'label': position_title(t.position),           # specific title held (shown in the modal)
+            'season': t.season,
+            'year': t.year,
+            'semester': semester_label(t.season, t.year),
+            'sortKey': semester_ordinal(t.season, t.year),  # chronological order within the role
+        }
+        for t in terms
+    ]
+
+
+def cabinet_member_dict(m):
+    """Serialize a CabinetMember for the /alumni graph JSON.
+
+    Exposes a generic 'feature' shape the client's lineage engine reads without knowing about any
+    specific feature: `relations` (person->person links), `attributes` (single values), and
+    `sequences` (multi-valued, time-ordered lists). Top-level fields are kept for filters + the modal.
+    """
+    return {
+        'id': m.id,
+        'name': m.name,
+        'grad_year': m.grad_year,
+        'role': m.role or '',
+        'major': m.major or '',
+        'instagram': m.instagram or '',
+        'instagram_url': instagram_url(m.instagram) or '',
+        'email': m.email or '',
+        'linkedin': m.linkedin or '',
+        'bio': m.bio or '',
+        'image': static_image(m.image_url) or '',
+        'big_id': m.big_id,
+        'initials': cabinet_initials(m.name),
+        # --- generic features consumed by the lineage engine ---
+        'relations': {'big': m.big_id},
+        'attributes': {
+            'major': m.major or '',
+            'majorField': major_category(m.major),
+            'classYear': m.grad_year,
+            'internClass': semester_label(m.intern_season, m.intern_year) if m.intern_year else '',
+            'internClassOrd': (semester_ordinal(m.intern_season, m.intern_year) if m.intern_year else None),
+        },
+        'sequences': {'position': cabinet_member_terms(m)},
+    }

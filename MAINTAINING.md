@@ -60,13 +60,35 @@ The Tailwind binary / `node_modules` are gitignored.
 
 ## Part 2 — Update the website (webmasters)
 
-### Officers, Families, Testimonials → use the admin panel (no code needed)
+### Officers, Families, Testimonials, Alumni → use the admin panel (no code needed)
 1. Go to `/login` and sign in with the admin username/password (from `.env`).
-2. Go to `/admin`. Pick Officers, Families, or Testimonials.
+2. Go to `/admin`. Pick Officers, Families, Testimonials, or Alumni.
 3. **Add**: click "Add …", fill the form, upload a photo, save. **Edit / Delete / Preview**: use the
    buttons on each row. Photos are uploaded through the form (no need to touch files directly).
 - If a photo is missing, a gray placeholder shows automatically.
 - Changes appear on the live site immediately — no redeploy.
+
+**Alumni (cabinet lineage map).** The **Alumni** tab manages cabinet members across every year —
+current, alumni, and future — and powers the interactive lineage map at `/alumni`. Edit any member from
+this tab to change their features. Each member has:
+- an optional **Big** (a dropdown of existing members) — draws the big → little tree;
+- a **Positions held** list — add a row per role, each with a semester (e.g. *Treasurer Intern ·
+  Fall 2023*). Add/remove rows with the buttons; no code needed. **Interns fold into their base role** —
+  Webmaster and Webmaster Intern are one "Webmaster" lineage;
+- an **Intern class** — the semester they joined cabinet (their first, intern semester);
+- a **Major** picked from the Berkeley catalog dropdown (grouped by field) so names stay consistent —
+  "Data Science", not "DS". If an old free-text major doesn't match, it's kept as an "(existing)" option
+  until you pick a catalog name;
+- optional grad year, Instagram, email, LinkedIn, bio, and photo.
+
+The public page has an **"Organize by"** selector that rebuilds the graph from any feature: **Big /
+Little**, **Position**, **Intern class**, **Major**, **Major field**, or **Class year**. The graph flows
+**top to bottom, oldest to newest** (bigs on top → littles below). It also filters by name and grad year,
+and shows Instagram/email/LinkedIn icons in a member's card only when that member has them. Deleting a
+member re-parents their littles and removes their position rows (littles are not deleted). A member can't
+be their own big or a big of their own descendant. To add another way to organize the graph later, add
+one entry to the `DIMENSIONS` registry in `static/js/cabinet_tree.js` plus the matching data in
+`helpers.cabinet_member_dict`. Berkeley majors live in `tasa_website/majors.py`.
 
 ### Home & About photos → drop files in a folder
 These two pages are static; their images are hand-placed files in
@@ -121,6 +143,15 @@ so a code update is a `git pull` + restart, but a **first-time** deploy needs se
 
 The database is preserved across `git pull` (it lives in the gitignored `instance/` folder). The archive
 links `~tasa/old_site2/` and `~tasa/old_site/` are static and unaffected by the app.
+
+**One-time step when first deploying the Alumni feature.** The alumni directory adds new tables
+(`cabinet_members`, and `cabinet_terms` for positions-by-semester). After pulling, run once:
+
+    flask init-db                       # safe: creates missing tables only; existing data untouched
+    flask seed-cabinet-from-officers    # optional: pre-load the current officers as cabinet members
+
+Cabinet member photos live in the gitignored `tasa_website/static/images/cabinet/` folder (created
+automatically); they arrive via admin uploads or the seed command, like the other photo folders.
 
 ---
 

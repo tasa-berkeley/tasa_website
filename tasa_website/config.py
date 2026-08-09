@@ -18,6 +18,7 @@ class Config:
     OFFICER_IMAGE_FOLDER = 'static/images/officers'
     FAMILY_IMAGE_FOLDER = 'static/images/families'
     TESTIMONIAL_IMAGE_FOLDER = 'static/images/testimonials'
+    CABINET_IMAGE_FOLDER = 'static/images/cabinet'
 
     @staticmethod
     def database_uri(instance_path):

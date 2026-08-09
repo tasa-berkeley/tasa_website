@@ -1,0 +1,104 @@
+{% extends "admin/base.html" %}
+{% from "_macros.html" import form_field, img_or_placeholder, back_link %}
+
+{% block content %}
+<div class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+  {{ back_link('admin.alumni', 'Back to alumni') }}
+  <h1 class="mt-4 text-3xl font-semibold tracking-tight">{{ 'Edit member' if member else 'Add member' }}</h1>
+
+  <form method="post" enctype="multipart/form-data" class="mt-8 space-y-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
+    {{ form.hidden_tag() }}
+    {{ form_field(form.name) }}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{ form_field(form.grad_year) }}
+      {{ form_field(form.role) }}
+    </div>
+    {# ----- Major: canonical Berkeley catalog, grouped by field ----- #}
+    {% set fld = "w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-200" %}
+    {% set known = [] %}
+    {% for cat, majors in major_categories.items() %}{% for mj in majors %}{% set _ = known.append(mj) %}{% endfor %}{% endfor %}
+    {% set current_major = form.major.data or '' %}
+    <div>
+      <label for="major" class="mb-1 block text-sm font-medium text-neutral-700">Major (optional)</label>
+      <select name="major" id="major" class="{{ fld }}">
+        <option value="">— Select a major —</option>
+        {% if current_major and current_major not in known %}
+          <option value="{{ current_major }}" selected>{{ current_major }} (existing — pick a catalog name to normalize)</option>
+        {% endif %}
+        {% for cat, majors in major_categories.items() %}
+          <optgroup label="{{ cat }}">
+            {% for mj in majors %}<option value="{{ mj }}" {{ 'selected' if mj == current_major }}>{{ mj }}</option>{% endfor %}
+          </optgroup>
+        {% endfor %}
+      </select>
+    </div>
+
+    {{ form_field(form.big_id) }}
+    <p class="-mt-2 text-xs text-neutral-500">
+      A member's <strong>big</strong> is their mentor. Leave it as &ldquo;None&rdquo; for the top of a lineage.
+    </p>
+
+    {# ----- Intern class: the semester they joined cabinet (their first, intern semester) ----- #}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{ form_field(form.intern_season) }}
+      {{ form_field(form.intern_year) }}
+    </div>
+    <p class="-mt-2 text-xs text-neutral-500">
+      <strong>Intern class</strong> is the semester this member joined cabinet — e.g. a Treasurer who
+      joined as a Treasurer Intern in Fall 2023 has an intern class of Fall 2023.
+    </p>
+
+    {# ----- Positions held (builds the Position lineage on /alumni) ----- #}
+    <div x-data="{ rows: {{ term_rows|tojson }} }">
+      <span class="mb-1 block text-sm font-medium text-neutral-700">Positions held</span>
+      <p class="mb-2 text-xs text-neutral-500">
+        Each row is one position in one semester. These build the <strong>Position</strong> lineage
+        (members chained by semester). Add a row per role — e.g. Treasurer Intern &middot; Fall 2023.
+      </p>
+      {% set sel = "rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-200" %}
+      <div class="space-y-2">
+        <template x-for="(row, i) in rows" :key="i">
+          <div class="flex flex-wrap items-center gap-2">
+            <select name="term_position[]" x-model="row.position" class="{{ sel }} flex-1 min-w-40">
+              <option value="">Position…</option>
+              {% for idx, title in positions %}<option value="{{ idx }}">{{ title }}</option>{% endfor %}
+            </select>
+            <select name="term_season[]" x-model="row.season" class="{{ sel }}">
+              {% for s in seasons %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+            </select>
+            <input type="number" name="term_year[]" x-model="row.year" placeholder="Year" min="1950" max="2100"
+                   class="{{ sel }} w-24">
+            <button type="button" @click="rows.splice(i, 1)"
+                    class="rounded-lg px-2 py-2 text-sm font-medium text-red-600 hover:bg-red-50" aria-label="Remove position">Remove</button>
+          </div>
+        </template>
+      </div>
+      <button type="button" @click="rows.push({ position: '', season: '{{ seasons[-1] }}', year: '' })"
+              class="mt-2 rounded-lg border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-100">
+        + Add position
+      </button>
+      <p class="mt-1 text-xs text-neutral-400" x-show="rows.length === 0" x-cloak>No positions yet.</p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{ form_field(form.instagram) }}
+      {{ form_field(form.email) }}
+    </div>
+    {{ form_field(form.linkedin) }}
+    {{ form_field(form.bio, rows=4) }}
+    {% if member %}
+      <div class="flex items-center gap-4">
+        {{ img_or_placeholder(static_image(member.image_url), member.name, 'h-12 w-12 rounded-full object-cover', 'square') }}
+        <p class="text-sm text-neutral-500">Current photo &mdash; upload a new one below to replace it.</p>
+      </div>
+    {% endif %}
+    {{ form_field(form.image) }}
+    <div class="flex gap-3 pt-2">
+      <button type="submit" class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-700">
+        {{ 'Save changes' if member else 'Add member' }}
+      </button>
+      <a href="{{ url_for('admin.alumni') }}" class="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

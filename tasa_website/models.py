@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .extensions import db
 
@@ -50,3 +50,57 @@ class Testimonial(db.Model):
     question: Mapped[str] = mapped_column(db.Text)
     response: Mapped[str] = mapped_column(db.Text)
     image_url: Mapped[Optional[str]] = mapped_column(db.String(255))
+
+
+class CabinetMember(db.Model):
+    """A cabinet member (current, alumni, or future) in the big/little lineage.
+
+    Self-referential: `big_id` points at this member's big (mentor); `littles` are the
+    members whose big is this one. Each member has at most one big, so the whole set forms
+    a forest of trees — that is what the public /alumni page draws as a lineage map.
+    This is a separate concept from the `officers` roster: officers are only the *current*
+    cabinet shown on the Officers page, whereas this table spans every cabinet year.
+    """
+    __tablename__ = 'cabinet_members'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(db.String(100))
+    grad_year: Mapped[Optional[int]]                                  # real graduation year (filter facet)
+    role: Mapped[Optional[str]] = mapped_column(db.String(200))      # free text, e.g. "President, Treasurer"
+    major: Mapped[Optional[str]] = mapped_column(db.String(100))
+    instagram: Mapped[Optional[str]] = mapped_column(db.String(100))  # handle, stored without a leading '@'
+    email: Mapped[Optional[str]] = mapped_column(db.String(255))
+    linkedin: Mapped[Optional[str]] = mapped_column(db.String(255))   # canonical profile URL
+    bio: Mapped[Optional[str]] = mapped_column(db.Text)
+    image_url: Mapped[Optional[str]] = mapped_column(db.String(255))
+    big_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('cabinet_members.id'))
+    # Intern class = the semester this member joined cabinet (their first, intern semester).
+    intern_season: Mapped[Optional[str]] = mapped_column(db.String(10))
+    intern_year: Mapped[Optional[int]]
+
+    big: Mapped[Optional['CabinetMember']] = relationship(
+        'CabinetMember', remote_side='CabinetMember.id', back_populates='littles')
+    littles: Mapped[list['CabinetMember']] = relationship(
+        'CabinetMember', back_populates='big')
+    # Positions this member held, one row per (position, semester). Deleting a member
+    # deletes its terms; clearing the collection deletes the removed rows.
+    terms: Mapped[list['CabinetTerm']] = relationship(
+        'CabinetTerm', back_populates='member', cascade='all, delete-orphan')
+
+
+class CabinetTerm(db.Model):
+    """One position a cabinet member held in one semester.
+
+    A member has many terms, which is what powers the 'Position' lineage on /alumni: members are
+    grouped by position and chained in semester order. A person who held several positions shows up
+    in each of those position lineages.
+    """
+    __tablename__ = 'cabinet_terms'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    member_id: Mapped[int] = mapped_column(db.ForeignKey('cabinet_members.id'))
+    position: Mapped[int]                                # index into helpers.POSITIONS
+    season: Mapped[str] = mapped_column(db.String(10))  # 'Fall' | 'Spring' | 'Summer'
+    year: Mapped[int]
+
+    member: Mapped['CabinetMember'] = relationship('CabinetMember', back_populates='terms')

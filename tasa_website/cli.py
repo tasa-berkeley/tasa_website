@@ -1,14 +1,18 @@
-"""Flask CLI commands: flask init-db | import-legacy | seed-testimonials | sync-officers | hash-password"""
+"""Flask CLI commands: flask init-db | import-legacy | seed-testimonials | sync-officers |
+seed-cabinet-from-officers | hash-password"""
+import os
 import sqlite3
 
 import click
 from flask import current_app
 from flask.cli import with_appcontext
+from PIL import Image
 from werkzeug.security import generate_password_hash
 
 from .extensions import db
-from .helpers import POSITIONS
-from .models import Family, Officer, Testimonial
+from .helpers import (IMAGE_MAXSIZE, POSITIONS, create_file_paths, generate_random_filename,
+                      position_title)
+from .models import CabinetMember, Family, Officer, Testimonial
 
 
 @click.command('init-db')
@@ -149,6 +153,58 @@ def sync_officers_command():
         click.echo(f"NOTE: position '{pos}' is not in helpers.POSITIONS; add it there to set that title.")
 
 
+def _copy_officer_photo(officer):
+    """Duplicate an officer's photo into the cabinet folder as its own file. Returns the url or None.
+
+    Cabinet members own an independent copy so replacing/deleting a cabinet photo never touches the
+    officer's file (deletion is path-based).
+    """
+    if not officer.image_url:
+        return None
+    src = os.path.join(current_app.root_path, *officer.image_url.split('/'))
+    if not os.path.exists(src):
+        return None
+    file_url, file_path = create_file_paths(
+        current_app.config['CABINET_IMAGE_FOLDER'], generate_random_filename('jpg'))
+    img = Image.open(src)
+    img.thumbnail(IMAGE_MAXSIZE)
+    if img.mode != 'RGB':
+        img = img.convert('RGB')
+    img.save(file_path, format='JPEG', quality=95, optimize=True, progressive=True)
+    return file_url
+
+
+@click.command('seed-cabinet-from-officers')
+@click.option('--wipe', is_flag=True, help='Delete existing cabinet members before seeding.')
+@with_appcontext
+def seed_cabinet_from_officers_command(wipe):
+    """Populate the cabinet alumni directory from the current officers roster (one-time convenience).
+
+    Copies each officer in as a cabinet member (name, role from their position, major, bio) with an
+    independent copy of their photo. Grad year / Instagram / email / LinkedIn / big are left blank to
+    fill in through the /admin panel.
+    """
+    db.create_all()
+    if wipe:
+        CabinetMember.query.delete()
+    elif db.session.query(CabinetMember.id).first():
+        raise click.ClickException('cabinet_members is not empty. Re-run with --wipe to replace it.')
+
+    count = 0
+    for officer in db.session.scalars(db.select(Officer)):
+        db.session.add(CabinetMember(
+            name=officer.name,
+            role=position_title(officer.position),
+            major=officer.major or None,
+            bio=officer.description or None,
+            image_url=_copy_officer_photo(officer),
+        ))
+        count += 1
+    db.session.commit()
+    click.echo(f'Seeded {count} cabinet members from officers '
+               '(fill in grad year, Instagram, email, LinkedIn, and bigs via /admin).')
+
+
 @click.command('hash-password')
 def hash_password_command():
     """Hash a password for the ADMIN_PASSWORD_HASH entry in .env."""
@@ -161,4 +217,5 @@ def register(app):
     app.cli.add_command(import_legacy_command)
     app.cli.add_command(seed_testimonials_command)
     app.cli.add_command(sync_officers_command)
+    app.cli.add_command(seed_cabinet_from_officers_command)
     app.cli.add_command(hash_password_command)

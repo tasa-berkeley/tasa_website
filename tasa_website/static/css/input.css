@@ -85,6 +85,27 @@
     text-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
   }
 
+  /* The Cytoscape big/little lineage map on /alumni. Explicit size (Cytoscape needs one) plus a
+     faint dot-grid "canvas" so the space reads as intentional, not flat. touch-action:none lets
+     Cytoscape own pan/zoom gestures; grab cursor signals the canvas is draggable. */
+  .cabinet-graph {
+    height: 72vh;
+    min-height: 500px;
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid #e5e5e5;   /* neutral-200 */
+    background-color: #fbfdff;
+    background-image: radial-gradient(circle, #dbeafe 1px, transparent 1.4px);
+    background-size: 22px 22px;
+    box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.05);
+    cursor: grab;
+    touch-action: none;
+    overflow: hidden;
+  }
+  .cabinet-graph:active {
+    cursor: grabbing;
+  }
+
   /* Soft halo behind the hero TASA logo (drop-shadow follows the circle's alpha). */
   .logo-glow {
     filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));

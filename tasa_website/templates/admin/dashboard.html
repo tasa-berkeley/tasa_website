@@ -4,11 +4,12 @@
 <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
   <h1 class="text-3xl font-semibold tracking-tight">Admin Dashboard</h1>
   <p class="mt-2 text-neutral-500">Click on a tab to edit the website.</p>
-  <div class="mt-8 grid gap-4 sm:grid-cols-3">
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {% for label, endpoint, count in [
       ('Officers', 'admin.officers', counts.officers),
       ('Families', 'admin.families', counts.families),
       ('Testimonials', 'admin.testimonials', counts.testimonials),
+      ('Alumni', 'admin.alumni', counts.cabinet),
     ] %}
       <a href="{{ url_for(endpoint) }}"
          class="group relative flex aspect-square flex-col items-center justify-center rounded-2xl border border-neutral-200 text-center transition hover:-translate-y-1 hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-lg">

@@ -1,0 +1,101 @@
+{% extends "admin/base.html" %}
+{% from "_macros.html" import thumb, back_link, sort_header, img_or_placeholder %}
+
+{% block content %}
+<div class="mx-auto max-w-6xl px-4 py-12 sm:px-6"
+     x-data="{ preview: null }"
+     @keydown.escape.window="preview = null"
+     x-effect="document.body.style.overflow = preview ? 'hidden' : ''">
+  {{ back_link('admin.dashboard', 'Back to dashboard') }}
+  <div class="mt-4 flex items-center justify-between">
+    <h1 class="text-3xl font-semibold tracking-tight">Alumni</h1>
+    <a href="{{ url_for('admin.new_alumni') }}"
+       class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-700">Add member</a>
+  </div>
+  <p class="mt-2 text-sm text-neutral-500">
+    Cabinet members across every year &mdash; current, alumni, and future. Set each person's <strong>big</strong>
+    to build the big/little lineage shown on the public <a class="text-accent-700 hover:underline" href="{{ url_for('public.alumni') }}">Alumni</a> page.
+  </p>
+
+  <div class="mt-8 overflow-visible rounded-2xl border border-neutral-200">
+    <table class="w-full text-left text-sm">
+      <thead class="border-b border-neutral-200 bg-neutral-50 text-neutral-500">
+        <tr>
+          <th class="px-4 py-3 font-medium">Photo</th>
+          <th class="px-4 py-3 font-medium">{{ sort_header('Name', 'name', current_sort, current_dir, request.endpoint) }}</th>
+          <th class="px-4 py-3 font-medium">{{ sort_header('Grad year', 'grad_year', current_sort, current_dir, request.endpoint) }}</th>
+          <th class="px-4 py-3 font-medium">{{ sort_header('Role', 'role', current_sort, current_dir, request.endpoint) }}</th>
+          <th class="px-4 py-3 font-medium">Big</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-100">
+        {% for member in members %}
+          <tr>
+            <td class="px-4 py-2">{{ thumb(static_image(member.image_url), member.name, 'round') }}</td>
+            <td class="px-4 py-2 font-medium">{{ member.name }}</td>
+            <td class="px-4 py-2">{{ member.grad_year or '—' }}</td>
+            <td class="px-4 py-2">{{ member.role or '—' }}</td>
+            <td class="px-4 py-2">{{ member.big.name if member.big else '—' }}</td>
+            <td class="px-4 py-2 text-right whitespace-nowrap">
+              <button type="button" class="font-medium text-neutral-700 hover:underline" @click="preview = {{ member.id }}">Preview</button>
+              <a class="ml-3 font-medium text-accent-700 hover:underline" href="{{ url_for('admin.edit_alumni', member_id=member.id) }}">Edit</a>
+              <form class="ml-3 inline" method="post" action="{{ url_for('admin.delete_alumni', member_id=member.id) }}"
+                    onsubmit="return confirm('Delete {{ member.name }}? Their littles will keep their spot but lose this big.');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="font-medium text-red-600 hover:underline">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="6" class="px-4 py-8 text-center text-neutral-500">No alumni yet. Add members, or run <code class="rounded bg-neutral-100 px-1">flask seed-cabinet-from-officers</code>.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# ----- Card preview overlay ----- #}
+  <div x-show="preview !== null" x-cloak
+       class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" @click="preview = null"
+         x-show="preview !== null" x-transition.opacity></div>
+
+    {% for member in members %}
+      <div x-show="preview === {{ member.id }}" x-cloak
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 scale-95"
+           x-transition:enter-end="opacity-100 scale-100"
+           class="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl sm:p-8">
+        <button type="button" @click="preview = null" aria-label="Close"
+                class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-2xl leading-none text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900">
+          &times;
+        </button>
+        <div class="flex items-center gap-4">
+          {{ img_or_placeholder(static_image(member.image_url), member.name, 'h-20 w-20 rounded-full object-cover', 'square') }}
+          <div>
+            <h2 class="text-2xl font-semibold tracking-tight">{{ member.name }}</h2>
+            <p class="mt-1 text-sm text-neutral-500">
+              {%- set bits = [] -%}
+              {%- if member.role %}{% set _ = bits.append(member.role) %}{% endif -%}
+              {%- if member.major %}{% set _ = bits.append(member.major) %}{% endif -%}
+              {%- if member.grad_year %}{% set _ = bits.append('Class of ' ~ member.grad_year) %}{% endif -%}
+              {{ bits | join(' · ') }}
+            </p>
+          </div>
+        </div>
+        {% if member.bio %}<p class="mt-4 leading-relaxed text-neutral-700">{{ member.bio }}</p>{% endif %}
+        <dl class="mt-4 space-y-1 text-sm text-neutral-600">
+          <div><dt class="inline font-medium text-neutral-500">Big:</dt> {{ member.big.name if member.big else '—' }}</div>
+          <div><dt class="inline font-medium text-neutral-500">Littles:</dt>
+            {{ member.littles | map(attribute='name') | join(', ') if member.littles else '—' }}</div>
+          <div><dt class="inline font-medium text-neutral-500">Positions:</dt>
+            {% if member.terms %}{% for t in member.terms %}{{ position_title(t.position) }} &middot; {{ t.season }} {{ t.year }}{% if not loop.last %}; {% endif %}{% endfor %}{% else %}—{% endif %}</div>
+          <div><dt class="inline font-medium text-neutral-500">Instagram:</dt> {{ ('@' ~ member.instagram) if member.instagram else '—' }}</div>
+          <div><dt class="inline font-medium text-neutral-500">Email:</dt> {{ member.email or '—' }}</div>
+          <div><dt class="inline font-medium text-neutral-500">LinkedIn:</dt> {{ member.linkedin or '—' }}</div>
+        </dl>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
