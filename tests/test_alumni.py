@@ -144,6 +144,9 @@ def test_major_category_helper():
     from tasa_website.majors import is_known_major, major_category
     assert major_category('Data Science') == 'Computing & Data Science'
     assert major_category('Applied Mathematics') == 'Mathematical & Physical Sciences'
+    assert major_category('Neuroscience') == 'Biological Sciences'          # newly added
+    assert major_category('Marine Science') == 'Mathematical & Physical Sciences'
+    assert major_category('Education Sciences') == 'Social Sciences'
     assert major_category('Not A Real Major') == ''
     assert is_known_major('Economics') and not is_known_major('DS')
 

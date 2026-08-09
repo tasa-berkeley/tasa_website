@@ -1,9 +1,12 @@
 """Canonical UC Berkeley undergraduate majors, grouped by college/division (the "category").
 
-Reflects the Berkeley Academic Guide undergraduate catalog. The admin major picker offers these as
-optgroups so majors are entered consistently (e.g. "Applied Mathematics", not "Applied Math"; "Data
-Science", not "DS"), and the /alumni page can organize the graph by major or by major *field*
-(category). To add a major, drop its exact catalog name under the right category below.
+Compiled from the UC Berkeley Office of Undergraduate Admissions majors list + the Academic Guide
+(reflects majors through the 2024–25 catalog, including newer ones like Neuroscience, Marine Science,
+Energy Engineering, and Education Sciences). Within-major concentrations/emphases (e.g. the MCB tracks,
+individual Scandinavian/Slavic languages) and "Undeclared" placeholders are folded into their parent
+major to keep the picker usable. The admin major dropdown offers these as optgroups so majors are
+entered consistently ("Data Science", not "DS"), and /alumni can organize by Major or Major *field*.
+To add a major, drop its exact catalog name under the right category below.
 """
 
 # Ordered so the admin dropdown reads naturally. Category name -> majors offered under it.
@@ -13,10 +16,12 @@ MAJOR_CATEGORIES = {
         'Bioengineering',
         'Civil Engineering',
         'Electrical Engineering and Computer Sciences',
+        'Energy Engineering',
         'Engineering Mathematics and Statistics',
         'Engineering Physics',
         'Environmental Engineering Science',
         'Industrial Engineering and Operations Research',
+        'Management, Entrepreneurship, and Technology (MET)',
         'Materials Science and Engineering',
         'Mechanical Engineering',
         'Nuclear Engineering',
@@ -36,12 +41,14 @@ MAJOR_CATEGORIES = {
         'Astrophysics',
         'Earth and Planetary Science',
         'Geophysics',
+        'Marine Science',
         'Mathematics',
         'Physics',
     ],
     'Biological Sciences': [
         'Integrative Biology',
         'Molecular and Cell Biology',
+        'Neuroscience',
         'Public Health',
     ],
     'Natural Resources': [
@@ -64,12 +71,14 @@ MAJOR_CATEGORIES = {
         'Cognitive Science',
         'Development Studies',
         'Economics',
+        'Education Sciences',
         'Ethnic Studies',
-        'Gender and Women’s Studies',
+        "Gender and Women's Studies",
         'Geography',
         'Global Studies',
         'History',
-        'Interdisciplinary Studies Field',
+        'Interdisciplinary Studies',
+        'Latin American Studies',
         'Legal Studies',
         'Linguistics',
         'Media Studies',
@@ -85,13 +94,18 @@ MAJOR_CATEGORIES = {
     'Arts & Humanities': [
         'Ancient Greek and Roman Studies',
         'Art History',
+        'Celtic Studies',
         'Comparative Literature',
+        'Dance and Performance Studies',
+        'Dutch Studies',
         'East Asian Languages and Cultures',
+        'East Asian Religion, Thought, and Culture',
         'English',
         'Film and Media',
         'French',
         'German',
         'Italian Studies',
+        'Middle Eastern Languages and Cultures',
         'Music',
         'Near Eastern Civilizations',
         'Philosophy',
@@ -111,6 +125,7 @@ MAJOR_CATEGORIES = {
     ],
     'Business': [
         'Business Administration',
+        'Global Management Program',
     ],
 }
 
