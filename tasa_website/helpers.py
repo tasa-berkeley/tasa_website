@@ -137,8 +137,9 @@ def delete_image(image_url):
 
 # --- Cabinet alumni (lineage features) ----------------------------------
 
-# Seasons in chronological order within a calendar year, so Fall 2023 precedes Spring 2024.
-SEASONS = ['Spring', 'Summer', 'Fall']
+# TASA runs Fall and Spring semesters only. Order is chronological within a calendar year (Spring
+# before Fall) so semester ordinals sort correctly, e.g. Fall 2023 precedes Spring 2024.
+SEASONS = ['Spring', 'Fall']
 SEASON_RANK = {s: i for i, s in enumerate(SEASONS)}
 
 
