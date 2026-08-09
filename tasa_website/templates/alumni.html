@@ -1,19 +1,27 @@
 {% extends "base.html" %}
-{% from "_macros.html" import heading %}
 
 {% block title %}Alumni — TASA @ Berkeley{% endblock %}
 
 {% block content %}
-<div class="site-container px-4 py-16 sm:px-6">
-
-  <div class="max-w-3xl">
-    {{ heading('Alumni') }}
-    <p class="mt-4 text-neutral-600">
-      Our cabinet big/little lineage &mdash; the members who've kept TASA running over the years. Hover a
-      node to trace its family line, drag to rearrange, scroll to zoom, and click anyone to see their info
-      and reach out. Filter by name or graduation year to find someone fast.
+{# Dark hero so the (white) fixed navbar + logo are legible at the top of this page. #}
+<section class="relative flex h-60 items-end overflow-hidden bg-gradient-to-br from-accent-950 via-neutral-950 to-neutral-900 sm:h-72 md:h-80">
+  <div class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent-500/20 blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-32 left-1/4 h-80 w-80 rounded-full bg-accent-700/20 blur-3xl"></div>
+  <div class="site-container relative px-4 pb-8 sm:px-6 sm:pb-10">
+    <h1 class="text-4xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-6xl">Alumni</h1>
+    <p class="mt-3 max-w-2xl text-base text-white/85 drop-shadow sm:text-lg">
+      Our cabinet big/little lineage &mdash; the members who've kept TASA running over the years.
     </p>
   </div>
+</section>
+
+<div class="site-container px-4 py-12 sm:px-6">
+
+  <p class="max-w-3xl text-neutral-600">
+    Hover a node to trace its family line, drag to rearrange, scroll to zoom, and click anyone to see their
+    info and reach out. Use &ldquo;Organize by&rdquo; to switch how the tree is built, and filter by name or
+    graduation year to find someone fast.
+  </p>
 
   {% if not members %}
     <p class="mt-12 text-neutral-500">The alumni directory is coming soon &mdash; check back shortly!</p>
