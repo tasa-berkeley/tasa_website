@@ -49,7 +49,9 @@
     </p>
 
     {# ----- Positions held (builds the Position lineage on /alumni) ----- #}
-    <div x-data="{ rows: {{ term_rows|tojson }} }">
+    {# NOTE: single-quote x-data — tojson emits double quotes, which would otherwise close a
+       double-quoted attribute and break row pre-fill when editing a member who already has terms. #}
+    <div x-data='{ rows: {{ term_rows|tojson }} }'>
       <span class="mb-1 block text-sm font-medium text-neutral-700">Positions held</span>
       <p class="mb-2 text-xs text-neutral-500">
         Each row is one position in one semester. These build the <strong>Position</strong> lineage

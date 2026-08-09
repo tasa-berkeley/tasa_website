@@ -182,3 +182,22 @@ def test_blank_term_rows_are_skipped(app, logged_in):
                    content_type='multipart/form-data', follow_redirects=True)
     m = _by_name('Blanky')
     assert len(m.terms) == 1 and m.terms[0].position == 3 and m.terms[0].year == 2022
+
+
+def test_edit_form_prefills_positions_without_breaking_attribute(app, logged_in):
+    # A member who already has positions...
+    data = _member_form_data(name='Posy')
+    data['term_position[]'] = ['4', '3']
+    data['term_season[]'] = ['Fall', 'Spring']
+    data['term_year[]'] = ['2022', '2023']
+    logged_in.post('/admin/alumni/new', data=data,
+                   content_type='multipart/form-data', follow_redirects=True)
+    m = _by_name('Posy')
+
+    html = logged_in.get(f'/admin/alumni/{m.id}/edit').get_data(as_text=True)
+    # The Alpine `rows` state must embed the existing terms WITHOUT breaking the HTML attribute, so the
+    # "Positions held" rows pre-fill on edit. Regression: a double-quoted x-data + tojson (whose JSON has
+    # double quotes) closed the attribute early, so rows never rendered and saving wiped the positions.
+    assert "x-data='{ rows:" in html                 # single-quoted, so the JSON's double quotes are safe
+    assert '"position": "4"' in html and '"position": "3"' in html
+    assert 'x-data="{ rows: [{"' not in html         # the old, broken double-quoted form must be gone
