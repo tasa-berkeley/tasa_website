@@ -205,6 +205,98 @@ def seed_cabinet_from_officers_command(wipe):
                '(fill in grad year, Instagram, email, LinkedIn, and bigs via /admin).')
 
 
+@click.command('add-missing-officers')
+@with_appcontext
+def add_missing_officers_command():
+    """Add officers from content.yaml that aren't already in the database (matched by name).
+
+    Purely additive: never updates or deletes existing rows. Safe to re-run -- officers
+    already present (by exact name match) are skipped. Use `sync-officers` afterward (or
+    beforehand) to refresh fields on officers that already existed.
+    """
+    from . import content
+
+    folder = current_app.config['OFFICER_IMAGE_FOLDER']
+    existing_names = {o.name.strip() for o in db.session.scalars(db.select(Officer))}
+    max_order = db.session.scalar(db.select(db.func.max(Officer.display_order))) or 0
+
+    added = 0
+    skipped_unknown_position = []
+    order = max_order + 1
+    for people in (content._load().get('officers') or {}).values():
+        for person in (people or []):
+            name = person['name'].strip()
+            if name in existing_names:
+                continue
+            pos = person.get('position')
+            if pos not in POSITIONS:
+                skipped_unknown_position.append(name)
+                continue
+            photo = person.get('photo')
+            db.session.add(Officer(
+                name=name,
+                year=person.get('year') or '',
+                major=person.get('major') or '',
+                position=POSITIONS.index(pos),
+                image_url=(folder + '/' + photo) if photo else '',
+                quote=person.get('quote') or '',
+                description=person.get('bio') or '',
+                display_order=order,
+            ))
+            order += 1
+            added += 1
+            existing_names.add(name)  # guard against duplicate names within content.yaml itself
+
+    db.session.commit()
+    click.echo(f'Added {added} new officers from content.yaml.')
+    for name in skipped_unknown_position:
+        click.echo(f"NOTE: skipped '{name}' - position not in helpers.POSITIONS; add it there first.")
+
+
+@click.command('reset-officers-from-yaml')
+@with_appcontext
+def reset_officers_from_yaml_command():
+    """Delete ALL officers and repopulate fresh from content.yaml, in content.yaml's order.
+
+    Destructive: wipes the officers table first. Use to fix ordering/duplicates cleanly.
+    Back up the database before running this.
+    """
+    from . import content
+
+    click.confirm('This will DELETE ALL officers and repopulate from content.yaml. Continue?', abort=True)
+
+    folder = current_app.config['OFFICER_IMAGE_FOLDER']
+    Officer.query.delete()
+
+    added = 0
+    skipped_unknown_position = []
+    order = 0
+    for people in (content._load().get('officers') or {}).values():
+        for person in (people or []):
+            pos = person.get('position')
+            if pos not in POSITIONS:
+                skipped_unknown_position.append(person['name'])
+                continue
+            photo = person.get('photo')
+            db.session.add(Officer(
+                name=person['name'].strip(),
+                year=person.get('year') or '',
+                major=person.get('major') or '',
+                position=POSITIONS.index(pos),
+                image_url=(folder + '/' + photo) if photo else '',
+                quote=person.get('quote') or '',
+                description=person.get('bio') or '',
+                display_order=order,
+            ))
+            order += 1
+            added += 1
+
+    db.session.commit()
+    click.echo(f'Reset officers table: added {added} officers from content.yaml.')
+    for name in skipped_unknown_position:
+        click.echo(f"NOTE: skipped '{name}' - position not in helpers.POSITIONS; add it there first.")
+
+
 @click.command('hash-password')
 def hash_password_command():
     """Hash a password for the ADMIN_PASSWORD_HASH entry in .env."""
@@ -218,4 +310,6 @@ def register(app):
     app.cli.add_command(seed_testimonials_command)
     app.cli.add_command(sync_officers_command)
     app.cli.add_command(seed_cabinet_from_officers_command)
+    app.cli.add_command(add_missing_officers_command)
+    app.cli.add_command(reset_officers_from_yaml_command)
     app.cli.add_command(hash_password_command)
